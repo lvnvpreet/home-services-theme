@@ -20,7 +20,6 @@
         initFormHandling();
         initAnimations();
         initTestimonialSlider();
-        initServiceFilters();
         initEmergencyFloat();
         initPhoneNumberFormatting();
         initTooltips();
@@ -391,41 +390,6 @@
             const nextIndex = (currentIndex + 1) % totalTestimonials;
             goToTestimonial(nextIndex);
         }, 5000);
-    }
-
-    /**
-     * Service Filters
-     */
-    function initServiceFilters() {
-        const filterButtons = document.querySelectorAll('.filter-btn');
-        const serviceItems = document.querySelectorAll('.service-item');
-        
-        filterButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                // Update active filter
-                filterButtons.forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-                
-                const filterValue = this.getAttribute('data-filter');
-                
-                // Filter services
-                serviceItems.forEach(item => {
-                    const itemCategory = item.getAttribute('data-category');
-                    
-                    if (filterValue === 'all' || itemCategory === filterValue) {
-                        item.style.display = 'block';
-                        item.classList.remove('filtered-out');
-                    } else {
-                        item.classList.add('filtered-out');
-                        setTimeout(() => {
-                            if (item.classList.contains('filtered-out')) {
-                                item.style.display = 'none';
-                            }
-                        }, 300);
-                    }
-                });
-            });
-        });
     }
 
     /**

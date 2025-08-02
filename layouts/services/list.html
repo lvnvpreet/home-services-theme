@@ -50,35 +50,20 @@
     </div>
   </section>
   
-  <!-- Service Categories -->
-  <section class="service-categories py-5 bg-light">
+  <!-- Our Services -->
+  <section class="our-services py-5 bg-light">
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2>Service Categories</h2>
-          <p>Browse our comprehensive range of home services</p>
-        </div>
-      </div>
-      
-      <!-- Service Filter Buttons -->
-      <div class="row mb-4">
-        <div class="col-12 text-center">
-          <div class="service-filters">
-            <button class="filter-btn active" data-filter="all">All Services</button>
-            <button class="filter-btn" data-filter="emergency">Emergency</button>
-            <button class="filter-btn" data-filter="electrical">Electrical</button>
-            <button class="filter-btn" data-filter="plumbing">Plumbing</button>
-            <button class="filter-btn" data-filter="hvac">HVAC</button>
-            <button class="filter-btn" data-filter="general">General</button>
-            <button class="filter-btn" data-filter="maintenance">Maintenance</button>
-          </div>
+          <h2>Our Services</h2>
+          <p>Professional home services tailored to your business needs</p>
         </div>
       </div>
       
       <!-- Services Grid -->
       <div class="row services-grid">
         {{ range .Pages }}
-        <div class="col-lg-4 col-md-6 mb-4 service-item" data-category="{{ .Params.category | default "general" }}">
+        <div class="col-lg-4 col-md-6 mb-4">
           <div class="service-card h-100">
             <!-- Service Image -->
             {{ if .Params.image }}
