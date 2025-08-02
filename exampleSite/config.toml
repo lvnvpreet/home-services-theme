@@ -6,7 +6,8 @@ title = "Your Home Services Company"
 theme = "home-services-theme"
 
 [params]
-  # Business Type Configuration
+  # Business Information
+  business_name = "Star Plumber"  # Just the business name for navigation
   business_type = "General Contractor" # Can be changed for different service types
   
   # Location & Service Area
@@ -89,19 +90,9 @@ theme = "home-services-theme"
     weight = 3
   
   [[menu.main]]
-    name = "Gallery"
-    url = "/gallery/"
-    weight = 4
-  
-  [[menu.main]]
     name = "Contact"
     url = "/contact/"
-    weight = 5
-  
-  [[menu.main]]
-    name = "Blog"
-    url = "/blog/"
-    weight = 6
+    weight = 4
 
 # SEO and Analytics
 [params.seo]

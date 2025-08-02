@@ -5,11 +5,11 @@
     <!-- Logo -->
     <a class="navbar-brand" href="{{ .Site.BaseURL }}">
       {{ if .Site.Params.logo }}
-      <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Title }}" height="50">
+      <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Params.business_name | default .Site.Title }}" height="50">
       {{ else }}
       <div class="logo-text">
         <i class="fas fa-tools me-2"></i>
-        <span class="brand-name">{{ .Site.Title }}</span>
+        <span class="brand-name">{{ .Site.Params.business_name | default .Site.Title }}</span>
       </div>
       {{ end }}
     </a>
@@ -61,14 +61,6 @@
           </div>
         </form>
         
-        <!-- Emergency Call Button (Mobile) -->
-        <div class="d-lg-none">
-          <a href="tel:{{ .Site.Params.emergency_phone }}" class="btn btn-danger btn-sm me-2">
-            <i class="fas fa-phone me-1"></i>
-            Emergency
-          </a>
-        </div>
-        
         <!-- CTA Button -->
         <div class="d-none d-lg-block">
           <a href="{{ "/contact" | relURL }}" class="btn btn-primary">
@@ -102,16 +94,6 @@
             <span>{{ .Site.Params.phone }}</span>
           </div>
         </a>
-        
-        {{ if .Site.Params.emergency_phone }}
-        <a href="tel:{{ .Site.Params.emergency_phone }}" class="mobile-contact-item emergency">
-          <i class="fas fa-exclamation-triangle"></i>
-          <div>
-            <strong>Emergency</strong>
-            <span>{{ .Site.Params.emergency_phone }}</span>
-          </div>
-        </a>
-        {{ end }}
       </div>
       
       <!-- Navigation Links -->
@@ -326,10 +308,6 @@
 
 .mobile-contact-item:hover {
   color: var(--primary-color);
-}
-
-.mobile-contact-item.emergency {
-  color: var(--danger-color);
 }
 
 .mobile-contact-item i {

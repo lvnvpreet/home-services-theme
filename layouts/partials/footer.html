@@ -7,11 +7,11 @@
           <div class="footer-section">
             <div class="footer-logo mb-3">
               {{ if .Site.Params.logo }}
-              <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Title }}" height="40">
+              <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Params.business_name | default .Site.Title }}" height="40">
               {{ else }}
               <div class="logo-text">
                 <i class="fas fa-tools me-2"></i>
-                <span class="brand-name">{{ .Site.Title }}</span>
+                <span class="brand-name">{{ .Site.Params.business_name | default .Site.Title }}</span>
               </div>
               {{ end }}
             </div>
@@ -212,7 +212,7 @@
       <div class="row align-items-center">
         <div class="col-md-6">
           <p class="copyright">
-            &copy; {{ now.Format "2006" }} {{ .Site.Title }}. All rights reserved.
+            &copy; {{ now.Format "2006" }} {{ .Site.Params.business_name | default .Site.Title }}. All rights reserved.
           </p>
         </div>
         <div class="col-md-6 text-md-end">
