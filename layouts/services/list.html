@@ -142,6 +142,25 @@
                 <a href="{{ "/contact" | relURL }}?service={{ .Title | urlize }}" class="btn btn-outline-primary">Get Quote</a>
               </div>
               
+              <!-- Location-Specific Services -->
+              {{ if .Pages }}
+              <div class="location-services">
+                <h6 class="location-title">
+                  <i class="fas fa-map-marker-alt me-1"></i>
+                  Location-Specific Services:
+                </h6>
+                <div class="location-links">
+                  {{ range .Pages }}
+                  {{ if .Params.location }}
+                  <a href="{{ .Permalink }}" class="location-link">
+                    {{ .Params.location }}
+                  </a>
+                  {{ end }}
+                  {{ end }}
+                </div>
+              </div>
+              {{ end }}
+              
               <!-- Service Areas -->
               {{ if .Params.service_areas }}
               <div class="service-areas">
@@ -504,6 +523,45 @@
   flex: 1;
   font-size: 0.875rem;
   padding: 8px 12px;
+}
+
+/* Location Services */
+.location-services {
+  background: var(--light-color);
+  padding: 15px;
+  border-radius: 8px;
+  margin: 15px 0;
+}
+
+.location-services .location-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--dark-color);
+  margin-bottom: 10px;
+}
+
+.location-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.location-link {
+  background: white;
+  color: var(--primary-color);
+  padding: 6px 12px;
+  border-radius: 15px;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--primary-color);
+  transition: all 0.3s ease;
+}
+
+.location-link:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-1px);
 }
 
 .service-areas {

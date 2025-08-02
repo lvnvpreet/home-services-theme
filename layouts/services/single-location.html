@@ -1,0 +1,487 @@
+{{ define "main" }}
+<div class="service-location-page">
+  <!-- Location-Specific Page Header -->
+  <section class="page-header location-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <!-- Breadcrumb -->
+          <nav aria-label="breadcrumb" class="location-breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{{ "/" | relURL }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ "/services" | relURL }}">Services</a></li>
+              <li class="breadcrumb-item"><a href="{{ .Parent.Permalink }}">{{ .Parent.Title }}</a></li>
+              <li class="breadcrumb-item active">{{ .Params.location }}</li>
+            </ol>
+          </nav>
+          
+          <div class="header-content">
+            <h1 class="page-title">{{ .Title }}</h1>
+            <p class="page-subtitle">{{ .Description }}</p>
+            
+            <!-- Location-Specific Badges -->
+            <div class="location-badges">
+              <span class="badge bg-primary">
+                <i class="fas fa-map-marker-alt me-1"></i>
+                {{ .Params.location }} Specialist
+              </span>
+              {{ if .Params.local_response_time }}
+              <span class="badge bg-success">
+                <i class="fas fa-clock me-1"></i>
+                {{ .Params.local_response_time }} Response
+              </span>
+              {{ end }}
+              {{ if .Params.local_permits }}
+              <span class="badge bg-info">
+                <i class="fas fa-certificate me-1"></i>
+                Local Permits Handled
+              </span>
+              {{ end }}
+            </div>
+            
+            <!-- Location CTA -->
+            <div class="location-cta">
+              <a href="{{ "/contact" | relURL }}?service={{ .Parent.Title | urlize }}&location={{ .Params.location | urlize }}" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-phone me-2"></i>
+                Get Quote in {{ .Params.location }}
+              </a>
+              {{ if .Site.Params.emergency_phone }}
+              <a href="tel:{{ .Site.Params.emergency_phone }}" class="btn btn-danger btn-lg">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Emergency {{ .Params.location }}
+              </a>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Location Service Info -->
+  <section class="location-service-info py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <!-- Location-Specific Content -->
+          <div class="location-content">
+            <h2>{{ .Parent.Title }} Services in {{ .Params.location }}</h2>
+            {{ .Content }}
+            
+            <!-- Local Neighborhoods -->
+            {{ if .Params.neighborhoods }}
+            <div class="neighborhoods-section">
+              <h3>Neighborhoods We Serve in {{ .Params.location }}</h3>
+              <div class="neighborhoods-grid">
+                {{ range .Params.neighborhoods }}
+                <div class="neighborhood-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>{{ . }}</span>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+            
+            <!-- Location-Specific Features -->
+            {{ if .Params.local_features }}
+            <div class="local-features">
+              <h3>Why Choose Us in {{ .Params.location }}</h3>
+              <div class="features-list">
+                {{ range .Params.local_features }}
+                <div class="feature-item">
+                  <i class="fas fa-check-circle text-success"></i>
+                  <span>{{ . }}</span>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+        
+        <div class="col-lg-4">
+          <div class="location-sidebar">
+            <!-- Location Quick Info -->
+            <div class="location-info-card">
+              <h4>{{ .Params.location }} Service Details</h4>
+              <div class="info-grid">
+                {{ if .Params.local_response_time }}
+                <div class="info-item">
+                  <i class="fas fa-clock"></i>
+                  <div>
+                    <strong>Response Time</strong>
+                    <span>{{ .Params.local_response_time }}</span>
+                  </div>
+                </div>
+                {{ end }}
+                
+                {{ if .Params.local_pricing_note }}
+                <div class="info-item">
+                  <i class="fas fa-dollar-sign"></i>
+                  <div>
+                    <strong>Local Pricing</strong>
+                    <span>{{ .Params.local_pricing_note }}</span>
+                  </div>
+                </div>
+                {{ end }}
+                
+                {{ if .Params.local_permits }}
+                <div class="info-item">
+                  <i class="fas fa-certificate"></i>
+                  <div>
+                    <strong>Permits</strong>
+                    <span>We handle all local permits</span>
+                  </div>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+            
+            <!-- Other Locations -->
+            <div class="other-locations-card">
+              <h4>{{ .Parent.Title }} in Other Areas</h4>
+              <div class="locations-list">
+                {{ $currentLocation := .Params.location }}
+                {{ $parentService := .Parent }}
+                {{ range $parentService.Pages }}
+                {{ if ne .Params.location $currentLocation }}
+                <a href="{{ .Permalink }}" class="location-link">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>{{ .Params.location }}</span>
+                  <i class="fas fa-chevron-right"></i>
+                </a>
+                {{ end }}
+                {{ end }}
+                
+                <!-- Link to main service page -->
+                <a href="{{ $parentService.Permalink }}" class="location-link main-service">
+                  <i class="fas fa-home"></i>
+                  <span>All {{ $parentService.Title }} Services</span>
+                  <i class="fas fa-chevron-right"></i>
+                </a>
+              </div>
+            </div>
+            
+            <!-- Contact Widget -->
+            <div class="contact-widget">
+              <h4>Get Started in {{ .Params.location }}</h4>
+              <div class="contact-methods">
+                <a href="tel:{{ .Site.Params.phone }}" class="contact-method">
+                  <i class="fas fa-phone"></i>
+                  <span>{{ .Site.Params.phone }}</span>
+                </a>
+                <a href="mailto:{{ .Site.Params.email }}" class="contact-method">
+                  <i class="fas fa-envelope"></i>
+                  <span>{{ .Site.Params.email }}</span>
+                </a>
+              </div>
+              
+              <a href="{{ "/contact" | relURL }}?service={{ .Parent.Title | urlize }}&location={{ .Params.location | urlize }}" class="btn btn-primary w-100 mt-3">
+                <i class="fas fa-calendar-check me-2"></i>
+                Schedule in {{ .Params.location }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Local Testimonials -->
+  {{ if .Params.local_testimonials }}
+  <section class="local-testimonials py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2>What {{ .Params.location }} Customers Say</h2>
+          <p>Real reviews from {{ .Params.location }} residents</p>
+        </div>
+      </div>
+      <div class="row">
+        {{ range .Params.local_testimonials }}
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="testimonial-card">
+            <div class="testimonial-rating">
+              {{ range seq (int .rating) }}
+              <i class="fas fa-star"></i>
+              {{ end }}
+            </div>
+            <p class="testimonial-text">"{{ .text }}"</p>
+            <div class="testimonial-author">
+              <strong>{{ .name }}</strong>
+              {{ if .neighborhood }}
+              <small class="text-muted">{{ .neighborhood }}</small>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+  
+  <!-- Location CTA -->
+  <section class="location-cta py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="cta-content">
+            <h2>Ready for {{ .Parent.Title }} Service in {{ .Params.location }}?</h2>
+            <p class="lead">Join hundreds of satisfied {{ .Params.location }} customers</p>
+            <div class="cta-actions">
+              <a href="{{ "/contact" | relURL }}?service={{ .Parent.Title | urlize }}&location={{ .Params.location | urlize }}" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-calendar-check me-2"></i>
+                Schedule Service
+              </a>
+              <a href="tel:{{ .Site.Params.phone }}" class="btn btn-outline-primary btn-lg">
+                <i class="fas fa-phone me-2"></i>
+                Call Now
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+/* Location-Specific Service Page Styles */
+.service-location-page .location-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 60px 0;
+}
+
+.location-breadcrumb .breadcrumb {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 8px 15px;
+  border-radius: 6px;
+  margin-bottom: 30px;
+}
+
+.location-breadcrumb .breadcrumb-item a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+}
+
+.location-breadcrumb .breadcrumb-item.active {
+  color: white;
+}
+
+.location-badges {
+  margin: 20px 0;
+}
+
+.location-badges .badge {
+  margin-right: 10px;
+  margin-bottom: 5px;
+  padding: 8px 12px;
+  font-size: 0.9rem;
+}
+
+.location-cta {
+  margin-top: 30px;
+}
+
+/* Neighborhoods Grid */
+.neighborhoods-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.neighborhood-item {
+  background: var(--light-color);
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.neighborhood-item i {
+  color: var(--primary-color);
+}
+
+/* Local Features */
+.local-features {
+  margin: 40px 0;
+}
+
+.features-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: var(--light-color);
+  border-radius: 8px;
+}
+
+/* Sidebar Styles */
+.location-sidebar .card {
+  margin-bottom: 30px;
+}
+
+.location-info-card,
+.other-locations-card,
+.contact-widget {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 30px;
+}
+
+.location-info-card h4,
+.other-locations-card h4,
+.contact-widget h4 {
+  margin-bottom: 20px;
+  color: var(--dark-color);
+}
+
+.info-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--light-color);
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item i {
+  color: var(--primary-color);
+  width: 20px;
+  text-align: center;
+}
+
+.locations-list {
+  display: grid;
+  gap: 10px;
+}
+
+.location-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 15px;
+  background: var(--light-color);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--dark-color);
+  transition: all 0.3s ease;
+}
+
+.location-link:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateX(5px);
+}
+
+.location-link.main-service {
+  background: var(--primary-color);
+  color: white;
+}
+
+.contact-methods {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: var(--light-color);
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--dark-color);
+}
+
+.contact-method:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Local Testimonials */
+.local-testimonials .testimonial-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  height: 100%;
+}
+
+.testimonial-rating {
+  color: var(--warning-color);
+  margin-bottom: 15px;
+}
+
+.testimonial-text {
+  font-style: italic;
+  margin-bottom: 20px;
+  color: var(--secondary-color);
+}
+
+.testimonial-author strong {
+  color: var(--dark-color);
+}
+
+/* Location CTA */
+.location-cta {
+  background: var(--primary-color);
+  color: white;
+}
+
+.location-cta .cta-content h2 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+.location-cta .lead {
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 30px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .location-cta .btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  .location-cta .btn:last-child {
+    margin-bottom: 0;
+  }
+  
+  .neighborhoods-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .features-list {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+{{ end }}
