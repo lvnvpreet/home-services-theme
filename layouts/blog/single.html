@@ -282,6 +282,7 @@
             <div class="sidebar-widget popular-posts-widget">
               <h4>Popular Articles</h4>
               <div class="popular-posts">
+                {{ $.Scratch.Set "counter" 0 }}
                 {{ range first 5 (where .Site.RegularPages "Section" "blog") }}
                 <div class="popular-post">
                   <div class="post-number">{{ add ($.Scratch.Get "counter") 1 }}{{ $.Scratch.Set "counter" (add ($.Scratch.Get "counter") 1) }}</div>

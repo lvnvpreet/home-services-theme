@@ -277,7 +277,8 @@
             
             <!-- Related Services -->
             {{ $currentService := . }}
-            {{ $relatedServices := where .Site.RegularPages "Section" "services" | where "Title" "!=" .Title | first 3 }}
+            {{ $allServices := where .Site.RegularPages "Section" "services" }}
+            {{ $relatedServices := where $allServices "Title" "!=" .Title | first 3 }}
             {{ if $relatedServices }}
             <div class="related-services-widget">
               <h4>Related Services</h4>

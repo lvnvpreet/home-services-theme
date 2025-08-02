@@ -73,7 +73,9 @@
           
           <!-- Blog Grid -->
           <div class="blog-grid">
-            {{ $paginator := .Paginate (where .Pages "Type" "blog" | where "Params.featured" "!=" true) 6 }}
+            {{ $blogPages := where .Pages "Type" "blog" }}
+            {{ $nonFeaturedPages := where $blogPages "Params.featured" "!=" true }}
+            {{ $paginator := .Paginate $nonFeaturedPages 6 }}
             {{ range $paginator.Pages }}
             <article class="blog-card">
               {{ if .Params.image }}
