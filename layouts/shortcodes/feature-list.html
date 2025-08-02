@@ -1,0 +1,51 @@
+<!-- 5. Feature List Shortcode: layouts/shortcodes/feature-list.html -->
+<!-- Usage: {{< feature-list features="Licensed & Insured,24/7 Emergency Service,Free Estimates,Quality Guarantee" >}} -->
+
+<div class="feature-list-shortcode">
+  {{ $features := split (.Get "features") "," }}
+  <div class="features-grid">
+    {{ range $features }}
+    <div class="feature-item">
+      <i class="fas fa-check-circle"></i>
+      <span>{{ . | trim }}</span>
+    </div>
+    {{ end }}
+  </div>
+</div>
+
+<style>
+.feature-list-shortcode {
+  margin: 30px 0;
+}
+
+.feature-list-shortcode .features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.feature-list-shortcode .feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: var(--light-color);
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.feature-list-shortcode .feature-item:hover {
+  transform: translateX(5px);
+}
+
+.feature-list-shortcode .feature-item i {
+  color: var(--success-color);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.feature-list-shortcode .feature-item span {
+  color: var(--dark-color);
+  font-weight: 500;
+}
+</style>

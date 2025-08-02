@@ -1,0 +1,119 @@
+# Home Services & Maintenance Hugo Theme Configuration
+
+baseURL = "https://yourhomeservices.com"
+languageCode = "en-us"
+title = "Your Home Services Company"
+theme = "home-services-theme"
+
+[params]
+  # Business Type Configuration
+  business_type = "General Contractor" # Can be changed for different service types
+  
+  # Location & Service Area
+  primary_location = "New York, NY"
+  service_areas = ["Manhattan", "Brooklyn", "Queens", "Bronx", "Staten Island"]
+  address = "123 Main Street, New York, NY 10001"
+  coordinates = "40.7128,-74.0060" # Lat,Long for maps
+  
+  # Contact Information
+  phone = "+1 (555) 123-4567"
+  emergency_phone = "+1 (555) 911-HELP"
+  email = "info@yourhomeservices.com"
+  
+  # Business Details
+  license_number = "LIC-12345"
+  insurance_provider = "State Farm Business Insurance"
+  years_in_business = "15"
+  
+  # Hero Section
+  hero_title = "Professional Home Services in New York"
+  hero_subtitle = "Licensed, insured, and trusted by homeowners for over 15 years"
+  hero_image = "/images/hero/home-services-hero.jpg"
+  
+  # Business Hours
+  [params.business_hours]
+    monday = "7:00 AM - 7:00 PM"
+    tuesday = "7:00 AM - 7:00 PM"
+    wednesday = "7:00 AM - 7:00 PM"
+    thursday = "7:00 AM - 7:00 PM"
+    friday = "7:00 AM - 7:00 PM"
+    saturday = "8:00 AM - 6:00 PM"
+    sunday = "Emergency Only"
+  
+  # Social Media
+  [params.social]
+    facebook = "https://facebook.com/yourhomeservices"
+    twitter = "https://twitter.com/yourhomeservices"
+    instagram = "https://instagram.com/yourhomeservices"
+    linkedin = "https://linkedin.com/company/yourhomeservices"
+    youtube = "https://youtube.com/yourhomeservices"
+    yelp = "https://yelp.com/biz/yourhomeservices"
+    google_business = "https://business.google.com/yourhomeservices"
+  
+  # Features for home page
+  [[params.why_choose_features]]
+    icon = "fas fa-certificate"
+    title = "Licensed & Insured"
+    description = "Fully licensed and insured for your peace of mind"
+  
+  [[params.why_choose_features]]
+    icon = "fas fa-clock"
+    title = "24/7 Emergency Service"
+    description = "Available for emergency repairs and urgent service calls"
+  
+  [[params.why_choose_features]]
+    icon = "fas fa-thumbs-up"
+    title = "Satisfaction Guaranteed"
+    description = "100% satisfaction guarantee on all our work"
+  
+  [[params.why_choose_features]]
+    icon = "fas fa-dollar-sign"
+    title = "Competitive Pricing"
+    description = "Fair, transparent pricing with free estimates"
+
+# Menu Configuration
+[menu]
+  [[menu.main]]
+    name = "Home"
+    url = "/"
+    weight = 1
+  
+  [[menu.main]]
+    name = "About"
+    url = "/about/"
+    weight = 2
+  
+  [[menu.main]]
+    name = "Services"
+    url = "/services/"
+    weight = 3
+  
+  [[menu.main]]
+    name = "Gallery"
+    url = "/gallery/"
+    weight = 4
+  
+  [[menu.main]]
+    name = "Contact"
+    url = "/contact/"
+    weight = 5
+  
+  [[menu.main]]
+    name = "Blog"
+    url = "/blog/"
+    weight = 6
+
+# SEO and Analytics
+[params.seo]
+  description = "Professional home services in New York. Licensed contractors for plumbing, electrical, HVAC, roofing, and more. Call for free estimates!"
+  keywords = "home services, contractor, plumber, electrician, HVAC, roofing, handyman, New York"
+
+[params.google]
+  analytics = "G-XXXXXXXXXX"
+  maps_api_key = "YOUR_GOOGLE_MAPS_API_KEY"
+
+# Markup Configuration
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true

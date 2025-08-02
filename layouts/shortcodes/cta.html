@@ -1,0 +1,52 @@
+<!-- 4. Call to Action Shortcode: layouts/shortcodes/cta.html -->
+<!-- Usage: {{< cta title="Ready to Get Started?" button-text="Contact Us" button-link="/contact" >}}Get your free estimate today{{< /cta >}} -->
+
+<div class="cta-shortcode">
+  <div class="cta-content">
+    <h3>{{ .Get "title" | default "Ready to Get Started?" }}</h3>
+    {{ if .Inner }}
+    <p>{{ .Inner }}</p>
+    {{ end }}
+    {{ if .Get "button-link" }}
+    <a href="{{ .Get "button-link" }}" class="btn btn-primary btn-lg">
+      {{ .Get "button-text" | default "Get Started" }}
+    </a>
+    {{ end }}
+  </div>
+</div>
+
+<style>
+.cta-shortcode {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: 50px;
+  border-radius: 12px;
+  text-align: center;
+  margin: 40px 0;
+}
+
+.cta-shortcode h3 {
+  color: white;
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+
+.cta-shortcode p {
+  opacity: 0.9;
+  margin-bottom: 25px;
+  font-size: 1.1rem;
+}
+
+.cta-shortcode .btn-primary {
+  background: white;
+  color: var(--primary-color);
+  border: none;
+  font-weight: 600;
+  padding: 15px 30px;
+}
+
+.cta-shortcode .btn-primary:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: translateY(-2px);
+}
+</style>

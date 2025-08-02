@@ -1,0 +1,1018 @@
+{{ define "main" }}
+<div class="service-single">
+  <!-- Service Hero -->
+  <section class="service-hero">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="service-hero-content">
+            <!-- Breadcrumb -->
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ .Site.BaseURL }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ "/services" | relURL }}">Services</a></li>
+                <li class="breadcrumb-item active">{{ .Title }}</li>
+              </ol>
+            </nav>
+            
+            <h1 class="service-title">{{ .Title }}</h1>
+            <p class="service-subtitle">{{ .Description | default .Summary }}</p>
+            
+            <!-- Service Badges -->
+            <div class="service-badges mb-4">
+              {{ if .Params.emergency }}
+              <span class="badge bg-danger">
+                <i class="fas fa-exclamation-triangle me-1"></i>
+                24/7 Emergency Available
+              </span>
+              {{ end }}
+              {{ if .Params.same_day }}
+              <span class="badge bg-warning">
+                <i class="fas fa-clock me-1"></i>
+                Same Day Service
+              </span>
+              {{ end }}
+              {{ if .Params.free_estimate }}
+              <span class="badge bg-success">
+                <i class="fas fa-dollar-sign me-1"></i>
+                Free Estimates
+              </span>
+              {{ end }}
+              {{ if .Params.licensed }}
+              <span class="badge bg-primary">
+                <i class="fas fa-certificate me-1"></i>
+                Licensed & Insured
+              </span>
+              {{ end }}
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="service-actions">
+              <a href="{{ "/contact" | relURL }}?service={{ .Title | urlize }}" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-phone me-2"></i>
+                Get Free Quote
+              </a>
+              {{ if .Params.emergency }}
+              <a href="tel:{{ .Site.Params.emergency_phone }}" class="btn btn-danger btn-lg">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                Emergency Call
+              </a>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="service-info-card">
+            <!-- Pricing -->
+            {{ if or .Params.starting_price .Params.hourly_rate }}
+            <div class="pricing-section">
+              <h4>Pricing</h4>
+              {{ if .Params.starting_price }}
+              <div class="price-item">
+                <span class="price-label">Starting at</span>
+                <span class="price-value">{{ .Params.starting_price }}</span>
+              </div>
+              {{ end }}
+              {{ if .Params.hourly_rate }}
+              <div class="price-item">
+                <span class="price-label">Hourly Rate</span>
+                <span class="price-value">{{ .Params.hourly_rate }}</span>
+              </div>
+              {{ end }}
+              <p class="pricing-note">*Final pricing depends on scope of work</p>
+            </div>
+            {{ end }}
+            
+            <!-- Quick Info -->
+            <div class="quick-info">
+              <h4>Service Details</h4>
+              <div class="info-grid">
+                {{ if .Params.response_time }}
+                <div class="info-item">
+                  <i class="fas fa-clock"></i>
+                  <div>
+                    <strong>Response Time</strong>
+                    <span>{{ .Params.response_time }}</span>
+                  </div>
+                </div>
+                {{ end }}
+                
+                {{ if .Params.service_type }}
+                <div class="info-item">
+                  <i class="fas fa-home"></i>
+                  <div>
+                    <strong>Property Type</strong>
+                    <span>{{ .Params.service_type }}</span>
+                  </div>
+                </div>
+                {{ end }}
+                
+                {{ if .Params.warranty }}
+                <div class="info-item">
+                  <i class="fas fa-shield-alt"></i>
+                  <div>
+                    <strong>Warranty</strong>
+                    <span>{{ .Params.warranty }}</span>
+                  </div>
+                </div>
+                {{ end }}
+                
+                <div class="info-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <div>
+                    <strong>Service Areas</strong>
+                    <span>{{ .Site.Params.primary_location }}{{ if .Params.service_areas }} & {{ len .Params.service_areas }} more{{ end }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Contact Info -->
+            <div class="contact-section">
+              <h4>Get Started Today</h4>
+              <div class="contact-methods">
+                <a href="tel:{{ .Site.Params.phone }}" class="contact-method">
+                  <i class="fas fa-phone"></i>
+                  <span>{{ .Site.Params.phone }}</span>
+                </a>
+                <a href="mailto:{{ .Site.Params.email }}" class="contact-method">
+                  <i class="fas fa-envelope"></i>
+                  <span>{{ .Site.Params.email }}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Service Content -->
+  <section class="service-content py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <!-- Main Content -->
+          <div class="content-main">
+            {{ if .Params.image }}
+            <div class="service-featured-image mb-4">
+              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid rounded">
+            </div>
+            {{ end }}
+            
+            <div class="service-description">
+              {{ .Content }}
+            </div>
+            
+            <!-- Service Features -->
+            {{ if .Params.features }}
+            <div class="service-features-section">
+              <h3>What's Included</h3>
+              <div class="features-grid">
+                {{ range .Params.features }}
+                <div class="feature-item">
+                  <i class="fas fa-check-circle text-success"></i>
+                  <span>{{ . }}</span>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+            
+            <!-- Service Process -->
+            {{ if .Params.process }}
+            <div class="service-process-section">
+              <h3>Our Process</h3>
+              <div class="process-steps">
+                {{ range $index, $step := .Params.process }}
+                <div class="process-step">
+                  <div class="step-number">{{ add $index 1 }}</div>
+                  <div class="step-content">
+                    <h5>{{ $step.title }}</h5>
+                    <p>{{ $step.description }}</p>
+                  </div>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+            
+            <!-- Before/After Gallery -->
+            {{ if .Params.gallery }}
+            <div class="gallery-section">
+              <h3>Our Work</h3>
+              <div class="work-gallery">
+                {{ range .Params.gallery }}
+                <div class="gallery-item">
+                  <img src="{{ .image | relURL }}" alt="{{ .title }}" class="img-fluid rounded">
+                  <div class="gallery-caption">
+                    <h5>{{ .title }}</h5>
+                    <p>{{ .description }}</p>
+                  </div>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+            
+            <!-- FAQ -->
+            {{ if .Params.faq }}
+            <div class="service-faq-section">
+              <h3>Frequently Asked Questions</h3>
+              <div class="accordion" id="serviceFaqAccordion">
+                {{ range $index, $faq := .Params.faq }}
+                <div class="accordion-item">
+                  <h4 class="accordion-header">
+                    <button class="accordion-button{{ if ne $index 0 }} collapsed{{ end }}" type="button" data-bs-toggle="collapse" data-bs-target="#faq{{ $index }}">
+                      {{ $faq.question }}
+                    </button>
+                  </h4>
+                  <div id="faq{{ $index }}" class="accordion-collapse collapse{{ if eq $index 0 }} show{{ end }}" data-bs-parent="#serviceFaqAccordion">
+                    <div class="accordion-body">
+                      {{ $faq.answer }}
+                    </div>
+                  </div>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+          <div class="service-sidebar">
+            
+            <!-- Request Quote Form -->
+            <div class="quote-form-widget">
+              <h4>Request a Quote</h4>
+              <form class="quick-quote-form">
+                <div class="mb-3">
+                  <input type="text" class="form-control" placeholder="Your Name" required>
+                </div>
+                <div class="mb-3">
+                  <input type="tel" class="form-control" placeholder="Phone Number" required>
+                </div>
+                <div class="mb-3">
+                  <input type="email" class="form-control" placeholder="Email Address" required>
+                </div>
+                <div class="mb-3">
+                  <textarea class="form-control" rows="3" placeholder="Describe your project..."></textarea>
+                </div>
+                <div class="mb-3">
+                  <select class="form-select">
+                    <option value="">Urgency Level</option>
+                    <option value="normal">Normal (within a week)</option>
+                    <option value="urgent">Urgent (2-3 days)</option>
+                    <option value="emergency">Emergency (same day)</option>
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">
+                  <i class="fas fa-paper-plane me-2"></i>
+                  Get Free Quote
+                </button>
+              </form>
+            </div>
+            
+            <!-- Related Services -->
+            {{ $currentService := . }}
+            {{ $relatedServices := where .Site.RegularPages "Section" "services" | where "Title" "!=" .Title | first 3 }}
+            {{ if $relatedServices }}
+            <div class="related-services-widget">
+              <h4>Related Services</h4>
+              <div class="related-services-list">
+                {{ range $relatedServices }}
+                <a href="{{ .Permalink }}" class="related-service-item">
+                  <div class="service-icon">
+                    <i class="{{ .Params.icon | default "fas fa-tools" }}"></i>
+                  </div>
+                  <div class="service-info">
+                    <h6>{{ .Title }}</h6>
+                    <p>{{ .Summary | truncate 60 }}</p>
+                  </div>
+                  <div class="service-arrow">
+                    <i class="fas fa-chevron-right"></i>
+                  </div>
+                </a>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+            
+            <!-- Emergency Contact -->
+            <div class="emergency-widget">
+              <div class="emergency-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h5>Emergency Service?</h5>
+                <p>Need immediate assistance? We're available 24/7 for emergency repairs.</p>
+                <a href="tel:{{ .Site.Params.emergency_phone }}" class="btn btn-danger w-100">
+                  <i class="fas fa-phone me-2"></i>
+                  Call {{ .Site.Params.emergency_phone }}
+                </a>
+              </div>
+            </div>
+            
+            <!-- Service Areas -->
+            {{ if .Params.service_areas }}
+            <div class="service-areas-widget">
+              <h4>Service Areas</h4>
+              <div class="areas-list">
+                {{ range .Params.service_areas }}
+                <div class="area-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>{{ . }}</span>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+            {{ end }}
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Reviews Section -->
+  {{ if .Params.reviews }}
+  <section class="reviews-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2>Customer Reviews</h2>
+          <div class="review-stats">
+            <div class="average-rating">
+              <span class="rating-number">{{ .Params.average_rating | default "4.8" }}</span>
+              <div class="rating-stars">
+                {{ range seq 5 }}
+                <i class="fas fa-star"></i>
+                {{ end }}
+              </div>
+              <p>Based on {{ len .Params.reviews }} reviews</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        {{ range .Params.reviews }}
+        <div class="col-lg-4 mb-4">
+          <div class="review-card">
+            <div class="review-header">
+              <div class="reviewer-info">
+                <h5>{{ .name }}</h5>
+                <span class="review-location">{{ .location }}</span>
+              </div>
+              <div class="review-rating">
+                {{ range seq (int .rating) }}
+                <i class="fas fa-star"></i>
+                {{ end }}
+              </div>
+            </div>
+            <div class="review-content">
+              <p>"{{ .comment }}"</p>
+            </div>
+            <div class="review-footer">
+              <small class="text-muted">{{ .date }}</small>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+  
+  <!-- CTA Section -->
+  <section class="service-cta py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="cta-content">
+            <h2>Ready to Get Started?</h2>
+            <p class="lead">Contact us today for a free estimate on your {{ .Title | lower }} project</p>
+            <div class="cta-actions">
+              <a href="{{ "/contact" | relURL }}?service={{ .Title | urlize }}" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-calculator me-2"></i>
+                Get Free Estimate
+              </a>
+              <a href="tel:{{ .Site.Params.phone }}" class="btn btn-outline-primary btn-lg">
+                <i class="fas fa-phone me-2"></i>
+                Call {{ .Site.Params.phone }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+<style>
+/* Service Single Page Styles */
+.service-hero {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 60px 0;
+}
+
+.breadcrumb {
+  background: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+
+.breadcrumb-item a {
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+}
+
+.breadcrumb-item.active {
+  color: white;
+}
+
+.service-title {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.service-subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+  margin-bottom: 25px;
+}
+
+.service-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.service-badges .badge {
+  padding: 8px 15px;
+  font-size: 0.875rem;
+}
+
+.service-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* Service Info Card */
+.service-info-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 120px;
+}
+
+.service-info-card h4 {
+  color: var(--dark-color);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.pricing-section {
+  margin-bottom: 30px;
+}
+
+.price-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.price-label {
+  color: var(--secondary-color);
+}
+
+.price-value {
+  font-weight: 700;
+  color: var(--success-color);
+  font-size: 1.25rem;
+}
+
+.pricing-note {
+  font-size: 0.85rem;
+  color: var(--secondary-color);
+  font-style: italic;
+  margin-top: 10px;
+}
+
+.quick-info {
+  margin-bottom: 30px;
+}
+
+.info-grid {
+  display: grid;
+  gap: 15px;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.info-item i {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  width: 20px;
+  text-align: center;
+}
+
+.info-item strong {
+  display: block;
+  color: var(--dark-color);
+  font-size: 0.9rem;
+  margin-bottom: 2px;
+}
+
+.info-item span {
+  color: var(--secondary-color);
+  font-size: 0.85rem;
+}
+
+.contact-section .contact-methods {
+  display: grid;
+  gap: 10px;
+}
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: var(--light-color);
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--dark-color);
+  transition: all 0.3s ease;
+}
+
+.contact-method:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+.contact-method i {
+  color: var(--primary-color);
+  width: 20px;
+  text-align: center;
+}
+
+.contact-method:hover i {
+  color: white;
+}
+
+/* Service Content */
+.service-content {
+  background: white;
+}
+
+.content-main {
+  background: white;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.service-featured-image {
+  text-align: center;
+}
+
+.service-description {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--secondary-color);
+  margin-bottom: 40px;
+}
+
+.service-features-section,
+.service-process-section,
+.gallery-section,
+.service-faq-section {
+  margin-top: 40px;
+  padding-top: 40px;
+  border-top: 1px solid #eee;
+}
+
+.service-features-section h3,
+.service-process-section h3,
+.gallery-section h3,
+.service-faq-section h3 {
+  color: var(--dark-color);
+  margin-bottom: 25px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 15px;
+  background: var(--light-color);
+  border-radius: 8px;
+}
+
+.feature-item i {
+  font-size: 1.25rem;
+}
+
+/* Service Process */
+.process-steps {
+  display: grid;
+  gap: 25px;
+}
+
+.process-step {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding: 20px;
+  background: var(--light-color);
+  border-radius: 8px;
+}
+
+.step-number {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.step-content h5 {
+  margin-bottom: 8px;
+  color: var(--dark-color);
+}
+
+.step-content p {
+  margin: 0;
+  color: var(--secondary-color);
+}
+
+/* Gallery */
+.work-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.gallery-item {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-caption {
+  padding: 15px;
+}
+
+.gallery-caption h5 {
+  margin-bottom: 5px;
+  color: var(--dark-color);
+}
+
+.gallery-caption p {
+  margin: 0;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
+
+/* Sidebar Widgets */
+.service-sidebar {
+  display: grid;
+  gap: 30px;
+}
+
+.quote-form-widget,
+.related-services-widget,
+.emergency-widget,
+.service-areas-widget {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+
+.quote-form-widget h4,
+.related-services-widget h4,
+.emergency-widget h5,
+.service-areas-widget h4 {
+  color: var(--dark-color);
+  margin-bottom: 20px;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+.related-services-list {
+  display: grid;
+  gap: 10px;
+}
+
+.related-service-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  background: var(--light-color);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--dark-color);
+  transition: all 0.3s ease;
+}
+
+.related-service-item:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateX(5px);
+}
+
+.related-service-item .service-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.related-service-item:hover .service-icon {
+  background: white;
+  color: var(--primary-color);
+}
+
+.related-service-item .service-info h6 {
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+.related-service-item .service-info p {
+  margin: 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+}
+
+.related-service-item .service-arrow {
+  margin-left: auto;
+}
+
+.emergency-widget {
+  background: linear-gradient(135deg, var(--danger-color), #c0392b);
+  color: white;
+  text-align: center;
+}
+
+.emergency-widget .emergency-content i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.emergency-widget h5 {
+  color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.emergency-widget p {
+  opacity: 0.9;
+  margin-bottom: 20px;
+}
+
+.emergency-widget .btn-danger {
+  background: white;
+  color: var(--danger-color);
+  border: none;
+}
+
+.service-areas-widget .areas-list {
+  display: grid;
+  gap: 8px;
+}
+
+.service-areas-widget .area-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  color: var(--secondary-color);
+  border-bottom: 1px solid #eee;
+}
+
+.service-areas-widget .area-item:last-child {
+  border-bottom: none;
+}
+
+.service-areas-widget .area-item i {
+  color: var(--primary-color);
+  width: 15px;
+}
+
+/* Reviews Section */
+.reviews-section {
+  background: var(--light-color);
+}
+
+.review-stats {
+  margin-bottom: 30px;
+}
+
+.average-rating {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.rating-number {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+}
+
+.rating-stars {
+  display: flex;
+  gap: 5px;
+}
+
+.rating-stars i {
+  color: var(--warning-color);
+  font-size: 1.5rem;
+}
+
+.review-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.reviewer-info h5 {
+  margin-bottom: 2px;
+  color: var(--dark-color);
+}
+
+.review-location {
+  color: var(--secondary-color);
+  font-size: 0.875rem;
+}
+
+.review-rating {
+  display: flex;
+  gap: 2px;
+}
+
+.review-rating i {
+  color: var(--warning-color);
+  font-size: 0.875rem;
+}
+
+.review-content p {
+  color: var(--secondary-color);
+  line-height: 1.6;
+  margin-bottom: 15px;
+  font-style: italic;
+}
+
+/* CTA Section */
+.service-cta {
+  background: var(--primary-color);
+  color: white;
+  text-align: center;
+}
+
+.cta-content h2 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+.cta-content .lead {
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-outline-primary {
+  border-color: white;
+  color: white;
+}
+
+.btn-outline-primary:hover {
+  background: white;
+  color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .service-info-card {
+    position: static;
+    margin-top: 30px;
+  }
+  
+  .service-title {
+    font-size: 2.5rem;
+  }
+  
+  .service-actions {
+    justify-content: center;
+  }
+  
+  .content-main {
+    padding: 30px 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .service-title {
+    font-size: 2rem;
+  }
+  
+  .service-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .process-step {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .work-gallery {
+    grid-template-columns: 1fr;
+  }
+  
+  .cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .review-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .service-hero {
+    padding: 40px 0;
+  }
+  
+  .service-badges {
+    justify-content: center;
+  }
+  
+  .content-main {
+    padding: 20px 15px;
+  }
+  
+  .quote-form-widget,
+  .related-services-widget,
+  .emergency-widget,
+  .service-areas-widget {
+    padding: 20px;
+  }
+}
+</style>
+{{ end }}

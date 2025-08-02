@@ -1,0 +1,1105 @@
+{{ define "main" }}
+<div class="gallery-page">
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="page-title">Our Work Gallery</h1>
+          <p class="page-subtitle">See the quality craftsmanship and professional results we deliver</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Gallery Filters -->
+  <section class="gallery-filters py-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="plumbing">Plumbing</button>
+            <button class="filter-btn" data-filter="electrical">Electrical</button>
+            <button class="filter-btn" data-filter="hvac">HVAC</button>
+            <button class="filter-btn" data-filter="roofing">Roofing</button>
+            <button class="filter-btn" data-filter="general">General Contracting</button>
+            <button class="filter-btn" data-filter="maintenance">Maintenance</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Gallery Grid -->
+  <section class="gallery-grid-section py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="gallery-grid" id="galleryGrid">
+            
+            <!-- Sample Gallery Items -->
+            {{ range where .Site.RegularPages "Section" "gallery" }}
+            <div class="gallery-item" data-category="{{ .Params.category | default "general" }}">
+              <div class="gallery-card">
+                {{ if .Params.before_image }}
+                <!-- Before/After Image -->
+                <div class="before-after-container">
+                  <div class="before-after-slider">
+                    <div class="before-image">
+                      <img src="{{ .Params.before_image | relURL }}" alt="Before - {{ .Title }}">
+                      <div class="image-label before-label">Before</div>
+                    </div>
+                    <div class="after-image">
+                      <img src="{{ .Params.after_image | relURL }}" alt="After - {{ .Title }}">
+                      <div class="image-label after-label">After</div>
+                    </div>
+                    <div class="slider-handle"></div>
+                  </div>
+                </div>
+                {{ else if .Params.image }}
+                <!-- Single Image -->
+                <div class="gallery-image">
+                  <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}">
+                  <div class="gallery-overlay">
+                    <div class="overlay-content">
+                      <button class="zoom-btn" onclick="openLightbox('{{ .Params.image | relURL }}', '{{ .Title }}')">
+                        <i class="fas fa-search-plus"></i>
+                      </button>
+                      <span class="gallery-category">{{ .Params.category | title }}</span>
+                    </div>
+                  </div>
+                </div>
+                {{ end }}
+                
+                <div class="gallery-content">
+                  <h4>{{ .Title }}</h4>
+                  <p>{{ .Summary | truncate 100 }}</p>
+                  
+                  <div class="project-details">
+                    {{ if .Params.location }}
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>{{ .Params.location }}</span>
+                    </div>
+                    {{ end }}
+                    
+                    {{ if .Params.duration }}
+                    <div class="detail-item">
+                      <i class="fas fa-clock"></i>
+                      <span>{{ .Params.duration }}</span>
+                    </div>
+                    {{ end }}
+                    
+                    {{ if .Params.cost_range }}
+                    <div class="detail-item">
+                      <i class="fas fa-dollar-sign"></i>
+                      <span>{{ .Params.cost_range }}</span>
+                    </div>
+                    {{ end }}
+                  </div>
+                  
+                  {{ if .Params.features }}
+                  <div class="project-features">
+                    {{ range first 3 .Params.features }}
+                    <span class="feature-tag">{{ . }}</span>
+                    {{ end }}
+                  </div>
+                  {{ end }}
+                </div>
+              </div>
+            </div>
+            {{ end }}
+            
+            <!-- Default gallery items if none exist -->
+            {{ if not (where .Site.RegularPages "Section" "gallery") }}
+            <!-- Plumbing Project -->
+            <div class="gallery-item" data-category="plumbing">
+              <div class="gallery-card">
+                <div class="gallery-image">
+                  <div class="placeholder-image plumbing-bg">
+                    <i class="fas fa-wrench"></i>
+                  </div>
+                  <div class="gallery-overlay">
+                    <div class="overlay-content">
+                      <button class="zoom-btn">
+                        <i class="fas fa-search-plus"></i>
+                      </button>
+                      <span class="gallery-category">Plumbing</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gallery-content">
+                  <h4>Bathroom Renovation Plumbing</h4>
+                  <p>Complete plumbing installation for a luxury bathroom renovation including new fixtures and piping.</p>
+                  <div class="project-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Manhattan, NY</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-clock"></i>
+                      <span>3 days</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-dollar-sign"></i>
+                      <span>$3,000 - $5,000</span>
+                    </div>
+                  </div>
+                  <div class="project-features">
+                    <span class="feature-tag">New Fixtures</span>
+                    <span class="feature-tag">Pipe Replacement</span>
+                    <span class="feature-tag">Water Pressure</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Electrical Project -->
+            <div class="gallery-item" data-category="electrical">
+              <div class="gallery-card">
+                <div class="gallery-image">
+                  <div class="placeholder-image electrical-bg">
+                    <i class="fas fa-bolt"></i>
+                  </div>
+                  <div class="gallery-overlay">
+                    <div class="overlay-content">
+                      <button class="zoom-btn">
+                        <i class="fas fa-search-plus"></i>
+                      </button>
+                      <span class="gallery-category">Electrical</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gallery-content">
+                  <h4>Panel Upgrade & Rewiring</h4>
+                  <p>Electrical panel upgrade and home rewiring for improved safety and capacity.</p>
+                  <div class="project-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Brooklyn, NY</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-clock"></i>
+                      <span>2 days</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-dollar-sign"></i>
+                      <span>$2,500 - $4,000</span>
+                    </div>
+                  </div>
+                  <div class="project-features">
+                    <span class="feature-tag">200A Panel</span>
+                    <span class="feature-tag">GFCI Outlets</span>
+                    <span class="feature-tag">Code Compliant</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- HVAC Project -->
+            <div class="gallery-item" data-category="hvac">
+              <div class="gallery-card">
+                <div class="gallery-image">
+                  <div class="placeholder-image hvac-bg">
+                    <i class="fas fa-fan"></i>
+                  </div>
+                  <div class="gallery-overlay">
+                    <div class="overlay-content">
+                      <button class="zoom-btn">
+                        <i class="fas fa-search-plus"></i>
+                      </button>
+                      <span class="gallery-category">HVAC</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gallery-content">
+                  <h4>Central Air Installation</h4>
+                  <p>New central air conditioning system installation with energy-efficient unit.</p>
+                  <div class="project-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Queens, NY</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-clock"></i>
+                      <span>1 day</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-dollar-sign"></i>
+                      <span>$4,000 - $6,000</span>
+                    </div>
+                  </div>
+                  <div class="project-features">
+                    <span class="feature-tag">Energy Star</span>
+                    <span class="feature-tag">Smart Thermostat</span>
+                    <span class="feature-tag">10 Year Warranty</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Roofing Project -->
+            <div class="gallery-item" data-category="roofing">
+              <div class="gallery-card">
+                <div class="gallery-image">
+                  <div class="placeholder-image roofing-bg">
+                    <i class="fas fa-home"></i>
+                  </div>
+                  <div class="gallery-overlay">
+                    <div class="overlay-content">
+                      <button class="zoom-btn">
+                        <i class="fas fa-search-plus"></i>
+                      </button>
+                      <span class="gallery-category">Roofing</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gallery-content">
+                  <h4>Roof Replacement</h4>
+                  <p>Complete roof replacement with architectural shingles and improved ventilation.</p>
+                  <div class="project-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Bronx, NY</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-clock"></i>
+                      <span>3 days</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-dollar-sign"></i>
+                      <span>$8,000 - $12,000</span>
+                    </div>
+                  </div>
+                  <div class="project-features">
+                    <span class="feature-tag">25 Year Shingles</span>
+                    <span class="feature-tag">Ridge Vents</span>
+                    <span class="feature-tag">Storm Resistant</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- General Contracting Project -->
+            <div class="gallery-item" data-category="general">
+              <div class="gallery-card">
+                <div class="gallery-image">
+                  <div class="placeholder-image general-bg">
+                    <i class="fas fa-hammer"></i>
+                  </div>
+                  <div class="gallery-overlay">
+                    <div class="overlay-content">
+                      <button class="zoom-btn">
+                        <i class="fas fa-search-plus"></i>
+                      </button>
+                      <span class="gallery-category">General Contracting</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gallery-content">
+                  <h4>Kitchen Renovation</h4>
+                  <p>Complete kitchen remodel with custom cabinets, granite countertops, and new appliances.</p>
+                  <div class="project-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Staten Island, NY</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-clock"></i>
+                      <span>2 weeks</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-dollar-sign"></i>
+                      <span>$25,000 - $35,000</span>
+                    </div>
+                  </div>
+                  <div class="project-features">
+                    <span class="feature-tag">Custom Cabinets</span>
+                    <span class="feature-tag">Granite Counters</span>
+                    <span class="feature-tag">LED Lighting</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Maintenance Project -->
+            <div class="gallery-item" data-category="maintenance">
+              <div class="gallery-card">
+                <div class="gallery-image">
+                  <div class="placeholder-image maintenance-bg">
+                    <i class="fas fa-tools"></i>
+                  </div>
+                  <div class="gallery-overlay">
+                    <div class="overlay-content">
+                      <button class="zoom-btn">
+                        <i class="fas fa-search-plus"></i>
+                      </button>
+                      <span class="gallery-category">Maintenance</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="gallery-content">
+                  <h4>Preventive Maintenance</h4>
+                  <p>Comprehensive home maintenance including HVAC service, plumbing check, and electrical inspection.</p>
+                  <div class="project-details">
+                    <div class="detail-item">
+                      <i class="fas fa-map-marker-alt"></i>
+                      <span>Manhattan, NY</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-clock"></i>
+                      <span>Half day</span>
+                    </div>
+                    <div class="detail-item">
+                      <i class="fas fa-dollar-sign"></i>
+                      <span>$200 - $400</span>
+                    </div>
+                  </div>
+                  <div class="project-features">
+                    <span class="feature-tag">Multi-Point</span>
+                    <span class="feature-tag">Preventive</span>
+                    <span class="feature-tag">Annual Plan</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{ end }}
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Load More Button -->
+  <section class="load-more-section py-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <button class="btn btn-primary btn-lg" id="loadMoreBtn">
+            <i class="fas fa-plus me-2"></i>
+            Load More Projects
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Call to Action -->
+  <section class="gallery-cta py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="cta-content">
+            <h2>Ready to Start Your Project?</h2>
+            <p class="lead">Let us help you achieve the same quality results for your home</p>
+            <div class="cta-actions">
+              <a href="{{ "/contact" | relURL }}" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-calendar-check me-2"></i>
+                Get Free Estimate
+              </a>
+              <a href="tel:{{ .Site.Params.phone }}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-phone me-2"></i>
+                Call {{ .Site.Params.phone }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+<!-- Lightbox Modal -->
+<div class="lightbox-modal" id="lightboxModal">
+  <div class="lightbox-content">
+    <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+    <img id="lightboxImage" src="" alt="">
+    <div class="lightbox-caption" id="lightboxCaption"></div>
+    <div class="lightbox-nav">
+      <button class="lightbox-prev" onclick="prevImage()">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button class="lightbox-next" onclick="nextImage()">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Gallery Page Styles */
+.gallery-page .page-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 80px 0;
+}
+
+/* Gallery Filters */
+.gallery-filters {
+  background: var(--light-color);
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-btn {
+  background: white;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Gallery Grid */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.gallery-item {
+  transition: all 0.3s ease;
+}
+
+.gallery-item.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+.gallery-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.gallery-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Gallery Images */
+.gallery-image {
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+}
+
+.gallery-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-card:hover .gallery-image img {
+  transform: scale(1.1);
+}
+
+.placeholder-image {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 4rem;
+  transition: transform 0.3s ease;
+}
+
+.gallery-card:hover .placeholder-image {
+  transform: scale(1.1);
+}
+
+.plumbing-bg {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.electrical-bg {
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+}
+
+.hvac-bg {
+  background: linear-gradient(135deg, #27ae60, #229954);
+}
+
+.roofing-bg {
+  background: linear-gradient(135deg, #8e44ad, #7d3c98);
+}
+
+.general-bg {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.maintenance-bg {
+  background: linear-gradient(135deg, #34495e, #2c3e50);
+}
+
+.gallery-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.gallery-card:hover .gallery-overlay {
+  opacity: 1;
+}
+
+.overlay-content {
+  text-align: center;
+  color: white;
+}
+
+.zoom-btn {
+  width: 60px;
+  height: 60px;
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 10px;
+}
+
+.zoom-btn:hover {
+  background: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+.gallery-category {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--primary-color);
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+/* Before/After Slider */
+.before-after-container {
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+}
+
+.before-after-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: col-resize;
+}
+
+.before-image,
+.after-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.before-image img,
+.after-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.after-image {
+  clip-path: inset(0 50% 0 0);
+  transition: clip-path 0.3s ease;
+}
+
+.image-label {
+  position: absolute;
+  top: 10px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: white;
+}
+
+.before-label {
+  left: 10px;
+  background: rgba(255, 0, 0, 0.8);
+}
+
+.after-label {
+  right: 10px;
+  background: rgba(0, 255, 0, 0.8);
+}
+
+.slider-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  background: white;
+  cursor: col-resize;
+  transform: translateX(-50%);
+  transition: left 0.3s ease;
+}
+
+.slider-handle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Gallery Content */
+.gallery-content {
+  padding: 25px;
+}
+
+.gallery-content h4 {
+  margin-bottom: 10px;
+  color: var(--dark-color);
+  font-size: 1.25rem;
+}
+
+.gallery-content p {
+  color: var(--secondary-color);
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.project-details {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.detail-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--secondary-color);
+}
+
+.detail-item i {
+  color: var(--primary-color);
+  width: 16px;
+  text-align: center;
+}
+
+.project-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.feature-tag {
+  background: var(--light-color);
+  color: var(--primary-color);
+  padding: 4px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* Load More Button */
+.load-more-section {
+  background: var(--light-color);
+}
+
+/* Gallery CTA */
+.gallery-cta {
+  background: var(--primary-color);
+  color: white;
+  text-align: center;
+}
+
+.cta-content h2 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+.cta-content .lead {
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-outline-light {
+  border-color: white;
+  color: white;
+}
+
+.btn-outline-light:hover {
+  background: white;
+  color: var(--primary-color);
+}
+
+/* Lightbox Modal */
+.lightbox-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90%;
+  max-height: 90%;
+  text-align: center;
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.lightbox-close:hover {
+  color: var(--primary-color);
+}
+
+#lightboxImage {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.lightbox-caption {
+  color: white;
+  margin-top: 15px;
+  font-size: 1.1rem;
+}
+
+.lightbox-nav {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background: var(--primary-dark);
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .gallery-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .filter-btn {
+    width: 200px;
+  }
+  
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .project-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 576px) {
+  .gallery-content {
+    padding: 20px;
+  }
+  
+  .lightbox-content {
+    max-width: 95%;
+  }
+  
+  .lightbox-nav {
+    justify-content: center;
+    gap: 20px;
+  }
+}
+</style>
+
+<script>
+// Gallery functionality
+document.addEventListener('DOMContentLoaded', function() {
+  initGalleryFilters();
+  initBeforeAfterSliders();
+  initLoadMore();
+  initLightbox();
+});
+
+function initGalleryFilters() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const galleryItems = document.querySelectorAll('.gallery-item');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Update active filter
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      
+      const filterValue = this.getAttribute('data-filter');
+      
+      // Filter gallery items
+      galleryItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        
+        if (filterValue === 'all' || itemCategory === filterValue) {
+          item.style.display = 'block';
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+          setTimeout(() => {
+            if (item.classList.contains('hidden')) {
+              item.style.display = 'none';
+            }
+          }, 300);
+        }
+      });
+    });
+  });
+}
+
+function initBeforeAfterSliders() {
+  const sliders = document.querySelectorAll('.before-after-slider');
+  
+  sliders.forEach(slider => {
+    const afterImage = slider.querySelector('.after-image');
+    const handle = slider.querySelector('.slider-handle');
+    let isDragging = false;
+    
+    function updateSlider(x) {
+      const rect = slider.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+      
+      afterImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+      handle.style.left = `${percentage}%`;
+    }
+    
+    slider.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      updateSlider(e.clientX);
+    });
+    
+    document.addEventListener('mousemove', function(e) {
+      if (isDragging) {
+        updateSlider(e.clientX);
+      }
+    });
+    
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+    });
+    
+    // Touch events for mobile
+    slider.addEventListener('touchstart', function(e) {
+      isDragging = true;
+      updateSlider(e.touches[0].clientX);
+    });
+    
+    document.addEventListener('touchmove', function(e) {
+      if (isDragging) {
+        e.preventDefault();
+        updateSlider(e.touches[0].clientX);
+      }
+    });
+    
+    document.addEventListener('touchend', function() {
+      isDragging = false;
+    });
+  });
+}
+
+function initLoadMore() {
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  let visibleItems = 6;
+  const allItems = document.querySelectorAll('.gallery-item');
+  
+  // Initially hide items beyond the first 6
+  allItems.forEach((item, index) => {
+    if (index >= visibleItems) {
+      item.style.display = 'none';
+    }
+  });
+  
+  loadMoreBtn.addEventListener('click', function() {
+    const hiddenItems = Array.from(allItems).filter(item => item.style.display === 'none' && !item.classList.contains('hidden'));
+    const itemsToShow = hiddenItems.slice(0, 6);
+    
+    itemsToShow.forEach(item => {
+      item.style.display = 'block';
+    });
+    
+    visibleItems += 6;
+    
+    // Hide load more button if all items are visible
+    if (hiddenItems.length <= 6) {
+      loadMoreBtn.style.display = 'none';
+    }
+  });
+  
+  // Check if load more button should be hidden initially
+  if (allItems.length <= visibleItems) {
+    loadMoreBtn.style.display = 'none';
+  }
+}
+
+function initLightbox() {
+  let currentImageIndex = 0;
+  let images = [];
+  
+  // Collect all images for navigation
+  function updateImageArray() {
+    const visibleItems = document.querySelectorAll('.gallery-item:not(.hidden):not([style*="display: none"])');
+    images = Array.from(visibleItems).map(item => {
+      const img = item.querySelector('img');
+      const title = item.querySelector('h4').textContent;
+      return {
+        src: img ? img.src : '',
+        alt: img ? img.alt : title,
+        title: title
+      };
+    }).filter(img => img.src);
+  }
+  
+  window.openLightbox = function(src, title) {
+    updateImageArray();
+    currentImageIndex = images.findIndex(img => img.src === src);
+    
+    const modal = document.getElementById('lightboxModal');
+    const image = document.getElementById('lightboxImage');
+    const caption = document.getElementById('lightboxCaption');
+    
+    image.src = src;
+    image.alt = title;
+    caption.textContent = title;
+    
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+  
+  window.closeLightbox = function() {
+    const modal = document.getElementById('lightboxModal');
+    modal.style.display = 'none';
+    document.body.style.overflow = 'auto';
+  };
+  
+  window.nextImage = function() {
+    if (images.length === 0) return;
+    currentImageIndex = (currentImageIndex + 1) % images.length;
+    const img = images[currentImageIndex];
+    
+    document.getElementById('lightboxImage').src = img.src;
+    document.getElementById('lightboxCaption').textContent = img.title;
+  };
+  
+  window.prevImage = function() {
+    if (images.length === 0) return;
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    const img = images[currentImageIndex];
+    
+    document.getElementById('lightboxImage').src = img.src;
+    document.getElementById('lightboxCaption').textContent = img.title;
+  };
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', function(e) {
+    const modal = document.getElementById('lightboxModal');
+    if (modal.style.display === 'flex') {
+      if (e.key === 'Escape') {
+        closeLightbox();
+      } else if (e.key === 'ArrowRight') {
+        nextImage();
+      } else if (e.key === 'ArrowLeft') {
+        prevImage();
+      }
+    }
+  });
+  
+  // Close on background click
+  document.getElementById('lightboxModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeLightbox();
+    }
+  });
+}
+</script>
+{{ end }}

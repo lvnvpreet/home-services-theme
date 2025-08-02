@@ -1,0 +1,624 @@
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="row">
+        <!-- Column 1: Company Info -->
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="footer-section">
+            <div class="footer-logo mb-3">
+              {{ if .Site.Params.logo }}
+              <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Title }}" height="40">
+              {{ else }}
+              <div class="logo-text">
+                <i class="fas fa-tools me-2"></i>
+                <span class="brand-name">{{ .Site.Title }}</span>
+              </div>
+              {{ end }}
+            </div>
+            <p class="footer-description">
+              Professional home services in {{ .Site.Params.primary_location }}. Licensed, insured, and trusted by homeowners for over {{ .Site.Params.years_in_business }} years.
+            </p>
+            
+            <!-- Credentials -->
+            <div class="credentials mb-3">
+              <div class="credential-item">
+                <i class="fas fa-certificate me-2"></i>
+                <span>License #{{ .Site.Params.license_number }}</span>
+              </div>
+              <div class="credential-item">
+                <i class="fas fa-shield-alt me-2"></i>
+                <span>Fully Insured & Bonded</span>
+              </div>
+            </div>
+            
+            <!-- Social Media -->
+            <div class="social-links">
+              {{ if .Site.Params.social.facebook }}
+              <a href="{{ .Site.Params.social.facebook }}" target="_blank" rel="noopener" title="Facebook">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              {{ end }}
+              {{ if .Site.Params.social.twitter }}
+              <a href="{{ .Site.Params.social.twitter }}" target="_blank" rel="noopener" title="Twitter">
+                <i class="fab fa-twitter"></i>
+              </a>
+              {{ end }}
+              {{ if .Site.Params.social.instagram }}
+              <a href="{{ .Site.Params.social.instagram }}" target="_blank" rel="noopener" title="Instagram">
+                <i class="fab fa-instagram"></i>
+              </a>
+              {{ end }}
+              {{ if .Site.Params.social.linkedin }}
+              <a href="{{ .Site.Params.social.linkedin }}" target="_blank" rel="noopener" title="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+              {{ end }}
+              {{ if .Site.Params.social.youtube }}
+              <a href="{{ .Site.Params.social.youtube }}" target="_blank" rel="noopener" title="YouTube">
+                <i class="fab fa-youtube"></i>
+              </a>
+              {{ end }}
+              {{ if .Site.Params.social.yelp }}
+              <a href="{{ .Site.Params.social.yelp }}" target="_blank" rel="noopener" title="Yelp">
+                <i class="fab fa-yelp"></i>
+              </a>
+              {{ end }}
+              {{ if .Site.Params.social.google_business }}
+              <a href="{{ .Site.Params.social.google_business }}" target="_blank" rel="noopener" title="Google Business">
+                <i class="fab fa-google"></i>
+              </a>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+        
+        <!-- Column 2: Services List -->
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="footer-section">
+            <h5>Our Services</h5>
+            <ul class="footer-links">
+              {{ range where .Site.RegularPages "Section" "services" | first 8 }}
+              <li>
+                <a href="{{ .Permalink }}">
+                  {{ if .Params.icon }}<i class="{{ .Params.icon }} me-2"></i>{{ end }}
+                  {{ .Title }}
+                </a>
+              </li>
+              {{ end }}
+              <li>
+                <a href="{{ "/services" | relURL }}" class="view-all">
+                  <i class="fas fa-arrow-right me-2"></i>
+                  View All Services
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        
+        <!-- Column 3: Contact Information -->
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="footer-section">
+            <h5>Contact Information</h5>
+            <div class="contact-info">
+              {{ if .Site.Params.address }}
+              <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <div>
+                  <strong>Address</strong>
+                  <p>{{ .Site.Params.address }}</p>
+                </div>
+              </div>
+              {{ end }}
+              
+              {{ if .Site.Params.phone }}
+              <div class="contact-item">
+                <i class="fas fa-phone-alt"></i>
+                <div>
+                  <strong>Phone</strong>
+                  <p><a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a></p>
+                </div>
+              </div>
+              {{ end }}
+              
+              {{ if .Site.Params.emergency_phone }}
+              <div class="contact-item emergency">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                  <strong>Emergency</strong>
+                  <p><a href="tel:{{ .Site.Params.emergency_phone }}" class="emergency-link">{{ .Site.Params.emergency_phone }}</a></p>
+                </div>
+              </div>
+              {{ end }}
+              
+              {{ if .Site.Params.email }}
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <div>
+                  <strong>Email</strong>
+                  <p><a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></p>
+                </div>
+              </div>
+              {{ end }}
+            </div>
+            
+            <!-- Business Hours -->
+            <div class="business-hours mt-4">
+              <h6>Business Hours</h6>
+              <div class="hours-list">
+                <div class="hour-item">
+                  <span>Monday - Friday:</span>
+                  <span>{{ .Site.Params.business_hours.monday }}</span>
+                </div>
+                <div class="hour-item">
+                  <span>Saturday:</span>
+                  <span>{{ .Site.Params.business_hours.saturday }}</span>
+                </div>
+                <div class="hour-item">
+                  <span>Sunday:</span>
+                  <span>{{ .Site.Params.business_hours.sunday }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Column 4: Newsletter & Service Areas -->
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="footer-section">
+            <h5>Newsletter & Updates</h5>
+            <p class="newsletter-description">
+              Get home maintenance tips, special offers, and updates delivered to your inbox.
+            </p>
+            
+            <!-- Newsletter Form -->
+            <form class="newsletter-form" method="POST" action="#" netlify>
+              <div class="input-group">
+                <input type="email" class="form-control" placeholder="Your email address" name="email" required>
+                <button class="btn btn-primary" type="submit">
+                  <i class="fas fa-paper-plane"></i>
+                </button>
+              </div>
+              <div class="form-text">We respect your privacy. Unsubscribe anytime.</div>
+            </form>
+            
+            <!-- Service Areas -->
+            <div class="service-areas mt-4">
+              <h6>Service Areas</h6>
+              <div class="areas-grid">
+                <div class="area-item primary">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>{{ .Site.Params.primary_location }}</span>
+                </div>
+                {{ range .Site.Params.service_areas }}
+                <div class="area-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>{{ . }}</span>
+                </div>
+                {{ end }}
+              </div>
+              <p class="areas-note">
+                Don't see your area? <a href="{{ "/contact" | relURL }}">Contact us</a> to check availability.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer Bottom -->
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <p class="copyright">
+            &copy; {{ now.Format "2006" }} {{ .Site.Title }}. All rights reserved.
+          </p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <ul class="footer-legal">
+            <li><a href="{{ "/privacy" | relURL }}">Privacy Policy</a></li>
+            <li><a href="{{ "/terms" | relURL }}">Terms of Service</a></li>
+            <li><a href="{{ "/sitemap" | relURL }}">Sitemap</a></li>
+            <li><a href="{{ "/accessibility" | relURL }}">Accessibility</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+/* Footer Styles */
+.site-footer {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  color: #ecf0f1;
+}
+
+.footer-main {
+  padding: 60px 0 40px;
+}
+
+.footer-section h5,
+.footer-section h6 {
+  color: #fff;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-color);
+  display: inline-block;
+}
+
+.footer-description {
+  color: #bdc3c7;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+/* Logo */
+.footer-logo .logo-text {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Credentials */
+.credentials {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.credential-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+  color: #ecf0f1;
+}
+
+.credential-item:last-child {
+  margin-bottom: 0;
+}
+
+.credential-item i {
+  color: var(--primary-color);
+  width: 20px;
+}
+
+/* Social Links */
+.social-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ecf0f1;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.social-links a:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-3px);
+}
+
+/* Footer Links */
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+  padding-left: 5px;
+}
+
+.footer-links a i {
+  width: 20px;
+  font-size: 0.875rem;
+}
+
+.footer-links .view-all {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-top: 10px;
+}
+
+/* Contact Information */
+.contact-info {
+  margin-bottom: 25px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 15px;
+}
+
+.contact-item i {
+  color: var(--primary-color);
+  font-size: 1.25rem;
+  margin-top: 3px;
+  width: 20px;
+  text-align: center;
+}
+
+.contact-item strong {
+  display: block;
+  color: #fff;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+}
+
+.contact-item p {
+  margin: 0;
+  color: #bdc3c7;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.contact-item a {
+  color: #bdc3c7;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-item a:hover {
+  color: var(--primary-color);
+}
+
+.contact-item.emergency .emergency-link {
+  color: #e74c3c;
+  font-weight: 600;
+}
+
+.contact-item.emergency .emergency-link:hover {
+  color: #c0392b;
+}
+
+/* Business Hours */
+.business-hours {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.hours-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hour-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9rem;
+  color: #bdc3c7;
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hour-item:last-child {
+  border-bottom: none;
+}
+
+.hour-item span:first-child {
+  font-weight: 500;
+}
+
+/* Newsletter */
+.newsletter-description {
+  color: #bdc3c7;
+  font-size: 0.95rem;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.newsletter-form .input-group {
+  margin-bottom: 10px;
+}
+
+.newsletter-form .form-control {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  border-radius: 25px 0 0 25px;
+  padding: 12px 15px;
+}
+
+.newsletter-form .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.newsletter-form .form-control:focus {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--primary-color);
+  color: #fff;
+  box-shadow: none;
+}
+
+.newsletter-form .btn {
+  border-radius: 0 25px 25px 0;
+  padding: 12px 20px;
+  border: none;
+}
+
+.newsletter-form .form-text {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Service Areas */
+.service-areas {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.areas-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.area-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: #bdc3c7;
+  padding: 5px 0;
+}
+
+.area-item.primary {
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.area-item i {
+  color: var(--primary-color);
+  width: 15px;
+  font-size: 0.8rem;
+}
+
+.areas-note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  text-align: center;
+}
+
+.areas-note a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.areas-note a:hover {
+  text-decoration: underline;
+}
+
+/* Footer Bottom */
+.footer-bottom {
+  background: rgba(0, 0, 0, 0.2);
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.copyright {
+  color: #bdc3c7;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.footer-legal {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.footer-legal li {
+  margin: 0;
+}
+
+.footer-legal a {
+  color: #bdc3c7;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-legal a:hover {
+  color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .footer-main {
+    padding: 40px 0 30px;
+  }
+  
+  .footer-section {
+    margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer-bottom .row {
+    text-align: center;
+  }
+  
+  .footer-legal {
+    justify-content: center;
+    margin-top: 15px;
+  }
+  
+  .areas-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .social-links {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .footer-main {
+    padding: 30px 0 20px;
+  }
+  
+  .contact-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+  }
+  
+  .hour-item {
+    flex-direction: column;
+    gap: 5px;
+    text-align: center;
+  }
+  
+  .areas-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .footer-legal {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+</style>

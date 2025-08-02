@@ -1,0 +1,658 @@
+{{ define "main" }}
+<div class="search-page">
+  <!-- Search Header -->
+  <section class="search-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <h1 class="search-title">Search Results</h1>
+          
+          <!-- Search Form -->
+          <form class="search-form" method="get">
+            <div class="input-group">
+              <input type="text" class="form-control form-control-lg" 
+                     name="q" 
+                     value="{{ .Params.q }}" 
+                     placeholder="Search services, blog posts, and more..."
+                     id="searchInput">
+              <button class="btn btn-primary btn-lg" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </div>
+          </form>
+          
+          <div class="search-info">
+            <span id="searchResults">Searching...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Search Results -->
+  <section class="search-results py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8">
+          <!-- Results will be populated by JavaScript -->
+          <div id="searchResultsContainer">
+            <div class="loading-spinner text-center">
+              <i class="fas fa-spinner fa-spin fa-2x"></i>
+              <p>Searching our content...</p>
+            </div>
+          </div>
+          
+          <!-- No Results -->
+          <div id="noResults" class="no-results" style="display: none;">
+            <div class="no-results-content">
+              <i class="fas fa-search"></i>
+              <h3>No Results Found</h3>
+              <p>We couldn't find any content matching your search. Try:</p>
+              <ul>
+                <li>Checking your spelling</li>
+                <li>Using different keywords</li>
+                <li>Making your search more general</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Search Sidebar -->
+        <div class="col-lg-4">
+          <div class="search-sidebar">
+            
+            <!-- Search Filters -->
+            <div class="sidebar-widget">
+              <h4>Filter Results</h4>
+              <div class="search-filters">
+                <div class="filter-group">
+                  <label class="filter-label">Content Type:</label>
+                  <div class="filter-options">
+                    <label class="filter-option">
+                      <input type="checkbox" name="type" value="all" checked>
+                      <span>All Content</span>
+                    </label>
+                    <label class="filter-option">
+                      <input type="checkbox" name="type" value="services">
+                      <span>Services</span>
+                    </label>
+                    <label class="filter-option">
+                      <input type="checkbox" name="type" value="blog">
+                      <span>Blog Posts</span>
+                    </label>
+                    <label class="filter-option">
+                      <input type="checkbox" name="type" value="team">
+                      <span>Team Members</span>
+                    </label>
+                    <label class="filter-option">
+                      <input type="checkbox" name="type" value="gallery">
+                      <span>Gallery</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Popular Searches -->
+            <div class="sidebar-widget">
+              <h4>Popular Searches</h4>
+              <div class="popular-searches">
+                <a href="?q=plumbing" class="search-tag">Plumbing</a>
+                <a href="?q=electrical" class="search-tag">Electrical</a>
+                <a href="?q=HVAC" class="search-tag">HVAC</a>
+                <a href="?q=emergency" class="search-tag">Emergency</a>
+                <a href="?q=repair" class="search-tag">Repair</a>
+                <a href="?q=installation" class="search-tag">Installation</a>
+                <a href="?q=maintenance" class="search-tag">Maintenance</a>
+                <a href="?q=contractor" class="search-tag">Contractor</a>
+              </div>
+            </div>
+            
+            <!-- Quick Contact -->
+            <div class="sidebar-widget contact-widget">
+              <h4>Can't Find What You Need?</h4>
+              <p>Our team is here to help you find the right service.</p>
+              <div class="contact-options">
+                <a href="{{ "/contact" | relURL }}" class="btn btn-primary w-100 mb-2">
+                  <i class="fas fa-envelope me-2"></i>
+                  Contact Us
+                </a>
+                <a href="tel:{{ .Site.Params.phone }}" class="btn btn-outline-primary w-100">
+                  <i class="fas fa-phone me-2"></i>
+                  Call {{ .Site.Params.phone }}
+                </a>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Search Index Data -->
+<script>
+// Search index data - This would be generated by Hugo build process
+window.searchIndex = [
+  {{ range $index, $page := .Site.RegularPages }}
+  {
+    "title": {{ $page.Title | jsonify }},
+    "summary": {{ $page.Summary | jsonify }},
+    "content": {{ $page.PlainWords | jsonify }},
+    "url": {{ $page.Permalink | jsonify }},
+    "type": {{ $page.Type | jsonify }},
+    "section": {{ $page.Section | jsonify }},
+    "date": {{ $page.Date.Format "2006-01-02" | jsonify }},
+    "tags": {{ $page.Params.tags | jsonify }},
+    "category": {{ $page.Params.category | jsonify }}
+  }{{ if ne $index (sub (len $.Site.RegularPages) 1) }},{{ end }}
+  {{ end }}
+];
+</script>
+
+<style>
+/* Search Page Styles */
+.search-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 60px 0;
+}
+
+.search-title {
+  text-align: center;
+  margin-bottom: 30px;
+  color: white;
+}
+
+.search-form {
+  margin-bottom: 20px;
+}
+
+.search-form .input-group {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.search-form .form-control {
+  border-radius: 25px 0 0 25px;
+  border-right: none;
+  font-size: 1.1rem;
+}
+
+.search-form .btn {
+  border-radius: 0 25px 25px 0;
+  padding: 0 25px;
+}
+
+.search-info {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.9rem;
+}
+
+/* Search Results */
+.search-results {
+  background: white;
+}
+
+.loading-spinner {
+  padding: 60px 0;
+  color: var(--secondary-color);
+}
+
+.loading-spinner i {
+  margin-bottom: 20px;
+  color: var(--primary-color);
+}
+
+.search-result {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.search-result:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.result-type {
+  display: inline-block;
+  background: var(--primary-color);
+  color: white;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.result-type.services {
+  background: var(--primary-color);
+}
+
+.result-type.blog {
+  background: var(--success-color);
+}
+
+.result-type.team {
+  background: var(--warning-color);
+}
+
+.result-type.gallery {
+  background: var(--info-color);
+}
+
+.result-title {
+  margin-bottom: 10px;
+}
+
+.result-title a {
+  color: var(--dark-color);
+  text-decoration: none;
+  font-size: 1.25rem;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.result-title a:hover {
+  color: var(--primary-color);
+}
+
+.result-summary {
+  color: var(--secondary-color);
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+.result-meta {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  font-size: 0.875rem;
+  color: var(--secondary-color);
+}
+
+.result-meta .meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.result-meta i {
+  color: var(--primary-color);
+}
+
+.result-tags {
+  margin-top: 10px;
+}
+
+.result-tag {
+  display: inline-block;
+  background: var(--light-color);
+  color: var(--primary-color);
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: 60px 0;
+}
+
+.no-results-content i {
+  font-size: 4rem;
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+}
+
+.no-results-content h3 {
+  color: var(--dark-color);
+  margin-bottom: 15px;
+}
+
+.no-results-content p {
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+}
+
+.no-results-content ul {
+  text-align: left;
+  max-width: 300px;
+  margin: 0 auto;
+  color: var(--secondary-color);
+}
+
+/* Search Sidebar */
+.search-sidebar {
+  padding-left: 30px;
+}
+
+.sidebar-widget {
+  background: white;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 30px;
+}
+
+.sidebar-widget h4 {
+  color: var(--dark-color);
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--primary-color);
+}
+
+/* Search Filters */
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-label {
+  font-weight: 600;
+  color: var(--dark-color);
+  margin-bottom: 10px;
+  display: block;
+}
+
+.filter-options {
+  display: grid;
+  gap: 8px;
+}
+
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
+
+.filter-option input {
+  margin: 0;
+}
+
+.filter-option:hover {
+  color: var(--primary-color);
+}
+
+/* Popular Searches */
+.popular-searches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.search-tag {
+  background: var(--light-color);
+  color: var(--primary-color);
+  padding: 6px 12px;
+  border-radius: 15px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.search-tag:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Contact Widget */
+.contact-widget {
+  background: var(--light-color);
+  text-align: center;
+}
+
+.contact-widget p {
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .search-sidebar {
+    padding-left: 0;
+    margin-top: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  .search-header {
+    padding: 40px 0;
+  }
+  
+  .result-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  
+  .search-form .input-group {
+    flex-direction: column;
+  }
+  
+  .search-form .form-control,
+  .search-form .btn {
+    border-radius: 25px;
+  }
+  
+  .search-form .btn {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar-widget {
+    padding: 20px;
+  }
+  
+  .popular-searches {
+    flex-direction: column;
+  }
+}
+</style>
+
+<script>
+// Search functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('searchInput');
+  const resultsContainer = document.getElementById('searchResultsContainer');
+  const noResults = document.getElementById('noResults');
+  const searchInfo = document.getElementById('searchResults');
+  const filterInputs = document.querySelectorAll('input[name="type"]');
+  
+  let currentResults = [];
+  
+  // Get search query from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const query = urlParams.get('q');
+  
+  if (query) {
+    searchInput.value = query;
+    performSearch(query);
+  } else {
+    showPlaceholder();
+  }
+  
+  // Search functionality
+  function performSearch(searchQuery) {
+    if (!searchQuery || searchQuery.trim() === '') {
+      showPlaceholder();
+      return;
+    }
+    
+    const query = searchQuery.toLowerCase().trim();
+    const activeFilters = getActiveFilters();
+    
+    // Simple search implementation
+    const results = window.searchIndex.filter(page => {
+      // Filter by content type
+      if (!activeFilters.includes('all') && !activeFilters.includes(page.section)) {
+        return false;
+      }
+      
+      // Search in title, summary, and content
+      const searchText = `${page.title} ${page.summary} ${page.content}`.toLowerCase();
+      const tags = (page.tags || []).join(' ').toLowerCase();
+      const category = (page.category || '').toLowerCase();
+      
+      return searchText.includes(query) || 
+             tags.includes(query) || 
+             category.includes(query);
+    });
+    
+    currentResults = results;
+    displayResults(results, query);
+  }
+  
+  function getActiveFilters() {
+    const filters = [];
+    filterInputs.forEach(input => {
+      if (input.checked) {
+        filters.push(input.value);
+      }
+    });
+    return filters;
+  }
+  
+  function displayResults(results, query) {
+    if (results.length === 0) {
+      showNoResults();
+      return;
+    }
+    
+    updateSearchInfo(results.length, query);
+    
+    const html = results.map(result => `
+      <div class="search-result">
+        <span class="result-type ${result.section}">${result.section || 'page'}</span>
+        <div class="result-title">
+          <a href="${result.url}">${highlightText(result.title, query)}</a>
+        </div>
+        <div class="result-summary">
+          ${highlightText(truncateText(result.summary, 200), query)}
+        </div>
+        <div class="result-meta">
+          <div class="meta-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>${formatDate(result.date)}</span>
+          </div>
+          <div class="meta-item">
+            <i class="fas fa-folder"></i>
+            <span>${result.section}</span>
+          </div>
+          ${result.category ? `
+          <div class="meta-item">
+            <i class="fas fa-tag"></i>
+            <span>${result.category}</span>
+          </div>
+          ` : ''}
+        </div>
+        ${result.tags ? `
+        <div class="result-tags">
+          ${result.tags.map(tag => `<span class="result-tag">#${tag}</span>`).join('')}
+        </div>
+        ` : ''}
+      </div>
+    `).join('');
+    
+    resultsContainer.innerHTML = html;
+    noResults.style.display = 'none';
+  }
+  
+  function showNoResults() {
+    resultsContainer.innerHTML = '';
+    noResults.style.display = 'block';
+    searchInfo.textContent = 'No results found';
+  }
+  
+  function showPlaceholder() {
+    resultsContainer.innerHTML = `
+      <div class="search-placeholder text-center">
+        <i class="fas fa-search fa-3x text-muted mb-3"></i>
+        <h3>Search Our Content</h3>
+        <p class="text-muted">Enter a search term to find services, blog posts, and more.</p>
+      </div>
+    `;
+    noResults.style.display = 'none';
+    searchInfo.textContent = 'Enter a search term above';
+  }
+  
+  function updateSearchInfo(count, query) {
+    searchInfo.textContent = `Found ${count} result${count !== 1 ? 's' : ''} for "${query}"`;
+  }
+  
+  function highlightText(text, query) {
+    if (!query || !text) return text;
+    const regex = new RegExp(`(${escapeRegex(query)})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+  }
+  
+  function truncateText(text, length) {
+    if (!text || text.length <= length) return text;
+    return text.substring(0, length) + '...';
+  }
+  
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', { 
+      year: 'numeric', 
+      month: 'short', 
+      day: 'numeric' 
+    });
+  }
+  
+  function escapeRegex(string) {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+  
+  // Event listeners
+  filterInputs.forEach(input => {
+    input.addEventListener('change', function() {
+      if (searchInput.value.trim()) {
+        performSearch(searchInput.value);
+      }
+    });
+  });
+  
+  // Handle "All Content" filter
+  const allFilter = document.querySelector('input[value="all"]');
+  const otherFilters = document.querySelectorAll('input[name="type"]:not([value="all"])');
+  
+  if (allFilter) {
+    allFilter.addEventListener('change', function() {
+      if (this.checked) {
+        otherFilters.forEach(filter => filter.checked = false);
+      }
+    });
+    
+    otherFilters.forEach(filter => {
+      filter.addEventListener('change', function() {
+        if (this.checked && allFilter.checked) {
+          allFilter.checked = false;
+        }
+        
+        // If no specific filters are checked, check "all"
+        const anyChecked = Array.from(otherFilters).some(f => f.checked);
+        if (!anyChecked) {
+          allFilter.checked = true;
+        }
+      });
+    });
+  }
+});
+</script>
+{{ end }}

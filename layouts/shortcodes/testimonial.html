@@ -1,0 +1,62 @@
+<!-- 3. Testimonial Shortcode: layouts/shortcodes/testimonial.html -->
+<!-- Usage: {{< testimonial name="John Doe" location="New York, NY" rating="5" >}}Great service, highly recommended!{{< /testimonial >}} -->
+
+<div class="testimonial-shortcode">
+  <div class="testimonial-content">
+    <div class="testimonial-rating">
+      {{ $rating := .Get "rating" | default "5" }}
+      {{ range seq (int $rating) }}
+      <i class="fas fa-star"></i>
+      {{ end }}
+    </div>
+    <blockquote>
+      "{{ .Inner }}"
+    </blockquote>
+    <div class="testimonial-author">
+      <strong>{{ .Get "name" }}</strong>
+      {{ if .Get "location" }}
+      <span class="author-location">{{ .Get "location" }}</span>
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+<style>
+.testimonial-shortcode {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--primary-color);
+  margin: 30px 0;
+}
+
+.testimonial-shortcode .testimonial-rating {
+  margin-bottom: 15px;
+}
+
+.testimonial-shortcode .testimonial-rating i {
+  color: #ffc107;
+  margin-right: 3px;
+}
+
+.testimonial-shortcode blockquote {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+  border: none;
+  padding: 0;
+}
+
+.testimonial-shortcode .testimonial-author strong {
+  color: var(--dark-color);
+  display: block;
+  margin-bottom: 5px;
+}
+
+.testimonial-shortcode .author-location {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
+</style>

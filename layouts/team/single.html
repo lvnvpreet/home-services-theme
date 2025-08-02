@@ -1,0 +1,881 @@
+{{ define "main" }}
+<div class="team-page">
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="page-title">Our Expert Team</h1>
+          <p class="page-subtitle">Meet the certified professionals who make your home service projects successful</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Team Overview -->
+  <section class="team-overview py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-5">
+          <h2>Professional Excellence</h2>
+          <p class="lead">Our team consists of licensed, certified professionals with years of experience in their respective fields. Every team member is committed to delivering the highest quality service and customer satisfaction.</p>
+          
+          <div class="team-stats">
+            <div class="row">
+              <div class="col-md-3 mb-3">
+                <div class="stat-item">
+                  <h3>{{ len .Pages }}+</h3>
+                  <p>Expert Technicians</p>
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <div class="stat-item">
+                  <h3>{{ .Site.Params.years_in_business | default "15" }}+</h3>
+                  <p>Years Combined Experience</p>
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <div class="stat-item">
+                  <h3>100%</h3>
+                  <p>Licensed & Insured</p>
+                </div>
+              </div>
+              <div class="col-md-3 mb-3">
+                <div class="stat-item">
+                  <h3>24/7</h3>
+                  <p>Emergency Response</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Team Filter -->
+  <section class="team-filter py-4 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">All Team Members</button>
+            <button class="filter-btn" data-filter="electrician">Electricians</button>
+            <button class="filter-btn" data-filter="plumber">Plumbers</button>
+            <button class="filter-btn" data-filter="hvac">HVAC Specialists</button>
+            <button class="filter-btn" data-filter="contractor">Contractors</button>
+            <button class="filter-btn" data-filter="handyman">Handyman</button>
+            <button class="filter-btn" data-filter="management">Management</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Team Grid -->
+  <section class="team-grid-section py-5">
+    <div class="container">
+      <div class="row team-grid">
+        {{ range .Pages }}
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="{{ .Params.specialty | lower | replaceRE "[^a-z]+" "" }}">
+          <div class="team-member-card h-100">
+            <!-- Member Photo -->
+            <div class="member-photo">
+              {{ if .Params.image }}
+              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid">
+              {{ else }}
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+              {{ end }}
+              
+              <!-- Member Overlay -->
+              <div class="member-overlay">
+                <div class="overlay-content">
+                  <div class="social-links">
+                    {{ if .Params.linkedin }}
+                    <a href="{{ .Params.linkedin }}" target="_blank" title="LinkedIn">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    {{ end }}
+                    {{ if .Params.email }}
+                    <a href="mailto:{{ .Params.email }}" title="Email">
+                      <i class="fas fa-envelope"></i>
+                    </a>
+                    {{ end }}
+                    {{ if .Params.phone }}
+                    <a href="tel:{{ .Params.phone }}" title="Phone">
+                      <i class="fas fa-phone"></i>
+                    </a>
+                    {{ end }}
+                  </div>
+                  <a href="{{ .Permalink }}" class="view-profile-btn">
+                    View Profile
+                  </a>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Member Info -->
+            <div class="member-info">
+              <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+              <p class="member-position">{{ .Params.position | default "Service Technician" }}</p>
+              <p class="member-specialty">{{ .Params.specialty | default "General Services" }}</p>
+              
+              <!-- Experience -->
+              {{ if .Params.experience }}
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>{{ .Params.experience }} years experience</span>
+              </div>
+              {{ end }}
+              
+              <!-- Certifications -->
+              {{ if .Params.certifications }}
+              <div class="member-certifications">
+                {{ range first 3 .Params.certifications }}
+                <span class="cert-badge">{{ . }}</span>
+                {{ end }}
+                {{ if gt (len .Params.certifications) 3 }}
+                <span class="cert-more">+{{ sub (len .Params.certifications) 3 }} more</span>
+                {{ end }}
+              </div>
+              {{ end }}
+              
+              <!-- Member Description -->
+              {{ if .Summary }}
+              <div class="member-description">
+                <p>{{ .Summary | truncate 120 }}</p>
+              </div>
+              {{ end }}
+              
+              <!-- Skills -->
+              {{ if .Params.skills }}
+              <div class="member-skills">
+                <h6>Specializes in:</h6>
+                <div class="skills-list">
+                  {{ range first 4 .Params.skills }}
+                  <span class="skill-tag">{{ . }}</span>
+                  {{ end }}
+                </div>
+              </div>
+              {{ end }}
+              
+              <!-- Contact Button -->
+              <div class="member-contact">
+                {{ if .Params.phone }}
+                <a href="tel:{{ .Params.phone }}" class="btn btn-outline-primary btn-sm me-2">
+                  <i class="fas fa-phone me-1"></i>
+                  Call
+                </a>
+                {{ end }}
+                {{ if .Params.email }}
+                <a href="mailto:{{ .Params.email }}" class="btn btn-outline-primary btn-sm">
+                  <i class="fas fa-envelope me-1"></i>
+                  Email
+                </a>
+                {{ end }}
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+        
+        <!-- Default team members if none exist -->
+        {{ if not .Pages }}
+        <!-- Electrician -->
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="electrician">
+          <div class="team-member-card h-100">
+            <div class="member-photo">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>John Smith</h4>
+              <p class="member-position">Master Electrician</p>
+              <p class="member-specialty">Electrical Systems & Safety</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>15 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">Licensed Electrician</span>
+                <span class="cert-badge">OSHA Certified</span>
+                <span class="cert-badge">Arc Flash Safety</span>
+              </div>
+              <div class="member-description">
+                <p>Expert in residential and commercial electrical installations, repairs, and safety inspections.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Plumber -->
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="plumber">
+          <div class="team-member-card h-100">
+            <div class="member-photo">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>Mike Rodriguez</h4>
+              <p class="member-position">Master Plumber</p>
+              <p class="member-specialty">Plumbing & Water Systems</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>12 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">Licensed Plumber</span>
+                <span class="cert-badge">Backflow Certified</span>
+                <span class="cert-badge">Water Heater Expert</span>
+              </div>
+              <div class="member-description">
+                <p>Specializes in emergency plumbing repairs, pipe installation, and water system maintenance.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- HVAC Specialist -->
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="hvac">
+          <div class="team-member-card h-100">
+            <div class="member-photo">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>Sarah Johnson</h4>
+              <p class="member-position">HVAC Specialist</p>
+              <p class="member-specialty">Heating & Cooling Systems</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>10 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">HVAC Licensed</span>
+                <span class="cert-badge">EPA Certified</span>
+                <span class="cert-badge">Energy Star Partner</span>
+              </div>
+              <div class="member-description">
+                <p>Expert in HVAC installation, repair, and energy-efficient system upgrades for optimal comfort.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- General Contractor -->
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="contractor">
+          <div class="team-member-card h-100">
+            <div class="member-photo">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>David Chen</h4>
+              <p class="member-position">General Contractor</p>
+              <p class="member-specialty">Home Renovations</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>18 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">Licensed Contractor</span>
+                <span class="cert-badge">Project Management</span>
+                <span class="cert-badge">Building Codes</span>
+              </div>
+              <div class="member-description">
+                <p>Manages complete home renovation projects from planning to completion with exceptional quality.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Project Manager -->
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="management">
+          <div class="team-member-card h-100">
+            <div class="member-photo">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>Lisa Thompson</h4>
+              <p class="member-position">Project Manager</p>
+              <p class="member-specialty">Customer Relations</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>8 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">PMP Certified</span>
+                <span class="cert-badge">Customer Service</span>
+                <span class="cert-badge">Quality Assurance</span>
+              </div>
+              <div class="member-description">
+                <p>Ensures seamless project coordination and maintains excellent customer communication throughout.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Handyman -->
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="handyman">
+          <div class="team-member-card h-100">
+            <div class="member-photo">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>Robert Williams</h4>
+              <p class="member-position">Senior Handyman</p>
+              <p class="member-specialty">General Repairs</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>20 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">Multi-Trade</span>
+                <span class="cert-badge">Home Repairs</span>
+                <span class="cert-badge">Maintenance</span>
+              </div>
+              <div class="member-description">
+                <p>Versatile professional handling all types of home repairs, maintenance, and small projects.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Team Certifications -->
+  <section class="team-certifications py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2>Our Team Credentials</h2>
+          <p>Every team member maintains current certifications and licenses</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="certification-item">
+            <i class="fas fa-certificate"></i>
+            <h5>Licensed Professionals</h5>
+            <p>State-licensed in all service areas</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="certification-item">
+            <i class="fas fa-shield-alt"></i>
+            <h5>Fully Insured</h5>
+            <p>Comprehensive liability coverage</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="certification-item">
+            <i class="fas fa-graduation-cap"></i>
+            <h5>Ongoing Training</h5>
+            <p>Regular skills and safety updates</p>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="certification-item">
+            <i class="fas fa-handshake"></i>
+            <h5>Background Checked</h5>
+            <p>Trusted professionals you can rely on</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Call to Action -->
+  <section class="team-cta py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="cta-content">
+            <h2>Ready to Work with Our Expert Team?</h2>
+            <p class="lead">Contact us today to discuss your project and meet the professionals who will make it happen</p>
+            <div class="cta-actions">
+              <a href="{{ "/contact" | relURL }}" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-calendar-check me-2"></i>
+                Schedule Consultation
+              </a>
+              <a href="tel:{{ .Site.Params.phone }}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-phone me-2"></i>
+                Call {{ .Site.Params.phone }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+<style>
+/* Team Page Styles */
+.team-page .page-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 80px 0;
+}
+
+/* Team Overview */
+.team-overview {
+  background: white;
+}
+
+.team-stats {
+  margin-top: 40px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 20px;
+  background: var(--light-color);
+  border-radius: 8px;
+  height: 100%;
+}
+
+.stat-item h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 10px;
+}
+
+.stat-item p {
+  color: var(--secondary-color);
+  margin: 0;
+  font-weight: 500;
+}
+
+/* Team Filter */
+.team-filter {
+  background: var(--light-color);
+}
+
+.filter-buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.filter-btn {
+  background: white;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+  background: var(--primary-color);
+  color: white;
+  transform: translateY(-2px);
+}
+
+/* Team Grid */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 30px;
+}
+
+.team-member-item {
+  transition: all 0.3s ease;
+}
+
+.team-member-item.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+.team-member-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.team-member-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+/* Member Photo */
+.member-photo {
+  height: 300px;
+  position: relative;
+  overflow: hidden;
+}
+
+.member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.team-member-card:hover .member-photo img {
+  transform: scale(1.1);
+}
+
+.member-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--secondary-color), #5a6268);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 5rem;
+}
+
+.member-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.team-member-card:hover .member-overlay {
+  opacity: 1;
+}
+
+.overlay-content {
+  text-align: center;
+  color: white;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  background: white;
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.view-profile-btn {
+  background: white;
+  color: var(--primary-color);
+  padding: 10px 20px;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.view-profile-btn:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Member Info */
+.member-info {
+  padding: 25px;
+}
+
+.member-info h4 {
+  margin-bottom: 5px;
+  color: var(--dark-color);
+}
+
+.member-info h4 a {
+  color: var(--dark-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.member-info h4 a:hover {
+  color: var(--primary-color);
+}
+
+.member-position {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.member-specialty {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.member-experience {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
+
+.member-experience i {
+  color: var(--primary-color);
+}
+
+.member-certifications {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+.cert-badge {
+  background: var(--light-color);
+  color: var(--primary-color);
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.cert-more {
+  color: var(--secondary-color);
+  font-size: 0.75rem;
+  font-style: italic;
+}
+
+.member-description {
+  margin-bottom: 15px;
+}
+
+.member-description p {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.member-skills h6 {
+  color: var(--dark-color);
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+}
+
+.skills-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+.skill-tag {
+  background: var(--primary-color);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 8px;
+  font-size: 0.7rem;
+  font-weight: 500;
+}
+
+.member-contact {
+  margin-top: 15px;
+  text-align: center;
+}
+
+/* Team Certifications */
+.team-certifications {
+  background: var(--light-color);
+}
+
+.certification-item {
+  text-align: center;
+  padding: 30px 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  height: 100%;
+}
+
+.certification-item i {
+  font-size: 3rem;
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.certification-item h5 {
+  color: var(--dark-color);
+  margin-bottom: 10px;
+}
+
+.certification-item p {
+  color: var(--secondary-color);
+  margin: 0;
+}
+
+/* Team CTA */
+.team-cta {
+  background: var(--primary-color);
+  color: white;
+  text-align: center;
+}
+
+.cta-content h2 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+.cta-content .lead {
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-outline-light {
+  border-color: white;
+  color: white;
+}
+
+.btn-outline-light:hover {
+  background: white;
+  color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .team-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+  }
+  
+  .cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .filter-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .filter-btn {
+    width: 200px;
+  }
+}
+
+@media (max-width: 768px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .member-photo {
+    height: 250px;
+  }
+  
+  .member-placeholder {
+    font-size: 4rem;
+  }
+  
+  .stat-item h3 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .member-info {
+    padding: 20px;
+  }
+  
+  .member-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .certification-item {
+    padding: 20px;
+  }
+  
+  .certification-item i {
+    font-size: 2rem;
+  }
+}
+</style>
+
+<script>
+// Team filtering functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  const teamItems = document.querySelectorAll('.team-member-item');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Update active filter
+      filterButtons.forEach(btn => btn.classList.remove('active'));
+      this.classList.add('active');
+      
+      const filterValue = this.getAttribute('data-filter');
+      
+      // Filter team members
+      teamItems.forEach(item => {
+        const itemCategory = item.getAttribute('data-category');
+        
+        if (filterValue === 'all' || itemCategory === filterValue) {
+          item.style.display = 'block';
+          item.classList.remove('hidden');
+        } else {
+          item.classList.add('hidden');
+          setTimeout(() => {
+            if (item.classList.contains('hidden')) {
+              item.style.display = 'none';
+            }
+          }, 300);
+        }
+      });
+    });
+  });
+});
+</script>
+{{ end }}

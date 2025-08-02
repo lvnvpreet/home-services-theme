@@ -1,0 +1,18 @@
+# Emergency services redirect
+/emergency           /contact?emergency=true  200
+/urgent              /contact?urgent=true     200
+
+# Service redirects for common misspellings
+/plumber             /services/plumbing       301
+/electrician         /services/electrical     301
+/hvac-repair         /services/hvac           301
+/handiman            /services/handyman       301
+
+# Old URL patterns (if migrating from another site)
+/service/*           /services/:splat         301
+/about-us            /about                   301
+/contact-us          /contact                 301
+
+# Fallback for forms
+/contact             /contact/                200
+/forms/*             /contact/                200

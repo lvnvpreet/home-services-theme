@@ -1,0 +1,123 @@
+<!-- 7. Before/After Image Shortcode: layouts/shortcodes/before-after.html -->
+<!-- Usage: {{< before-after before="/images/before.jpg" after="/images/after.jpg" title="Kitchen Renovation" >}} -->
+
+<div class="before-after-shortcode">
+  <h4 class="before-after-title">{{ .Get "title" | default "Before & After" }}</h4>
+  <div class="before-after-container">
+    <div class="before-after-slider">
+      <div class="before-image">
+        <img src="{{ .Get "before" }}" alt="Before - {{ .Get "title" }}">
+        <div class="image-label before-label">Before</div>
+      </div>
+      <div class="after-image">
+        <img src="{{ .Get "after" }}" alt="After - {{ .Get "title" }}">
+        <div class="image-label after-label">After</div>
+      </div>
+      <div class="slider-handle"></div>
+    </div>
+  </div>
+</div>
+
+<style>
+.before-after-shortcode {
+  margin: 30px 0;
+}
+
+.before-after-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: var(--dark-color);
+}
+
+.before-after-container {
+  height: 400px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.before-after-slider {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  cursor: col-resize;
+}
+
+.before-image,
+.after-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.before-image img,
+.after-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.after-image {
+  clip-path: inset(0 50% 0 0);
+  transition: clip-path 0.3s ease;
+}
+
+.image-label {
+  position: absolute;
+  top: 15px;
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: white;
+}
+
+.before-label {
+  left: 15px;
+  background: rgba(220, 53, 69, 0.9);
+}
+
+.after-label {
+  right: 15px;
+  background: rgba(40, 167, 69, 0.9);
+}
+
+.slider-handle {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 4px;
+  height: 100%;
+  background: white;
+  cursor: col-resize;
+  transform: translateX(-50%);
+  transition: left 0.3s ease;
+}
+
+.slider-handle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  background: white;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.slider-handle::after {
+  content: '⟷';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--primary-color);
+  font-weight: bold;
+  font-size: 12px;
+}
+</style>

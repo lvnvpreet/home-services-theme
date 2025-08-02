@@ -1,0 +1,482 @@
+<!-- layouts/partials/scripts.html -->
+
+<!-- Bootstrap JavaScript Bundle (includes Popper) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" 
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SgM855z4Q" 
+        crossorigin="anonymous"></script>
+
+<!-- Main Theme JavaScript -->
+<script src="{{ "js/main.js" | relURL }}"></script>
+
+<!-- Custom JavaScript (if exists) -->
+{{ if fileExists "static/js/custom.js" }}
+<script src="{{ "js/custom.js" | relURL }}"></script>
+{{ end }}
+
+<!-- Google Maps API (if configured) -->
+{{ if .Site.Params.google.maps_api_key }}
+<script async defer 
+        src="https://maps.googleapis.com/maps/api/js?key={{ .Site.Params.google.maps_api_key }}&libraries=places&callback=initMap">
+</script>
+{{ end }}
+
+<!-- Contact Form Handling (Netlify or custom) -->
+{{ if eq .Section "contact" }}
+<script>
+// Enhanced form handling for contact pages
+document.addEventListener('DOMContentLoaded', function() {
+    const contactForms = document.querySelectorAll('form[data-netlify], form.contact-form, form.quote-form');
+    
+    contactForms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            // Add loading state
+            const submitBtn = this.querySelector('button[type="submit"]');
+            if (submitBtn) {
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
+            }
+            
+            // If Netlify form, let it submit naturally
+            if (this.hasAttribute('data-netlify') || this.hasAttribute('netlify')) {
+                return true;
+            }
+            
+            // For other forms, handle with custom logic
+            e.preventDefault();
+            handleFormSubmission(this);
+        });
+    });
+});
+
+function handleFormSubmission(form) {
+    // Custom form submission logic here
+    // You can integrate with your preferred form service
+    
+    setTimeout(() => {
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
+        submitBtn.classList.remove('btn-primary');
+        submitBtn.classList.add('btn-success');
+        
+        // Show success message
+        showNotification('Thank you! We\'ll get back to you within 24 hours.', 'success');
+        
+        // Reset form
+        form.reset();
+        
+        // Reset button after delay
+        setTimeout(() => {
+            submitBtn.innerHTML = 'Send Message';
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('btn-success');
+            submitBtn.classList.add('btn-primary');
+        }, 5000);
+    }, 2000);
+}
+
+function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `alert alert-${type} notification-toast position-fixed`;
+    notification.style.cssText = `
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+        min-width: 300px;
+        animation: slideInRight 0.3s ease;
+    `;
+    notification.innerHTML = `
+        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+        ${message}
+        <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        if (notification.parentNode) {
+            notification.style.animation = 'slideOutRight 0.3s ease';
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, 5000);
+}
+</script>
+{{ end }}
+
+<!-- Gallery Page Scripts -->
+{{ if eq .Section "gallery" }}
+<script>
+// Before/After slider functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const sliders = document.querySelectorAll('.before-after-slider');
+    
+    sliders.forEach(slider => {
+        const afterImage = slider.querySelector('.after-image');
+        const handle = slider.querySelector('.slider-handle');
+        let isDragging = false;
+        
+        function updateSlider(x) {
+            const rect = slider.getBoundingClientRect();
+            const percentage = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+            
+            if (afterImage) {
+                afterImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+            }
+            if (handle) {
+                handle.style.left = `${percentage}%`;
+            }
+        }
+        
+        slider.addEventListener('mousedown', function(e) {
+            isDragging = true;
+            updateSlider(e.clientX);
+        });
+        
+        document.addEventListener('mousemove', function(e) {
+            if (isDragging) {
+                updateSlider(e.clientX);
+            }
+        });
+        
+        document.addEventListener('mouseup', function() {
+            isDragging = false;
+        });
+        
+        // Touch events for mobile
+        slider.addEventListener('touchstart', function(e) {
+            isDragging = true;
+            updateSlider(e.touches[0].clientX);
+        });
+        
+        document.addEventListener('touchmove', function(e) {
+            if (isDragging) {
+                e.preventDefault();
+                updateSlider(e.touches[0].clientX);
+            }
+        }, { passive: false });
+        
+        document.addEventListener('touchend', function() {
+            isDragging = false;
+        });
+    });
+});
+</script>
+{{ end }}
+
+<!-- Service Pages Scripts -->
+{{ if eq .Section "services" }}
+<script>
+// Service page enhancements
+document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scrolling for service page anchors
+    const serviceLinks = document.querySelectorAll('a[href^="#"]');
+    serviceLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                e.preventDefault();
+                const headerHeight = document.querySelector('.site-header').offsetHeight;
+                const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Service filtering (if on services list page)
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const serviceItems = document.querySelectorAll('.service-item');
+    
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Update active filter
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            
+            const filterValue = this.getAttribute('data-filter');
+            
+            // Filter services
+            serviceItems.forEach(item => {
+                const itemCategory = item.getAttribute('data-category');
+                
+                if (filterValue === 'all' || itemCategory === filterValue) {
+                    item.style.display = 'block';
+                    item.classList.remove('filtered-out');
+                } else {
+                    item.classList.add('filtered-out');
+                    setTimeout(() => {
+                        if (item.classList.contains('filtered-out')) {
+                            item.style.display = 'none';
+                        }
+                    }, 300);
+                }
+            });
+        });
+    });
+});
+</script>
+{{ end }}
+
+<!-- Blog Pages Scripts -->
+{{ if eq .Section "blog" }}
+<script>
+// Blog enhancements
+document.addEventListener('DOMContentLoaded', function() {
+    // Reading progress indicator
+    if (document.querySelector('.blog-single')) {
+        const progressBar = document.createElement('div');
+        progressBar.className = 'reading-progress';
+        progressBar.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: var(--primary-color);
+            z-index: 9999;
+            transition: width 0.1s ease;
+        `;
+        document.body.appendChild(progressBar);
+        
+        window.addEventListener('scroll', function() {
+            const article = document.querySelector('.article-content');
+            if (article) {
+                const articleHeight = article.offsetHeight;
+                const articleTop = article.offsetTop;
+                const scrollTop = window.pageYOffset;
+                const windowHeight = window.innerHeight;
+                
+                const progress = Math.min(100, Math.max(0, 
+                    ((scrollTop - articleTop + windowHeight) / articleHeight) * 100
+                ));
+                
+                progressBar.style.width = progress + '%';
+            }
+        });
+    }
+    
+    // Social sharing
+    const shareButtons = document.querySelectorAll('.share-btn');
+    shareButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+            if (url && url.startsWith('http')) {
+                e.preventDefault();
+                window.open(url, 'share', 'width=600,height=400');
+            }
+        });
+    });
+});
+</script>
+{{ end }}
+
+<!-- Homepage Scripts -->
+{{ if .IsHome }}
+<script>
+// Homepage specific functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Testimonial carousel
+    const testimonialContainer = document.querySelector('.testimonials-carousel');
+    if (testimonialContainer) {
+        const testimonials = testimonialContainer.querySelectorAll('.testimonial-card');
+        let currentIndex = 0;
+        
+        if (testimonials.length > 1) {
+            // Auto-advance testimonials
+            setInterval(() => {
+                testimonials[currentIndex].style.display = 'none';
+                currentIndex = (currentIndex + 1) % testimonials.length;
+                testimonials[currentIndex].style.display = 'block';
+            }, 5000);
+        }
+    }
+    
+    // Smooth scrolling for hero CTA buttons
+    const ctaButtons = document.querySelectorAll('.hero-actions a[href^="#"]');
+    ctaButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                e.preventDefault();
+                const headerHeight = document.querySelector('.site-header').offsetHeight;
+                const targetPosition = targetElement.offsetTop - headerHeight - 20;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // FAQ accordion enhancement
+    const faqButtons = document.querySelectorAll('.accordion-button');
+    faqButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Add analytics tracking if needed
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'faq_open', {
+                    'faq_question': this.textContent.trim()
+                });
+            }
+        });
+    });
+});
+</script>
+{{ end }}
+
+<!-- Performance and Analytics -->
+{{ if .Site.Params.google.analytics }}
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id={{ .Site.Params.google.analytics }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', '{{ .Site.Params.google.analytics }}');
+  
+  // Enhanced ecommerce events for service inquiries
+  function trackServiceInquiry(serviceName) {
+    gtag('event', 'generate_lead', {
+      'currency': 'USD',
+      'value': 100,
+      'service_name': serviceName
+    });
+  }
+  
+  // Track phone clicks
+  document.addEventListener('DOMContentLoaded', function() {
+    const phoneLinks = document.querySelectorAll('a[href^="tel:"]');
+    phoneLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        gtag('event', 'phone_call', {
+          'phone_number': this.getAttribute('href').replace('tel:', ''),
+          'event_category': 'engagement'
+        });
+      });
+    });
+  });
+</script>
+{{ end }}
+
+<!-- Schema.org JSON-LD for specific pages -->
+{{ if eq .Section "services" }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "{{ .Title }}",
+  "description": "{{ .Description | default .Summary }}",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "{{ .Site.Title }}",
+    "telephone": "{{ .Site.Params.phone }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ .Site.Params.address }}"
+    }
+  },
+  "areaServed": [
+    {{ range $index, $area := .Site.Params.service_areas }}
+    {{ if $index }},{{ end }}
+    {
+      "@type": "City",
+      "name": "{{ $area }}"
+    }
+    {{ end }}
+  ]
+  {{ if .Params.starting_price }}
+  ,"offers": {
+    "@type": "Offer",
+    "price": "{{ .Params.starting_price }}",
+    "priceCurrency": "USD"
+  }
+  {{ end }}
+}
+</script>
+{{ end }}
+
+<!-- Service Worker Registration -->
+{{ if not hugo.IsServer }}
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('SW registered: ', registration);
+      })
+      .catch(registrationError => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
+</script>
+{{ end }}
+
+<!-- Print Styles -->
+<style media="print">
+@media print {
+  .site-header,
+  .site-footer,
+  .emergency-float,
+  #back-to-top,
+  .share-section,
+  .sidebar,
+  .btn {
+    display: none !important;
+  }
+  
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+  
+  .container {
+    max-width: none;
+    padding: 0;
+  }
+  
+  a[href]:after {
+    content: " (" attr(href) ")";
+    font-size: 10pt;
+    color: #666;
+  }
+  
+  .page-break {
+    page-break-before: always;
+  }
+}
+</style>
+
+<!-- Error Handling -->
+<script>
+// Global error handling
+window.addEventListener('error', function(e) {
+  console.error('JavaScript error:', e.error);
+  
+  // Track errors in analytics if available
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'exception', {
+      'description': e.error.message,
+      'fatal': false
+    });
+  }
+});
+
+// Handle offline/online status
+window.addEventListener('online', function() {
+  document.body.classList.remove('offline');
+  showNotification('Connection restored!', 'success');
+});
+
+window.addEventListener('offline', function() {
+  document.body.classList.add('offline');
+  showNotification('You are offline. Some features may not work.', 'warning');
+});
+</script>

@@ -1,0 +1,79 @@
+<!-- 6. Contact Info Shortcode: layouts/shortcodes/contact-info.html -->
+<!-- Usage: {{< contact-info type="phone" value="+1-555-123-4567" label="Call Us" >}} -->
+
+<div class="contact-info-shortcode contact-{{ .Get "type" }}">
+  {{ $type := .Get "type" }}
+  {{ $icon := "fas fa-info" }}
+  {{ if eq $type "phone" }}{{ $icon = "fas fa-phone" }}{{ end }}
+  {{ if eq $type "email" }}{{ $icon = "fas fa-envelope" }}{{ end }}
+  {{ if eq $type "address" }}{{ $icon = "fas fa-map-marker-alt" }}{{ end }}
+  {{ if eq $type "hours" }}{{ $icon = "fas fa-clock" }}{{ end }}
+  
+  <div class="contact-icon">
+    <i class="{{ $icon }}"></i>
+  </div>
+  <div class="contact-details">
+    <strong>{{ .Get "label" }}</strong>
+    {{ if eq $type "phone" }}
+    <a href="tel:{{ .Get "value" }}">{{ .Get "value" }}</a>
+    {{ else if eq $type "email" }}
+    <a href="mailto:{{ .Get "value" }}">{{ .Get "value" }}</a>
+    {{ else }}
+    <span>{{ .Get "value" }}</span>
+    {{ end }}
+  </div>
+</div>
+
+<style>
+.contact-info-shortcode {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.contact-info-shortcode:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+.contact-info-shortcode .contact-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.25rem;
+  flex-shrink: 0;
+}
+
+.contact-info-shortcode .contact-details {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.contact-info-shortcode .contact-details strong {
+  color: var(--dark-color);
+  font-size: 1rem;
+}
+
+.contact-info-shortcode .contact-details a,
+.contact-info-shortcode .contact-details span {
+  color: var(--secondary-color);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-info-shortcode .contact-details a:hover {
+  color: var(--primary-color);
+}
+</style>

@@ -1,0 +1,62 @@
+<!-- 2. Emergency Notice Shortcode: layouts/shortcodes/emergency-notice.html -->
+<!-- Usage: {{< emergency-notice title="Emergency Plumbing" phone="+1-555-123-4567" >}}Call us immediately for urgent plumbing issues{{< /emergency-notice >}} -->
+
+<div class="emergency-notice-shortcode">
+  <div class="emergency-icon">
+    <i class="fas fa-exclamation-triangle"></i>
+  </div>
+  <div class="emergency-content">
+    <h4>{{ .Get "title" | default "Emergency Service Available" }}</h4>
+    <p>{{ .Inner }}</p>
+    {{ if .Get "phone" }}
+    <a href="tel:{{ .Get "phone" }}" class="btn btn-danger">
+      <i class="fas fa-phone me-2"></i>
+      {{ .Get "phone" }}
+    </a>
+    {{ end }}
+  </div>
+</div>
+
+<style>
+.emergency-notice-shortcode {
+  background: linear-gradient(135deg, #dc3545, #c82333);
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 30px 0;
+  box-shadow: 0 5px 20px rgba(220, 53, 69, 0.3);
+}
+
+.emergency-notice-shortcode .emergency-icon {
+  font-size: 3rem;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.emergency-notice-shortcode h4 {
+  color: white;
+  margin-bottom: 10px;
+}
+
+.emergency-notice-shortcode p {
+  opacity: 0.9;
+  margin-bottom: 15px;
+}
+
+.emergency-notice-shortcode .btn-danger {
+  background: white;
+  color: #dc3545;
+  border: none;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .emergency-notice-shortcode {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+</style>

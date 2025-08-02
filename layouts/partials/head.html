@@ -1,0 +1,208 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Title -->
+  <title>
+    {{- if .IsHome -}}
+      {{ .Site.Title }} - {{ .Site.Params.business_type }} in {{ .Site.Params.primary_location }}
+    {{- else -}}
+      {{ .Title }} | {{ .Site.Title }}
+    {{- end -}}
+  </title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else if .Summary }}{{ .Summary }}{{ else }}{{ .Site.Params.seo.description }}{{ end }}">
+  <meta name="keywords" content="{{ if .Params.keywords }}{{ delimit .Params.keywords ", " }}{{ else }}{{ .Site.Params.seo.keywords }}{{ end }}">
+  <meta name="author" content="{{ .Site.Title }}">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Location-specific SEO -->
+  <meta name="geo.region" content="US-NY">
+  <meta name="geo.placename" content="{{ .Site.Params.primary_location }}">
+  {{ if .Site.Params.coordinates }}
+  <meta name="geo.position" content="{{ .Site.Params.coordinates }}">
+  <meta name="ICBM" content="{{ .Site.Params.coordinates }}">
+  {{ end }}
+  
+  <!-- Business Information -->
+  <meta name="business:contact_data:street_address" content="{{ .Site.Params.address }}">
+  <meta name="business:contact_data:locality" content="{{ .Site.Params.primary_location }}">
+  <meta name="business:contact_data:phone_number" content="{{ .Site.Params.phone }}">
+  <meta name="business:contact_data:website" content="{{ .Site.BaseURL }}">
+  
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ if .Title }}{{ .Title }}{{ else }}{{ .Site.Title }}{{ end }}">
+  <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else if .Summary }}{{ .Summary }}{{ else }}{{ .Site.Params.seo.description }}{{ end }}">
+  <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:site_name" content="{{ .Site.Title }}">
+  {{ if .Params.image }}
+  <meta property="og:image" content="{{ .Params.image | absURL }}">
+  {{ else if .Site.Params.og_image }}
+  <meta property="og:image" content="{{ .Site.Params.og_image | absURL }}">
+  {{ end }}
+  <meta property="og:locale" content="en_US">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ if .Title }}{{ .Title }}{{ else }}{{ .Site.Title }}{{ end }}">
+  <meta name="twitter:description" content="{{ if .Description }}{{ .Description }}{{ else if .Summary }}{{ .Summary }}{{ else }}{{ .Site.Params.seo.description }}{{ end }}">
+  {{ if .Params.image }}
+  <meta name="twitter:image" content="{{ .Params.image | absURL }}">
+  {{ else if .Site.Params.twitter_image }}
+  <meta name="twitter:image" content="{{ .Site.Params.twitter_image | absURL }}">
+  {{ end }}
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="{{ .Permalink }}">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="{{ .Site.Params.favicon | default "/favicon.ico" | relURL }}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ "/apple-touch-icon.png" | relURL }}">
+  
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  
+  <!-- CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="{{ "css/style.css" | relURL }}" rel="stylesheet">
+  
+  <!-- Structured Data for Local Business -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "{{ .Site.Title }}",
+    "description": "{{ .Site.Params.seo.description }}",
+    "url": "{{ .Site.BaseURL }}",
+    {{ if .Site.Params.logo }}
+    "logo": "{{ .Site.Params.logo | absURL }}",
+    {{ end }}
+    "telephone": "{{ .Site.Params.phone }}",
+    "email": "{{ .Site.Params.email }}",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ .Site.Params.address }}"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      {{ if .Site.Params.coordinates }}
+      {{ $coords := split .Site.Params.coordinates "," }}
+      "latitude": "{{ index $coords 0 }}",
+      "longitude": "{{ index $coords 1 }}"
+      {{ end }}
+    },
+    "areaServed": [
+      {{ range $index, $area := .Site.Params.service_areas }}
+      {{ if $index }},{{ end }}
+      {
+        "@type": "City",
+        "name": "{{ $area }}"
+      }
+      {{ end }}
+    ],
+    "openingHours": [
+      {{ if .Site.Params.business_hours.monday }}"Mo {{ .Site.Params.business_hours.monday }}",{{ end }}
+      {{ if .Site.Params.business_hours.tuesday }}"Tu {{ .Site.Params.business_hours.tuesday }}",{{ end }}
+      {{ if .Site.Params.business_hours.wednesday }}"We {{ .Site.Params.business_hours.wednesday }}",{{ end }}
+      {{ if .Site.Params.business_hours.thursday }}"Th {{ .Site.Params.business_hours.thursday }}",{{ end }}
+      {{ if .Site.Params.business_hours.friday }}"Fr {{ .Site.Params.business_hours.friday }}",{{ end }}
+      {{ if .Site.Params.business_hours.saturday }}"Sa {{ .Site.Params.business_hours.saturday }}"{{ end }}
+    ],
+    "sameAs": [
+      {{ if .Site.Params.social.facebook }}"{{ .Site.Params.social.facebook }}",{{ end }}
+      {{ if .Site.Params.social.twitter }}"{{ .Site.Params.social.twitter }}",{{ end }}
+      {{ if .Site.Params.social.instagram }}"{{ .Site.Params.social.instagram }}",{{ end }}
+      {{ if .Site.Params.social.linkedin }}"{{ .Site.Params.social.linkedin }}",{{ end }}
+      {{ if .Site.Params.social.yelp }}"{{ .Site.Params.social.yelp }}",{{ end }}
+      {{ if .Site.Params.social.google_business }}"{{ .Site.Params.social.google_business }}"{{ end }}
+    ],
+    "priceRange": "$$",
+    "paymentAccepted": "Cash, Credit Card, Check",
+    "currenciesAccepted": "USD"
+  }
+  </script>
+  
+  {{ if eq .Section "services" }}
+  <!-- Service-specific structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": "{{ .Title }}",
+    "description": "{{ .Description | default .Summary }}",
+    "provider": {
+      "@type": "LocalBusiness",
+      "name": "{{ .Site.Title }}",
+      "telephone": "{{ .Site.Params.phone }}",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "{{ .Site.Params.address }}"
+      }
+    },
+    "areaServed": [
+      {{ range $index, $area := .Site.Params.service_areas }}
+      {{ if $index }},{{ end }}
+      {
+        "@type": "City",
+        "name": "{{ $area }}"
+      }
+      {{ end }}
+    ]
+    {{ if .Params.starting_price }}
+    ,"offers": {
+      "@type": "Offer",
+      "price": "{{ .Params.starting_price }}",
+      "priceCurrency": "USD"
+    }
+    {{ end }}
+  }
+  </script>
+  {{ end }}
+  
+  <!-- Google Maps API (if needed) -->
+  {{ if .Site.Params.google.maps_api_key }}
+  <script src="https://maps.googleapis.com/maps/api/js?key={{ .Site.Params.google.maps_api_key }}&libraries=places" defer></script>
+  {{ end }}
+  
+  <!-- Critical CSS for above-the-fold content -->
+  <style>
+    /* Critical styles for immediate rendering */
+    body { font-family: 'Inter', sans-serif; margin: 0; }
+    .site-header { position: sticky; top: 0; z-index: 1000; }
+    .hero-section { min-height: 600px; position: relative; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 15px; }
+    .btn-primary { background-color: #007bff; color: white; padding: 12px 24px; border: none; border-radius: 6px; text-decoration: none; display: inline-block; }
+  </style>
+  
+  <!-- Preload important resources -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" as="style">
+  <link rel="preload" href="{{ "css/style.css" | relURL }}" as="style">
+  
+  <!-- DNS Prefetch -->
+  <link rel="dns-prefetch" href="//fonts.googleapis.com">
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="//www.google-analytics.com">
+  
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#007bff">
+  <meta name="msapplication-TileColor" content="#007bff">
+  
+  <!-- RSS Feed -->
+  {{ with .OutputFormats.Get "RSS" }}
+  <link href="{{ .RelPermalink }}" rel="alternate" type="application/rss+xml" title="{{ $.Site.Title }} RSS Feed">
+  {{ end }}
+  
+  <!-- Security Headers -->
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
+  <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+  
+  <!-- Performance Hints -->
+  <meta http-equiv="Accept-CH" content="DPR, Viewport-Width, Width">
+</head>

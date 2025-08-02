@@ -1,0 +1,1068 @@
+{{ define "main" }}
+<div class="about-page">
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="page-title">About Us</h1>
+          <p class="page-subtitle">Professional home services you can trust for over {{ .Site.Params.years_in_business }} years</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Company Overview -->
+  <section class="company-overview py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="about-content">
+            <h2>Our Story</h2>
+            <p class="lead">Founded with a commitment to excellence, we've been serving homeowners in {{ .Site.Params.primary_location }} with reliable, professional home services since {{ sub now.Year (int .Site.Params.years_in_business) }}.</p>
+            
+            <p>What started as a small local business has grown into a trusted name in home services, but we've never lost sight of our core values: quality workmanship, honest pricing, and exceptional customer service.</p>
+            
+            <p>Today, we're proud to be a fully licensed and insured company serving thousands of satisfied customers across {{ .Site.Params.primary_location }} and surrounding areas. Our team of certified professionals is equipped with the latest tools and training to handle any home service challenge.</p>
+            
+            <div class="company-highlights">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="highlight-stat">
+                    <h3>{{ .Site.Params.years_in_business }}+</h3>
+                    <p>Years in Business</p>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="highlight-stat">
+                    <h3>5,000+</h3>
+                    <p>Satisfied Customers</p>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="highlight-stat">
+                    <h3>24/7</h3>
+                    <p>Emergency Service</p>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="highlight-stat">
+                    <h3>100%</h3>
+                    <p>Licensed & Insured</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="about-image">
+            {{ if .Params.about_image }}
+            <img src="{{ .Params.about_image | relURL }}" alt="About {{ .Site.Title }}" class="img-fluid rounded">
+            {{ else }}
+            <div class="about-placeholder">
+              <div class="company-visual">
+                <i class="fas fa-hard-hat"></i>
+                <div class="visual-overlay">
+                  <div class="credential-badges">
+                    <div class="badge-item">Licensed</div>
+                    <div class="badge-item">Insured</div>
+                    <div class="badge-item">Bonded</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Mission, Vision, Values -->
+  <section class="mission-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2>Our Mission & Values</h2>
+          <p>The principles that guide everything we do</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 mb-4">
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-bullseye"></i>
+            </div>
+            <h4>Our Mission</h4>
+            <p>To provide exceptional home services that enhance the comfort, safety, and value of every home we serve, while building lasting relationships with our customers through trust, reliability, and superior craftsmanship.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-eye"></i>
+            </div>
+            <h4>Our Vision</h4>
+            <p>To be the most trusted and respected home services company in {{ .Site.Params.primary_location }}, known for our commitment to excellence, innovation, and customer satisfaction in every project we undertake.</p>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-4">
+          <div class="value-card">
+            <div class="value-icon">
+              <i class="fas fa-heart"></i>
+            </div>
+            <h4>Our Values</h4>
+            <ul class="values-list">
+              <li><strong>Integrity:</strong> Honest communication and fair pricing</li>
+              <li><strong>Quality:</strong> Superior workmanship in every job</li>
+              <li><strong>Reliability:</strong> On-time service you can count on</li>
+              <li><strong>Safety:</strong> Protecting our customers and team</li>
+              <li><strong>Excellence:</strong> Exceeding expectations always</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Team Section -->
+  <section class="team-section py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2>Meet Our Expert Team</h2>
+          <p>Experienced professionals dedicated to delivering exceptional home services</p>
+        </div>
+      </div>
+      <div class="row">
+        {{ range where .Site.RegularPages "Section" "team" }}
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="team-member-card">
+            <div class="member-image">
+              {{ if .Params.image }}
+              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid">
+              {{ else }}
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+              {{ end }}
+              <div class="member-overlay">
+                <div class="social-links">
+                  {{ if .Params.linkedin }}
+                  <a href="{{ .Params.linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                  {{ end }}
+                  {{ if .Params.email }}
+                  <a href="mailto:{{ .Params.email }}"><i class="fas fa-envelope"></i></a>
+                  {{ end }}
+                </div>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>{{ .Title }}</h4>
+              <p class="member-position">{{ .Params.position | default "Service Technician" }}</p>
+              <p class="member-specialty">{{ .Params.specialty | default "General Home Services" }}</p>
+              
+              {{ if .Params.experience }}
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>{{ .Params.experience }} years experience</span>
+              </div>
+              {{ end }}
+              
+              {{ if .Params.certifications }}
+              <div class="member-certifications">
+                {{ range .Params.certifications }}
+                <span class="cert-badge">{{ . }}</span>
+                {{ end }}
+              </div>
+              {{ end }}
+              
+              {{ if .Content }}
+              <div class="member-bio">
+                {{ .Content }}
+              </div>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+        {{ end }}
+        
+        <!-- Default team members if none defined -->
+        {{ if not (where .Site.RegularPages "Section" "team") }}
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="team-member-card">
+            <div class="member-image">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>John Smith</h4>
+              <p class="member-position">Master Electrician</p>
+              <p class="member-specialty">Electrical Systems & Repairs</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>15 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">Licensed Electrician</span>
+                <span class="cert-badge">OSHA Certified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="team-member-card">
+            <div class="member-image">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>Mike Rodriguez</h4>
+              <p class="member-position">Master Plumber</p>
+              <p class="member-specialty">Plumbing & Water Systems</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>12 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">Licensed Plumber</span>
+                <span class="cert-badge">Backflow Certified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="team-member-card">
+            <div class="member-image">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>Sarah Johnson</h4>
+              <p class="member-position">HVAC Specialist</p>
+              <p class="member-specialty">Heating & Cooling Systems</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>10 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">HVAC Licensed</span>
+                <span class="cert-badge">EPA Certified</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="team-member-card">
+            <div class="member-image">
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+            </div>
+            <div class="member-info">
+              <h4>David Chen</h4>
+              <p class="member-position">General Contractor</p>
+              <p class="member-specialty">Home Renovations</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>18 years experience</span>
+              </div>
+              <div class="member-certifications">
+                <span class="cert-badge">Licensed Contractor</span>
+                <span class="cert-badge">Project Management</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  
+  <!-- Credentials & Licenses -->
+  <section class="credentials-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2>Licensed, Insured & Certified</h2>
+          <p>Your peace of mind is our priority - we maintain all required licenses and insurance</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6 mb-4">
+          <div class="credential-card">
+            <div class="credential-icon">
+              <i class="fas fa-certificate"></i>
+            </div>
+            <div class="credential-content">
+              <h4>Professional Licensing</h4>
+              <p><strong>License #{{ .Site.Params.license_number }}</strong></p>
+              <p>We maintain all required state and local licenses for our services, ensuring compliance with industry standards and regulations.</p>
+              <ul>
+                <li>General Contractor License</li>
+                <li>Electrical Contractor License</li>
+                <li>Plumbing Contractor License</li>
+                <li>HVAC Contractor License</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+          <div class="credential-card">
+            <div class="credential-icon">
+              <i class="fas fa-shield-alt"></i>
+            </div>
+            <div class="credential-content">
+              <h4>Insurance Coverage</h4>
+              <p><strong>Fully Insured & Bonded</strong></p>
+              <p>Comprehensive insurance protection for your property and our workers, providing complete peace of mind.</p>
+              <ul>
+                <li>General Liability Insurance</li>
+                <li>Workers' Compensation</li>
+                <li>Professional Liability</li>
+                <li>Surety Bonding</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+          <div class="credential-card">
+            <div class="credential-icon">
+              <i class="fas fa-award"></i>
+            </div>
+            <div class="credential-content">
+              <h4>Industry Certifications</h4>
+              <p><strong>Certified Professionals</strong></p>
+              <p>Our team holds industry-recognized certifications and participates in ongoing training programs.</p>
+              <ul>
+                <li>OSHA Safety Certified</li>
+                <li>EPA Refrigerant Certified</li>
+                <li>Manufacturer Warranties</li>
+                <li>Continuing Education</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-6 mb-4">
+          <div class="credential-card">
+            <div class="credential-icon">
+              <i class="fas fa-handshake"></i>
+            </div>
+            <div class="credential-content">
+              <h4>Quality Guarantee</h4>
+              <p><strong>100% Satisfaction Promise</strong></p>
+              <p>We stand behind our work with comprehensive warranties and a commitment to customer satisfaction.</p>
+              <ul>
+                <li>Workmanship Warranty</li>
+                <li>Parts & Materials Guarantee</li>
+                <li>24/7 Emergency Support</li>
+                <li>Follow-up Service</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Company Timeline -->
+  <section class="timeline-section py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2>Our Journey</h2>
+          <p>Milestones in our commitment to excellence</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-year">{{ sub now.Year (int .Site.Params.years_in_business) }}</div>
+              <div class="timeline-content">
+                <h4>Company Founded</h4>
+                <p>Started as a small local business with a commitment to quality home services in {{ .Site.Params.primary_location }}.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-year">{{ sub now.Year (sub (int .Site.Params.years_in_business) 3) }}</div>
+              <div class="timeline-content">
+                <h4>Team Expansion</h4>
+                <p>Grew our team of certified professionals and expanded service offerings to include specialized trades.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-year">{{ sub now.Year (sub (int .Site.Params.years_in_business) 8) }}</div>
+              <div class="timeline-content">
+                <h4>Emergency Services</h4>
+                <p>Launched 24/7 emergency service program to better serve our customers' urgent needs.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-year">{{ sub now.Year (sub (int .Site.Params.years_in_business) 12) }}</div>
+              <div class="timeline-content">
+                <h4>Technology Integration</h4>
+                <p>Invested in modern technology and equipment to improve service quality and efficiency.</p>
+              </div>
+            </div>
+            
+            <div class="timeline-item">
+              <div class="timeline-year">{{ now.Year }}</div>
+              <div class="timeline-content">
+                <h4>Continuing Excellence</h4>
+                <p>Today, we're proud to serve thousands of satisfied customers with the same commitment to quality that started it all.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Service Areas -->
+  <section class="service-areas-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2>Areas We Serve</h2>
+          <p class="mb-4">Bringing professional home services to communities across {{ .Site.Params.primary_location }} and beyond</p>
+          
+          <div class="service-map">
+            <div class="primary-location">
+              <div class="location-marker primary">
+                <i class="fas fa-map-marker-alt"></i>
+                <h4>{{ .Site.Params.primary_location }}</h4>
+                <p>Our main service area</p>
+              </div>
+            </div>
+            
+            <div class="surrounding-locations">
+              {{ range .Site.Params.service_areas }}
+              <div class="location-marker">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>{{ . }}</span>
+              </div>
+              {{ end }}
+            </div>
+          </div>
+          
+          <div class="coverage-note">
+            <p class="text-muted">Don't see your area? <a href="{{ "/contact" | relURL }}">Contact us</a> to check if we can serve your location.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Call to Action -->
+  <section class="about-cta py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <div class="cta-content">
+            <h2>Ready to Experience the Difference?</h2>
+            <p class="lead">Join thousands of satisfied customers who trust us with their home service needs</p>
+            <div class="cta-actions">
+              <a href="{{ "/contact" | relURL }}" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-calendar-check me-2"></i>
+                Schedule Service
+              </a>
+              <a href="tel:{{ .Site.Params.phone }}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-phone me-2"></i>
+                Call {{ .Site.Params.phone }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+</div>
+
+<style>
+/* About Page Styles */
+.about-page .page-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  color: white;
+  padding: 80px 0;
+}
+
+/* Company Overview */
+.company-overview {
+  background: white;
+}
+
+.about-content h2 {
+  color: var(--dark-color);
+  margin-bottom: 20px;
+}
+
+.about-content .lead {
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.about-content p {
+  color: var(--secondary-color);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.company-highlights {
+  margin-top: 30px;
+  padding-top: 30px;
+  border-top: 1px solid #eee;
+}
+
+.highlight-stat {
+  text-align: center;
+  padding: 20px;
+  background: var(--light-color);
+  border-radius: 8px;
+  height: 100%;
+}
+
+.highlight-stat h3 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  margin-bottom: 5px;
+}
+
+.highlight-stat p {
+  margin: 0;
+  color: var(--secondary-color);
+  font-weight: 500;
+}
+
+.about-image {
+  text-align: center;
+}
+
+.about-placeholder {
+  height: 400px;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.company-visual i {
+  font-size: 8rem;
+  color: rgba(255, 255, 255, 0.3);
+  margin-bottom: 30px;
+}
+
+.visual-overlay {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  right: 30px;
+}
+
+.credential-badges {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.badge-item {
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--primary-color);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* Mission Section */
+.mission-section {
+  background: var(--light-color);
+}
+
+.value-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  height: 100%;
+}
+
+.value-icon {
+  width: 80px;
+  height: 80px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: white;
+  font-size: 2rem;
+}
+
+.value-card h4 {
+  color: var(--dark-color);
+  margin-bottom: 15px;
+}
+
+.value-card p {
+  color: var(--secondary-color);
+  line-height: 1.6;
+}
+
+.values-list {
+  list-style: none;
+  padding: 0;
+  text-align: left;
+}
+
+.values-list li {
+  margin-bottom: 8px;
+  color: var(--secondary-color);
+}
+
+.values-list strong {
+  color: var(--primary-color);
+}
+
+/* Team Section */
+.team-section {
+  background: white;
+}
+
+.team-member-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.team-member-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.member-image {
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+}
+
+.member-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.member-placeholder {
+  height: 100%;
+  background: linear-gradient(135deg, var(--secondary-color), #5a6268);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 4rem;
+}
+
+.member-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.team-member-card:hover .member-overlay {
+  opacity: 1;
+}
+
+.social-links {
+  display: flex;
+  gap: 15px;
+}
+
+.social-links a {
+  width: 40px;
+  height: 40px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+  background: white;
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.member-info {
+  padding: 25px;
+  text-align: center;
+}
+
+.member-info h4 {
+  color: var(--dark-color);
+  margin-bottom: 5px;
+}
+
+.member-position {
+  color: var(--primary-color);
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.member-specialty {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+}
+
+.member-experience {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 15px;
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+}
+
+.member-experience i {
+  color: var(--primary-color);
+}
+
+.member-certifications {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.cert-badge {
+  background: var(--light-color);
+  color: var(--primary-color);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.member-bio {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* Credentials Section */
+.credentials-section {
+  background: var(--light-color);
+}
+
+.credential-card {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  display: flex;
+  gap: 20px;
+  height: 100%;
+}
+
+.credential-icon {
+  width: 80px;
+  height: 80px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.credential-content h4 {
+  color: var(--dark-color);
+  margin-bottom: 10px;
+}
+
+.credential-content p {
+  color: var(--secondary-color);
+  margin-bottom: 15px;
+}
+
+.credential-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.credential-content li {
+  margin-bottom: 5px;
+  color: var(--secondary-color);
+  position: relative;
+  padding-left: 20px;
+}
+
+.credential-content li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--success-color);
+  font-weight: bold;
+}
+
+/* Timeline Section */
+.timeline-section {
+  background: white;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 30px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--primary-color);
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 40px;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -23px;
+  top: 5px;
+  width: 16px;
+  height: 16px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  border: 3px solid white;
+  box-shadow: 0 0 0 3px var(--primary-color);
+}
+
+.timeline-year {
+  background: var(--primary-color);
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-content h4 {
+  color: var(--dark-color);
+  margin-bottom: 8px;
+}
+
+.timeline-content p {
+  color: var(--secondary-color);
+  margin: 0;
+  line-height: 1.6;
+}
+
+/* Service Areas Section */
+.service-areas-section .service-map {
+  display: grid;
+  gap: 30px;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+
+.primary-location {
+  text-align: center;
+}
+
+.location-marker.primary {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: 30px;
+  border-radius: 12px;
+}
+
+.location-marker.primary i {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+}
+
+.location-marker.primary h4 {
+  color: white;
+  margin-bottom: 5px;
+}
+
+.surrounding-locations {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.location-marker {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.location-marker i {
+  color: var(--primary-color);
+}
+
+/* About CTA */
+.about-cta {
+  background: var(--primary-color);
+  color: white;
+  text-align: center;
+}
+
+.cta-content h2 {
+  color: white;
+  margin-bottom: 15px;
+}
+
+.cta-content .lead {
+  opacity: 0.9;
+  margin-bottom: 30px;
+}
+
+.cta-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-outline-light {
+  border-color: white;
+  color: white;
+}
+
+.btn-outline-light:hover {
+  background: white;
+  color: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .credential-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .timeline {
+    padding-left: 0;
+  }
+  
+  .timeline::before {
+    display: none;
+  }
+  
+  .timeline-item {
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .timeline-item::before {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-page .page-header {
+    padding: 60px 0;
+  }
+  
+  .cta-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .surrounding-locations {
+    grid-template-columns: 1fr;
+  }
+  
+  .member-certifications {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  .value-card {
+    padding: 20px;
+  }
+  
+  .member-info {
+    padding: 20px;
+  }
+  
+  .credential-card {
+    padding: 20px;
+  }
+  
+  .company-visual i {
+    font-size: 6rem;
+  }
+  
+  .credential-badges {
+    flex-direction: column;
+    gap: 5px;
+  }
+}
+</style>
+{{ end }}

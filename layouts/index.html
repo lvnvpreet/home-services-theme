@@ -1,0 +1,592 @@
+{{ define "main" }}
+<div class="homepage">
+  
+  <!-- 1. Hero Section -->
+  <section class="hero-section">
+    <div class="hero-bg">
+      {{ if .Site.Params.hero_image }}
+      <img src="{{ .Site.Params.hero_image | relURL }}" alt="Professional Home Services" class="hero-background">
+      {{ end }}
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8">
+            <h1 class="hero-title">{{ .Site.Params.hero_title | default "Professional Home Services in Your Area" }}</h1>
+            <p class="hero-subtitle">{{ .Site.Params.hero_subtitle | default "Licensed, insured, and trusted by homeowners" }}</p>
+            
+            <div class="hero-badges mb-4">
+              <span class="badge bg-success me-2">
+                <i class="fas fa-certificate me-1"></i>
+                Licensed & Insured
+              </span>
+              <span class="badge bg-warning me-2">
+                <i class="fas fa-clock me-1"></i>
+                24/7 Emergency
+              </span>
+              <span class="badge bg-info">
+                <i class="fas fa-thumbs-up me-1"></i>
+                {{ .Site.Params.years_in_business }}+ Years Experience
+              </span>
+            </div>
+            
+            <div class="hero-actions">
+              <a href="{{ "/contact" | relURL }}" class="btn btn-primary btn-lg me-3">
+                <i class="fas fa-phone me-2"></i>
+                Get Free Quote
+              </a>
+              <a href="{{ "/services" | relURL }}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-tools me-2"></i>
+                Our Services
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <div class="hero-contact-card">
+              <h3>Need Service Now?</h3>
+              <p class="mb-3">Call for immediate assistance</p>
+              <a href="tel:{{ .Site.Params.phone }}" class="contact-phone">
+                {{ .Site.Params.phone }}
+              </a>
+              <p class="service-area">Serving {{ .Site.Params.primary_location }} & Surrounding Areas</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 2. Our Services Section -->
+  <section class="services-section py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2 class="section-title">Our Home Services</h2>
+          <p class="section-subtitle">Professional solutions for all your home improvement and maintenance needs</p>
+        </div>
+      </div>
+      <div class="row">
+        {{ range where .Site.RegularPages "Section" "services" | first 6 }}
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="service-card">
+            {{ if .Params.image }}
+            <div class="service-image">
+              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid">
+            </div>
+            {{ end }}
+            <div class="service-content">
+              {{ if .Params.icon }}
+              <div class="service-icon">
+                <i class="{{ .Params.icon }}"></i>
+              </div>
+              {{ end }}
+              <h4>{{ .Title }}</h4>
+              <p>{{ .Summary | truncate 120 }}</p>
+              <div class="service-features">
+                {{ if .Params.starting_price }}
+                <span class="price">Starting at {{ .Params.starting_price }}</span>
+                {{ end }}
+                <span class="service-type">{{ .Params.service_type | default "Residential & Commercial" }}</span>
+              </div>
+              <a href="{{ .Permalink }}" class="btn btn-outline-primary">Learn More</a>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+      <div class="text-center">
+        <a href="{{ "/services" | relURL }}" class="btn btn-primary btn-lg">
+          View All Services <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 3. About Us Section -->
+  <section class="about-section py-5 bg-light">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6 mb-4 mb-lg-0">
+          <div class="about-image">
+            {{ if .Site.Params.about_image }}
+            <img src="{{ .Site.Params.about_image | relURL }}" alt="About Us" class="img-fluid rounded">
+            {{ else }}
+            <div class="about-placeholder">
+              <i class="fas fa-hard-hat"></i>
+              <div class="credentials-overlay">
+                <div class="credential-badge">Licensed</div>
+                <div class="credential-badge">Insured</div>
+                <div class="credential-badge">Bonded</div>
+              </div>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="about-content">
+            <h2 class="section-title text-start">About Our Company</h2>
+            <p class="lead">Professional home services you can trust, with over {{ .Site.Params.years_in_business }} years of experience serving {{ .Site.Params.primary_location }}.</p>
+            <div class="about-highlights">
+              <div class="highlight-item">
+                <i class="fas fa-shield-alt text-primary"></i>
+                <div>
+                  <strong>Licensed & Insured</strong>
+                  <p>License #{{ .Site.Params.license_number | default "LIC-12345" }}</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <i class="fas fa-award text-primary"></i>
+                <div>
+                  <strong>Quality Guarantee</strong>
+                  <p>100% satisfaction guaranteed on all work</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <i class="fas fa-users text-primary"></i>
+                <div>
+                  <strong>Expert Team</strong>
+                  <p>Certified professionals with extensive training</p>
+                </div>
+              </div>
+            </div>
+            <a href="{{ "/about" | relURL }}" class="btn btn-primary">Learn More About Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 4. Testimonials Section -->
+  <section class="testimonials-section py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2 class="section-title">What Our Customers Say</h2>
+          <p class="section-subtitle">Real reviews from satisfied homeowners in {{ .Site.Params.primary_location }}</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="testimonials-carousel">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p>"Excellent service! They fixed our plumbing issue quickly and professionally. The technician was knowledgeable and explained everything clearly. Highly recommended!"</p>
+                <div class="testimonial-author">
+                  <div class="author-info">
+                    <strong>Sarah Johnson</strong>
+                    <span>Manhattan, NY</span>
+                  </div>
+                  <div class="service-type">Plumbing Service</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p>"Outstanding electrical work! They upgraded our entire electrical panel and did it safely and efficiently. Fair pricing and excellent workmanship."</p>
+                <div class="testimonial-author">
+                  <div class="author-info">
+                    <strong>Mike Rodriguez</strong>
+                    <span>Brooklyn, NY</span>
+                  </div>
+                  <div class="service-type">Electrical Service</div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+              <div class="testimonial-content">
+                <div class="rating">
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                  <i class="fas fa-star"></i>
+                </div>
+                <p>"Great HVAC service! Our air conditioning was repaired quickly and has been working perfectly ever since. Professional team and reasonable rates."</p>
+                <div class="testimonial-author">
+                  <div class="author-info">
+                    <strong>Lisa Chen</strong>
+                    <span>Queens, NY</span>
+                  </div>
+                  <div class="service-type">HVAC Service</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 5. FAQ Section -->
+  <section class="faq-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <p class="section-subtitle">Get answers to common questions about our home services</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <div class="accordion" id="faqAccordion">
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                  Are you licensed and insured?
+                </button>
+              </h3>
+              <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Yes, we are fully licensed (License #{{ .Site.Params.license_number }}) and insured. We carry both liability and workers' compensation insurance for your protection and peace of mind.
+                </div>
+              </div>
+            </div>
+            
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                  Do you provide free estimates?
+                </button>
+              </h3>
+              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Yes, we provide free, no-obligation estimates for all our services. Contact us to schedule your free consultation and estimate.
+                </div>
+              </div>
+            </div>
+            
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                  What areas do you serve?
+                </button>
+              </h3>
+              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  We serve {{ .Site.Params.primary_location }} and surrounding areas including {{ delimit .Site.Params.service_areas ", " }}. Contact us to confirm service availability in your area.
+                </div>
+              </div>
+            </div>
+            
+            <div class="accordion-item">
+              <h3 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                  Do you offer emergency services?
+                </button>
+              </h3>
+              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                  Yes, we offer 24/7 emergency services for urgent repairs. Call our emergency line at {{ .Site.Params.emergency_phone }} for immediate assistance.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 6. Expert Team Section -->
+  <section class="team-section py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2 class="section-title">Our Expert Team</h2>
+          <p class="section-subtitle">Experienced professionals dedicated to quality workmanship</p>
+        </div>
+      </div>
+      <div class="row">
+        {{ range where .Site.RegularPages "Section" "team" | first 4 }}
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="team-card">
+            <div class="team-image">
+              {{ if .Params.image }}
+              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid">
+              {{ else }}
+              <div class="team-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+              {{ end }}
+            </div>
+            <div class="team-info">
+              <h4>{{ .Title }}</h4>
+              <p class="team-role">{{ .Params.position | default "Service Technician" }}</p>
+              <p class="team-specialty">{{ .Params.specialty | default "General Services" }}</p>
+              {{ if .Params.certifications }}
+              <div class="certifications">
+                {{ range .Params.certifications }}
+                <span class="cert-badge">{{ . }}</span>
+                {{ end }}
+              </div>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  
+  <!-- 7. Why Choose Us Section -->
+  <section class="why-choose-section py-5 bg-primary text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2 class="section-title text-white">Why Choose Us</h2>
+          <p class="section-subtitle text-white-50">What sets us apart from other home service providers</p>
+        </div>
+      </div>
+      <div class="row">
+        {{ range .Site.Params.why_choose_features }}
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="feature-box text-center">
+            <div class="feature-icon">
+              <i class="{{ .icon }}"></i>
+            </div>
+            <h4>{{ .title }}</h4>
+            <p>{{ .description }}</p>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  
+  <!-- 8. Special Offers Section -->
+  <section class="offers-section py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2 class="section-title">Special Offers</h2>
+          <p class="section-subtitle">Save money on our professional home services</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="offer-card">
+            <div class="offer-badge">New Customer</div>
+            <div class="offer-content">
+              <h3>15% OFF</h3>
+              <p>First Service</p>
+              <ul>
+                <li>Valid for new customers only</li>
+                <li>Applies to labor costs</li>
+                <li>Cannot be combined with other offers</li>
+              </ul>
+              <a href="{{ "/contact" | relURL }}" class="btn btn-primary">Claim Offer</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="offer-card">
+            <div class="offer-badge">Emergency</div>
+            <div class="offer-content">
+              <h3>FREE</h3>
+              <p>Service Call Fee</p>
+              <ul>
+                <li>With completed repair</li>
+                <li>Available 24/7</li>
+                <li>Same-day service</li>
+              </ul>
+              <a href="tel:{{ .Site.Params.emergency_phone }}" class="btn btn-danger">Call Now</a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="offer-card">
+            <div class="offer-badge">Maintenance</div>
+            <div class="offer-content">
+              <h3>$50 OFF</h3>
+              <p>Annual Maintenance</p>
+              <ul>
+                <li>HVAC or Plumbing maintenance</li>
+                <li>Includes full inspection</li>
+                <li>Priority scheduling</li>
+              </ul>
+              <a href="{{ "/contact" | relURL }}" class="btn btn-warning">Schedule Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 9. Latest News/Blog Section -->
+  <section class="blog-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2 class="section-title">Latest News & Tips</h2>
+          <p class="section-subtitle">Helpful information for homeowners</p>
+        </div>
+      </div>
+      <div class="row">
+        {{ range where .Site.RegularPages "Section" "blog" | first 3 }}
+        <div class="col-lg-4 mb-4">
+          <div class="blog-card">
+            {{ if .Params.image }}
+            <div class="blog-image">
+              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid">
+            </div>
+            {{ end }}
+            <div class="blog-content">
+              <div class="blog-meta">
+                <span class="blog-date">{{ .Date.Format "Jan 2, 2006" }}</span>
+                <span class="blog-category">{{ .Params.category | default "Home Tips" }}</span>
+              </div>
+              <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+              <p>{{ .Summary | truncate 120 }}</p>
+              <a href="{{ .Permalink }}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+      <div class="text-center">
+        <a href="{{ "/blog" | relURL }}" class="btn btn-primary">
+          View All Articles <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 10. Appointment Scheduling Section -->
+  <section class="appointment-section py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-5">
+          <h2 class="section-title">Schedule Your Service</h2>
+          <p class="section-subtitle">Get a free estimate or book your appointment today</p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="appointment-form-card">
+            <form class="appointment-form">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="name" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="name" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="phone" class="form-label">Phone Number</label>
+                  <input type="tel" class="form-control" id="phone" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="email" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="service" class="form-label">Service Needed</label>
+                  <select class="form-select" id="service" required>
+                    <option value="">Select a service</option>
+                    <option value="plumbing">Plumbing</option>
+                    <option value="electrical">Electrical</option>
+                    <option value="hvac">HVAC</option>
+                    <option value="roofing">Roofing</option>
+                    <option value="general">General Contracting</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="message" class="form-label">Description of Work Needed</label>
+                <textarea class="form-control" id="message" rows="4" placeholder="Please describe the work you need done..."></textarea>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="preferred_date" class="form-label">Preferred Date</label>
+                  <input type="date" class="form-control" id="preferred_date">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="urgency" class="form-label">Urgency</label>
+                  <select class="form-select" id="urgency">
+                    <option value="normal">Normal (within a week)</option>
+                    <option value="urgent">Urgent (within 2-3 days)</option>
+                    <option value="emergency">Emergency (same day)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-lg">
+                  <i class="fas fa-calendar-check me-2"></i>
+                  Schedule Service
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="contact-sidebar">
+            <div class="contact-card">
+              <h4>Prefer to Call?</h4>
+              <div class="phone-numbers">
+                <div class="phone-item">
+                  <strong>General Service:</strong>
+                  <a href="tel:{{ .Site.Params.phone }}" class="phone-link">{{ .Site.Params.phone }}</a>
+                </div>
+                <div class="phone-item emergency">
+                  <strong>Emergency Line:</strong>
+                  <a href="tel:{{ .Site.Params.emergency_phone }}" class="emergency-link">{{ .Site.Params.emergency_phone }}</a>
+                </div>
+              </div>
+            </div>
+            
+            <div class="service-area-card">
+              <h4>Service Areas</h4>
+              <ul class="service-areas">
+                <li><i class="fas fa-map-marker-alt"></i> {{ .Site.Params.primary_location }}</li>
+                {{ range .Site.Params.service_areas }}
+                <li><i class="fas fa-map-marker-alt"></i> {{ . }}</li>
+                {{ end }}
+              </ul>
+            </div>
+            
+            <div class="hours-card">
+              <h4>Business Hours</h4>
+              <div class="hours-list">
+                <div class="hour-item">
+                  <span>Monday - Friday:</span>
+                  <span>{{ .Site.Params.business_hours.monday }}</span>
+                </div>
+                <div class="hour-item">
+                  <span>Saturday:</span>
+                  <span>{{ .Site.Params.business_hours.saturday }}</span>
+                </div>
+                <div class="hour-item">
+                  <span>Sunday:</span>
+                  <span>{{ .Site.Params.business_hours.sunday }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{{ end }}

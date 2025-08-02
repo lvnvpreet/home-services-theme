@@ -1,0 +1,62 @@
+<!-- 1. Service Card Shortcode: layouts/shortcodes/service-card.html -->
+<!-- Usage: {{< service-card title="Plumbing" icon="fas fa-wrench" price="$89" description="Professional plumbing services" link="/services/plumbing" >}} -->
+
+<div class="service-card-shortcode">
+  <div class="service-icon">
+    <i class="{{ .Get "icon" | default "fas fa-tools" }}"></i>
+  </div>
+  <h4>{{ .Get "title" }}</h4>
+  <p>{{ .Get "description" }}</p>
+  {{ if .Get "price" }}
+  <div class="service-price">Starting at {{ .Get "price" }}</div>
+  {{ end }}
+  {{ if .Get "link" }}
+  <a href="{{ .Get "link" }}" class="btn btn-primary">Learn More</a>
+  {{ end }}
+</div>
+
+<style>
+.service-card-shortcode {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  height: 100%;
+  transition: transform 0.3s ease;
+}
+
+.service-card-shortcode:hover {
+  transform: translateY(-5px);
+}
+
+.service-card-shortcode .service-icon {
+  width: 80px;
+  height: 80px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  color: white;
+  font-size: 2rem;
+}
+
+.service-card-shortcode h4 {
+  margin-bottom: 15px;
+  color: var(--dark-color);
+}
+
+.service-card-shortcode p {
+  color: var(--secondary-color);
+  margin-bottom: 20px;
+}
+
+.service-card-shortcode .service-price {
+  font-weight: 700;
+  color: var(--success-color);
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+</style>

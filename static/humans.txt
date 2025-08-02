@@ -1,0 +1,20 @@
+/* TEAM */
+  Developer: Your Name
+  Contact: your.email [at] example.com
+  Twitter: @yourhandle
+  From: Your City, Your State
+
+/* THANKS */
+  Hugo Static Site Generator
+  Bootstrap Framework
+  Font Awesome Icons
+  Google Fonts
+
+/* SITE */
+  Last update: 2024/01/15
+  Language: English
+  Doctype: HTML5
+  IDE: Visual Studio Code
+  Standards: HTML5, CSS3, ES6
+  Components: Hugo, Bootstrap 5, Font Awesome 6
+  Software: Hugo, Node.js, Git

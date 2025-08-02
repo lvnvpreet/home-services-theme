@@ -1,0 +1,179 @@
+<!-- 8. Service Area Map Shortcode: layouts/shortcodes/service-area.html -->
+<!-- Usage: {{< service-area primary="New York, NY" areas="Manhattan,Brooklyn,Queens,Bronx" >}} -->
+
+<div class="service-area-shortcode">
+  <h4>Areas We Serve</h4>
+  <div class="service-area-map">
+    <div class="primary-area">
+      <i class="fas fa-map-marker-alt"></i>
+      <span class="primary-location">{{ .Get "primary" }}</span>
+      <small>Primary Service Area</small>
+    </div>
+    
+    {{ if .Get "areas" }}
+    <div class="surrounding-areas">
+      {{ $areas := split (.Get "areas") "," }}
+      {{ range $areas }}
+      <div class="area-item">
+        <i class="fas fa-map-marker-alt"></i>
+        <span>{{ . | trim }}</span>
+      </div>
+      {{ end }}
+    </div>
+    {{ end }}
+  </div>
+  
+  <p class="area-note">
+    Don't see your area? <a href="/contact">Contact us</a> to check availability.
+  </p>
+</div>
+
+<style>
+.service-area-shortcode {
+  background: var(--light-color);
+  padding: 30px;
+  border-radius: 12px;
+  margin: 30px 0;
+  text-align: center;
+}
+
+.service-area-shortcode h4 {
+  margin-bottom: 25px;
+  color: var(--dark-color);
+}
+
+.service-area-map {
+  display: grid;
+  gap: 25px;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.primary-area {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  color: white;
+  padding: 25px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.primary-area i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.primary-location {
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.surrounding-areas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+}
+
+.area-item {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.area-item i {
+  color: var(--primary-color);
+}
+
+.area-note {
+  color: var(--secondary-color);
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.area-note a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+</style>
+
+<!-- JavaScript for Before/After Slider -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const sliders = document.querySelectorAll('.before-after-slider');
+  
+  sliders.forEach(slider => {
+    const afterImage = slider.querySelector('.after-image');
+    const handle = slider.querySelector('.slider-handle');
+    let isDragging = false;
+    
+    function updateSlider(x) {
+      const rect = slider.getBoundingClientRect();
+      const percentage = Math.max(0, Math.min(100, ((x - rect.left) / rect.width) * 100));
+      
+      afterImage.style.clipPath = `inset(0 ${100 - percentage}% 0 0)`;
+      handle.style.left = `${percentage}%`;
+    }
+    
+    slider.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      updateSlider(e.clientX);
+    });
+    
+    document.addEventListener('mousemove', function(e) {
+      if (isDragging) {
+        updateSlider(e.clientX);
+      }
+    });
+    
+    document.addEventListener('mouseup', function() {
+      isDragging = false;
+    });
+    
+    // Touch events
+    slider.addEventListener('touchstart', function(e) {
+      isDragging = true;
+      updateSlider(e.touches[0].clientX);
+    });
+    
+    document.addEventListener('touchmove', function(e) {
+      if (isDragging) {
+        e.preventDefault();
+        updateSlider(e.touches[0].clientX);
+      }
+    });
+    
+    document.addEventListener('touchend', function() {
+      isDragging = false;
+    });
+  });
+});
+</script>
+
+
+
+<!-- Usage Examples in Markdown Content:
+
+## In a service page:
+{{< emergency-notice title="Emergency Plumbing" phone="+1-555-911-HELP" >}}
+Don't let a plumbing emergency flood your home. Call us now for immediate assistance!
+{{< /emergency-notice >}}
+
+{{< feature-list features="Licensed & Insured,24/7 Emergency Service,Free Estimates,1 Year Warranty,Same Day Service" >}}
+
+## In a blog post:
+{{< testimonial name="Sarah Johnson" location="Manhattan, NY" rating="5" >}}
+The team was professional, prompt, and did excellent work. Our kitchen renovation exceeded our expectations!
+{{< /testimonial >}}
+
+{{< before-after before="/images/kitchen-before.jpg" after="/images/kitchen-after.jpg" title="Kitchen Renovation Project" >}}
+
+## In any page:
+{{< cta title="Ready to Transform Your Home?" button-text="Get Free Estimate" button-link="/contact" >}}
+Contact us today for a free consultation and see how we can improve your home.
+{{< /cta >}}

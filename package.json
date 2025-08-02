@@ -1,0 +1,106 @@
+{
+  "name": "home-services-hugo-theme",
+  "version": "1.0.0",
+  "description": "A comprehensive Hugo theme for home services and maintenance businesses",
+  "keywords": [
+    "hugo",
+    "theme",
+    "home-services",
+    "contractor",
+    "plumbing",
+    "electrical",
+    "hvac",
+    "maintenance",
+    "business",
+    "responsive"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT",
+  "homepage": "https://github.com/your-username/home-services-theme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/home-services-theme.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/home-services-theme/issues"
+  },
+  "engines": {
+    "hugo": ">=0.112.0",
+    "node": ">=16.0.0"
+  },
+  "scripts": {
+    "dev": "hugo server -D --disableFastRender",
+    "build": "hugo --minify",
+    "build:preview": "hugo --buildDrafts --buildFuture --minify",
+    "clean": "rm -rf public resources",
+    "lint:css": "stylelint 'static/css/**/*.css'",
+    "lint:js": "eslint 'static/js/**/*.js'",
+    "lint:html": "htmlhint 'layouts/**/*.html'",
+    "lint": "npm run lint:css && npm run lint:js && npm run lint:html",
+    "format:css": "prettier --write 'static/css/**/*.css'",
+    "format:js": "prettier --write 'static/js/**/*.js'",
+    "format": "npm run format:css && npm run format:js",
+    "optimize:images": "imagemin 'static/images/**/*.{jpg,jpeg,png}' --out-dir='static/images/optimized'",
+    "test": "npm run lint && npm run build",
+    "deploy:netlify": "netlify deploy --prod --dir=public",
+    "deploy:vercel": "vercel --prod",
+    "serve": "hugo server --bind 0.0.0.0 --baseURL http://localhost",
+    "serve:production": "hugo server --environment production",
+    "analyze": "hugo --templateMetrics --templateMetricsHints"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.23.0",
+    "@babel/preset-env": "^7.23.0",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.50.0",
+    "htmlhint": "^1.1.4",
+    "hugo-bin": "^0.111.3",
+    "imagemin": "^8.0.1",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "imagemin-webp": "^7.0.0",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0",
+    "prettier": "^3.0.3",
+    "stylelint": "^15.10.3",
+    "stylelint-config-standard": "^34.0.0"
+  },
+  "dependencies": {
+    "bootstrap": "^5.3.0",
+    "font-awesome": "^4.7.0"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11",
+    "> 1%",
+    "last 2 versions"
+  ],
+  "hugo": {
+    "version": "0.112.0",
+    "environment": "production"
+  },
+  "config": {
+    "imagemin": {
+      "gifsicle": {
+        "optimizationLevel": 7,
+        "interlaced": false
+      },
+      "mozjpeg": {
+        "progressive": true,
+        "quality": 85
+      },
+      "pngquant": {
+        "quality": [0.8, 0.9],
+        "speed": 4
+      },
+      "svgo": {
+        "plugins": [
+          {
+            "name": "removeViewBox",
+            "active": false
+          }
+        ]
+      }
+    }
+  }
+}

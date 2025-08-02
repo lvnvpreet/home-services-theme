@@ -1,0 +1,101 @@
+{{ define "main" }}
+<div class="offline-page">
+  <section class="offline-content py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <div class="offline-icon">
+            <i class="fas fa-wifi" style="opacity: 0.3;"></i>
+          </div>
+          <h1>You're Offline</h1>
+          <p class="lead">It looks like you've lost your internet connection. Don't worry, you can still access some content that was previously loaded.</p>
+          
+          <div class="offline-actions">
+            <button onclick="window.location.reload()" class="btn btn-primary btn-lg me-3">
+              <i class="fas fa-redo me-2"></i>
+              Try Again
+            </button>
+            <a href="/" class="btn btn-outline-primary btn-lg">
+              <i class="fas fa-home me-2"></i>
+              Go Home
+            </a>
+          </div>
+          
+          <div class="offline-tips mt-5">
+            <h3>While You're Offline</h3>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="tip-item">
+                  <i class="fas fa-phone"></i>
+                  <h5>Call Us Directly</h5>
+                  <p>For immediate assistance</p>
+                  <a href="tel:{{ .Site.Params.phone }}" class="btn btn-sm btn-success">{{ .Site.Params.phone }}</a>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="tip-item">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  <h5>Emergency Service</h5>
+                  <p>24/7 urgent repairs</p>
+                  <a href="tel:{{ .Site.Params.emergency_phone }}" class="btn btn-sm btn-danger">{{ .Site.Params.emergency_phone }}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+.offline-page {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+}
+
+.offline-icon {
+  font-size: 5rem;
+  color: var(--secondary-color);
+  margin-bottom: 2rem;
+}
+
+.offline-page h1 {
+  margin-bottom: 1rem;
+  color: var(--dark-color);
+}
+
+.offline-actions {
+  margin: 2rem 0;
+}
+
+.offline-tips {
+  background: var(--light-color);
+  padding: 2rem;
+  border-radius: 12px;
+}
+
+.tip-item {
+  text-align: center;
+  padding: 1.5rem;
+}
+
+.tip-item i {
+  font-size: 2rem;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.tip-item h5 {
+  margin-bottom: 0.5rem;
+  color: var(--dark-color);
+}
+
+.tip-item p {
+  color: var(--secondary-color);
+  margin-bottom: 1rem;
+}
+</style>
+{{ end }}
+

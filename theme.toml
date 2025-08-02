@@ -1,0 +1,284 @@
+# Home Services Theme Configuration
+
+name = "Home Services & Maintenance"
+license = "MIT"
+licenselink = "https://github.com/your-username/home-services-theme/blob/main/LICENSE"
+description = "A comprehensive Hugo theme for home services and maintenance businesses"
+homepage = "https://github.com/your-username/home-services-theme"
+demosite = "https://home-services-demo.netlify.app"
+tags = [
+  "business",
+  "responsive",
+  "mobile",
+  "company",
+  "services",
+  "maintenance",
+  "contractor",
+  "plumbing",
+  "electrical",
+  "hvac",
+  "roofing",
+  "repair",
+  "portfolio",
+  "gallery",
+  "contact-form",
+  "location-based",
+  "bootstrap",
+  "seo",
+  "fast",
+  "modern"
+]
+features = [
+  "Fully responsive design",
+  "10 home page sections",
+  "Service catalog with filtering",
+  "Team member profiles",
+  "Project gallery with before/after sliders",
+  "Blog with categories and tags",
+  "Contact forms with validation",
+  "Location-based service areas",
+  "Emergency service sections",
+  "SEO optimized",
+  "Google Maps integration",
+  "Social media integration",
+  "Newsletter signup",
+  "Testimonials slider",
+  "Fast loading performance",
+  "Multiple content types",
+  "Bootstrap 5 framework",
+  "Font Awesome icons",
+  "Custom shortcodes",
+  "Mobile menu",
+  "Smooth scrolling",
+  "Image optimization",
+  "Form handling",
+  "Print-friendly styles"
+]
+
+min_version = "0.112.0"
+
+[author]
+  name = "Your Name"
+  homepage = "https://yourwebsite.com"
+  email = "your.email@example.com"
+
+# Original template info
+[original]
+  author = "Home Services Theme"
+  homepage = "https://github.com/your-username/home-services-theme"
+  repo = "https://github.com/your-username/home-services-theme"
+
+# Theme variations for different home service types
+[variations]
+  [variations.general_contractor]
+    name = "General Contractor"
+    description = "Full-service contracting and construction"
+    primary_color = "#007bff"
+    
+  [variations.electrician]
+    name = "Electrician"
+    description = "Professional electrical services"
+    primary_color = "#f39c12"
+    
+  [variations.plumber]
+    name = "Plumber"
+    description = "Plumbing installation and repair"
+    primary_color = "#3498db"
+    
+  [variations.hvac]
+    name = "HVAC Contractor"
+    description = "Heating, ventilation, and air conditioning"
+    primary_color = "#27ae60"
+    
+  [variations.roofing]
+    name = "Roofing Contractor"
+    description = "Roof installation and repair"
+    primary_color = "#8e44ad"
+    
+  [variations.handyman]
+    name = "Handyman Services"
+    description = "General home repairs and maintenance"
+    primary_color = "#e74c3c"
+    
+  [variations.landscaping]
+    name = "Landscaping"
+    description = "Lawn care and landscaping services"
+    primary_color = "#16a085"
+    
+  [variations.cleaning]
+    name = "Cleaning Services"
+    description = "Residential and commercial cleaning"
+    primary_color = "#9b59b6"
+
+# Required Hugo parameters
+[params]
+  version = "1.0.0"
+  hugo_version = "0.112.0"
+  
+  # Default configuration suggestions
+  [params.suggested_config]
+    baseURL = "https://yourhomeservices.com"
+    languageCode = "en-us"
+    title = "Your Home Services Company"
+    
+    # SEO defaults
+    [params.suggested_config.params]
+      description = "Professional home services in your area. Licensed, insured, and trusted for all your home maintenance and repair needs."
+      keywords = "home services, contractor, plumber, electrician, HVAC, repair, maintenance"
+      
+    # Business defaults
+    [params.suggested_config.params.business]
+      type = "General Contractor"
+      phone = "+1 (555) 123-4567"
+      emergency_phone = "+1 (555) 911-HELP"
+      email = "info@yourhomeservices.com"
+      address = "123 Main Street, Your City, State 12345"
+      license_number = "LIC-12345"
+      years_in_business = "15"
+      
+    # Service areas
+    [params.suggested_config.params.service_areas]
+      primary = "Your City, State"
+      areas = ["Area 1", "Area 2", "Area 3", "Area 4"]
+      
+    # Social media
+    [params.suggested_config.params.social]
+      facebook = "https://facebook.com/yourbusiness"
+      google_business = "https://business.google.com/yourbusiness"
+      yelp = "https://yelp.com/biz/yourbusiness"
+
+# File structure documentation
+[file_structure]
+  content_types = [
+    "services - Individual service pages",
+    "team - Team member profiles", 
+    "blog - Blog posts and articles",
+    "gallery - Project portfolio items"
+  ]
+  
+  required_directories = [
+    "content/services/",
+    "content/team/",
+    "content/blog/",
+    "content/gallery/",
+    "static/images/",
+    "data/"
+  ]
+  
+  optional_directories = [
+    "content/testimonials/",
+    "content/faqs/",
+    "static/css/",
+    "static/js/",
+    "static/fonts/"
+  ]
+
+# Customization guide
+[customization]
+  colors = "Edit CSS variables in themes/home-services-theme/static/css/style.css"
+  fonts = "Add custom fonts in themes/home-services-theme/layouts/partials/head.html"
+  logo = "Replace logo in static/images/logo.png or set params.logo in config"
+  favicon = "Replace static/favicon.ico or set params.favicon in config"
+  
+  [customization.content]
+    hero = "Edit hero_title and hero_subtitle in site params"
+    services = "Add markdown files to content/services/"
+    team = "Add markdown files to content/team/"
+    testimonials = "Add testimonials array to site params"
+    contact = "Configure contact forms and business information"
+
+# Performance recommendations
+[performance]
+  image_optimization = "Use WebP format for images when possible"
+  css_minification = "Enable in Hugo config: [minify] [minify.tdewolff] [minify.tdewolff.css]"
+  js_minification = "Enable in Hugo config: [minify] [minify.tdewolff] [minify.tdewolff.js]"
+  caching = "Configure proper cache headers on your web server"
+  cdn = "Consider using a CDN for static assets"
+
+# SEO recommendations  
+[seo]
+  structured_data = "Included automatically for LocalBusiness schema"
+  meta_tags = "Generated automatically from front matter and site config"
+  open_graph = "Configured in head.html partial"
+  twitter_cards = "Configured in head.html partial"
+  sitemap = "Enable in Hugo config: [sitemap]"
+  robots = "Create robots.txt in static/ directory"
+
+# Browser support
+[browser_support]
+  minimum = [
+    "Chrome 60+",
+    "Firefox 55+", 
+    "Safari 12+",
+    "Edge 79+",
+    "iOS Safari 12+",
+    "Android Chrome 60+"
+  ]
+  features_used = [
+    "CSS Grid",
+    "CSS Flexbox", 
+    "ES6 JavaScript",
+    "Intersection Observer API",
+    "CSS Custom Properties"
+  ]
+
+# Dependencies
+[dependencies]
+  hugo_minimum = "0.112.0"
+  external_css = [
+    "Bootstrap 5.3.0",
+    "Font Awesome 6.4.0",
+    "Google Fonts (Inter)"
+  ]
+  external_js = [
+    "Bootstrap 5.3.0 Bundle"
+  ]
+  
+# Development setup
+[development]
+  setup_commands = [
+    "hugo new site mysite",
+    "cd mysite",
+    "git clone https://github.com/your-username/home-services-theme themes/home-services-theme",
+    "echo 'theme = \"home-services-theme\"' >> config.toml",
+    "hugo server -D"
+  ]
+  
+  sample_content = [
+    "Copy sample content from themes/home-services-theme/exampleSite/",
+    "Customize config.toml with your business information", 
+    "Add your own images to static/images/",
+    "Create content in content/services/ and content/team/"
+  ]
+
+# Deployment recommendations
+[deployment]
+  recommended_hosts = [
+    "Netlify - Easy deployment with form handling",
+    "Vercel - Fast global CDN",
+    "GitHub Pages - Free hosting for open source",
+    "AWS S3 + CloudFront - Scalable enterprise solution"
+  ]
+  
+  form_handling = [
+    "Netlify Forms - Built-in form processing",
+    "Formspree - Third-party form service", 
+    "Custom backend - For advanced requirements"
+  ]
+
+# Changelog
+[changelog]
+  [changelog.v1_0_0]
+    date = "2024-01-15"
+    changes = [
+      "Initial release",
+      "Complete home services theme",
+      "10 homepage sections", 
+      "Service catalog with filtering",
+      "Team member profiles",
+      "Project gallery",
+      "Blog functionality",
+      "Contact forms",
+      "SEO optimization",
+      "Mobile responsive design"
+    ]

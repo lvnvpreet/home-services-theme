@@ -1,0 +1,535 @@
+<!-- Navigation Partial: layouts/partials/navigation.html -->
+
+<nav class="main-navbar navbar navbar-expand-lg navbar-light">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand" href="{{ .Site.BaseURL }}">
+      {{ if .Site.Params.logo }}
+      <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Title }}" height="50">
+      {{ else }}
+      <div class="logo-text">
+        <i class="fas fa-tools me-2"></i>
+        <span class="brand-name">{{ .Site.Title }}</span>
+      </div>
+      {{ end }}
+    </a>
+    
+    <!-- Mobile Toggle Button -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain" aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- Navigation Menu -->
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav mx-auto">
+        {{ $currentPage := . }}
+        {{ range .Site.Menus.main }}
+        <li class="nav-item {{ if .HasChildren }}dropdown{{ end }}">
+          {{ if .HasChildren }}
+          <!-- Dropdown Menu -->
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown{{ .Name }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            {{ .Name }}
+            <i class="fas fa-chevron-down ms-1"></i>
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown{{ .Name }}">
+            {{ range .Children }}
+            <li><a class="dropdown-item" href="{{ .URL }}">{{ .Name }}</a></li>
+            {{ end }}
+          </ul>
+          {{ else }}
+          <!-- Regular Menu Item -->
+          <a class="nav-link{{ if eq $currentPage.RelPermalink .URL }} active{{ end }}" href="{{ .URL }}">
+            {{ if .Pre }}{{ .Pre | safeHTML }}{{ end }}
+            {{ .Name }}
+            {{ if .Post }}{{ .Post | safeHTML }}{{ end }}
+          </a>
+          {{ end }}
+        </li>
+        {{ end }}
+      </ul>
+      
+      <!-- Right Side Items -->
+      <div class="navbar-nav ms-auto d-flex align-items-center">
+        
+        <!-- Search Form -->
+        <form class="d-flex search-form me-3" action="{{ "/search" | relURL }}" method="get">
+          <div class="input-group">
+            <input class="form-control" type="search" placeholder="Search..." name="q" aria-label="Search">
+            <button class="btn btn-outline-primary" type="submit" aria-label="Search">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
+        
+        <!-- Emergency Call Button (Mobile) -->
+        <div class="d-lg-none">
+          <a href="tel:{{ .Site.Params.emergency_phone }}" class="btn btn-danger btn-sm me-2">
+            <i class="fas fa-phone me-1"></i>
+            Emergency
+          </a>
+        </div>
+        
+        <!-- CTA Button -->
+        <div class="d-none d-lg-block">
+          <a href="{{ "/contact" | relURL }}" class="btn btn-primary">
+            <i class="fas fa-calendar-check me-2"></i>
+            Free Quote
+          </a>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Navigation Overlay -->
+<div class="mobile-nav-overlay d-lg-none" id="mobileNavOverlay">
+  <div class="mobile-nav-content">
+    <div class="mobile-nav-header">
+      <h5>Menu</h5>
+      <button class="mobile-nav-close" id="mobileNavClose">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    
+    <div class="mobile-nav-body">
+      <!-- Quick Contact -->
+      <div class="mobile-contact-section">
+        <a href="tel:{{ .Site.Params.phone }}" class="mobile-contact-item">
+          <i class="fas fa-phone"></i>
+          <div>
+            <strong>Call Us</strong>
+            <span>{{ .Site.Params.phone }}</span>
+          </div>
+        </a>
+        
+        {{ if .Site.Params.emergency_phone }}
+        <a href="tel:{{ .Site.Params.emergency_phone }}" class="mobile-contact-item emergency">
+          <i class="fas fa-exclamation-triangle"></i>
+          <div>
+            <strong>Emergency</strong>
+            <span>{{ .Site.Params.emergency_phone }}</span>
+          </div>
+        </a>
+        {{ end }}
+      </div>
+      
+      <!-- Navigation Links -->
+      <div class="mobile-nav-links">
+        {{ range .Site.Menus.main }}
+        {{ if .HasChildren }}
+        <div class="mobile-nav-group">
+          <div class="mobile-nav-group-title">
+            <span>{{ .Name }}</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="mobile-nav-submenu">
+            {{ range .Children }}
+            <a href="{{ .URL }}" class="mobile-nav-link submenu">{{ .Name }}</a>
+            {{ end }}
+          </div>
+        </div>
+        {{ else }}
+        <a href="{{ .URL }}" class="mobile-nav-link">{{ .Name }}</a>
+        {{ end }}
+        {{ end }}
+      </div>
+      
+      <!-- Mobile CTA -->
+      <div class="mobile-nav-cta">
+        <a href="{{ "/contact" | relURL }}" class="btn btn-primary w-100 mb-2">
+          <i class="fas fa-calendar-check me-2"></i>
+          Get Free Quote
+        </a>
+        <a href="{{ "/services" | relURL }}" class="btn btn-outline-primary w-100">
+          <i class="fas fa-tools me-2"></i>
+          View Services
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+/* Navigation Styles */
+.main-navbar {
+  background: #fff;
+  padding: 15px 0;
+  border-bottom: 1px solid #e9ecef;
+  transition: all 0.3s ease;
+}
+
+.main-navbar.scrolled {
+  padding: 10px 0;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+}
+
+/* Logo Styles */
+.navbar-brand {
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.05);
+}
+
+.navbar-brand .logo-text {
+  display: flex;
+  align-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.navbar-brand .brand-name {
+  color: var(--dark-color);
+}
+
+/* Navigation Links */
+.navbar-nav .nav-link {
+  font-weight: 500;
+  color: var(--dark-color);
+  padding: 10px 15px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: var(--primary-color);
+}
+
+.navbar-nav .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--primary-color);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  width: 80%;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  border: none;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  padding: 10px 0;
+  margin-top: 10px;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+  color: var(--dark-color);
+}
+
+.dropdown-item:hover {
+  background: var(--primary-color);
+  color: white;
+}
+
+/* Search Form */
+.search-form .input-group {
+  width: 250px;
+}
+
+.search-form .form-control {
+  border-radius: 25px 0 0 25px;
+  border-right: none;
+  font-size: 0.9rem;
+}
+
+.search-form .btn {
+  border-radius: 0 25px 25px 0;
+  border-left: none;
+}
+
+/* Mobile Navigation Overlay */
+.mobile-nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.8);
+  z-index: 9999;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-nav-content {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 300px;
+  height: 100%;
+  background: white;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+}
+
+.mobile-nav-overlay.active .mobile-nav-content {
+  transform: translateX(0);
+}
+
+.mobile-nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-nav-header h5 {
+  margin: 0;
+  color: var(--dark-color);
+}
+
+.mobile-nav-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+  cursor: pointer;
+}
+
+.mobile-contact-section {
+  padding: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0;
+  text-decoration: none;
+  color: var(--dark-color);
+  transition: color 0.3s ease;
+}
+
+.mobile-contact-item:hover {
+  color: var(--primary-color);
+}
+
+.mobile-contact-item.emergency {
+  color: var(--danger-color);
+}
+
+.mobile-contact-item i {
+  width: 20px;
+  text-align: center;
+  font-size: 1.25rem;
+}
+
+.mobile-contact-item strong {
+  display: block;
+  margin-bottom: 2px;
+}
+
+.mobile-contact-item span {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.mobile-nav-links {
+  padding: 20px;
+}
+
+.mobile-nav-link {
+  display: block;
+  padding: 12px 0;
+  color: var(--dark-color);
+  text-decoration: none;
+  font-weight: 500;
+  border-bottom: 1px solid #eee;
+  transition: color 0.3s ease;
+}
+
+.mobile-nav-link:hover {
+  color: var(--primary-color);
+}
+
+.mobile-nav-link.submenu {
+  padding-left: 20px;
+  font-size: 0.9rem;
+  border-bottom: none;
+}
+
+.mobile-nav-group-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  font-weight: 600;
+  color: var(--dark-color);
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.mobile-nav-submenu {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.mobile-nav-submenu.active {
+  max-height: 200px;
+}
+
+.mobile-nav-cta {
+  padding: 20px;
+  border-top: 1px solid #eee;
+}
+
+/* Responsive Design */
+@media (max-width: 991px) {
+  .search-form {
+    margin-top: 15px;
+    width: 100%;
+  }
+  
+  .search-form .input-group {
+    width: 100%;
+  }
+  
+  .navbar-nav {
+    margin-top: 15px;
+  }
+  
+  .navbar-nav .nav-link {
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .dropdown-menu {
+    position: static;
+    float: none;
+    width: auto;
+    box-shadow: none;
+    border: none;
+    background: var(--light-color);
+    margin: 10px 0;
+    border-radius: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .mobile-nav-content {
+    width: 100%;
+  }
+  
+  .search-form .input-group {
+    flex-direction: column;
+  }
+  
+  .search-form .form-control,
+  .search-form .btn {
+    border-radius: 25px;
+    margin-bottom: 5px;
+  }
+}
+</style>
+
+<script>
+// Navigation JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+  initMobileNavigation();
+  initStickyNavigation();
+  initDropdownMenus();
+});
+
+function initMobileNavigation() {
+  const mobileToggle = document.querySelector('.navbar-toggler');
+  const mobileOverlay = document.getElementById('mobileNavOverlay');
+  const mobileClose = document.getElementById('mobileNavClose');
+  
+  if (mobileToggle && mobileOverlay) {
+    mobileToggle.addEventListener('click', function() {
+      mobileOverlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+    
+    // Close mobile nav
+    function closeMobileNav() {
+      mobileOverlay.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+    
+    if (mobileClose) {
+      mobileClose.addEventListener('click', closeMobileNav);
+    }
+    
+    // Close on overlay click
+    mobileOverlay.addEventListener('click', function(e) {
+      if (e.target === mobileOverlay) {
+        closeMobileNav();
+      }
+    });
+    
+    // Close on link click
+    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', closeMobileNav);
+    });
+  }
+  
+  // Mobile submenu toggles
+  const groupTitles = document.querySelectorAll('.mobile-nav-group-title');
+  groupTitles.forEach(title => {
+    title.addEventListener('click', function() {
+      const submenu = this.nextElementSibling;
+      const icon = this.querySelector('i');
+      
+      submenu.classList.toggle('active');
+      icon.style.transform = submenu.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
+  });
+}
+
+function initStickyNavigation() {
+  const navbar = document.querySelector('.main-navbar');
+  let lastScrollTop = 0;
+  
+  window.addEventListener('scroll', function() {
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    
+    // Add scrolled class
+    if (scrollTop > 100) {
+      navbar.classList.add('scrolled');
+    } else {
+      navbar.classList.remove('scrolled');
+    }
+    
+    lastScrollTop = scrollTop;
+  });
+}
+
+function initDropdownMenus() {
+  // Close dropdowns when clicking outside
+  document.addEventListener('click', function(e) {
+    const dropdowns = document.querySelectorAll('.dropdown-menu.show');
+    dropdowns.forEach(dropdown => {
+      if (!dropdown.parentNode.contains(e.target)) {
+        dropdown.classList.remove('show');
+      }
+    });
+  });
+}
+</script>
