@@ -1,5 +1,5 @@
 <!-- 5. Feature List Shortcode: layouts/shortcodes/feature-list.html -->
-<!-- Usage: {{< feature-list features="Licensed & Insured,24/7 Emergency Service,Free Estimates,Quality Guarantee" >}} -->
+<!-- Usage: {{ "{{< feature-list features=\"Licensed & Insured,24/7 Emergency Service,Free Estimates,Quality Guarantee\" >}}" }} -->
 
 <div class="feature-list-shortcode">
   {{ $features := split (.Get "features") "," }}

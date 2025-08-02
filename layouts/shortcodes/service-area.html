@@ -1,5 +1,5 @@
 <!-- 8. Service Area Map Shortcode: layouts/shortcodes/service-area.html -->
-<!-- Usage: {{< service-area primary="New York, NY" areas="Manhattan,Brooklyn,Queens,Bronx" >}} -->
+<!-- Usage: {{ "{{< service-area primary=\"New York, NY\" areas=\"Manhattan,Brooklyn,Queens,Bronx\" >}}" }} -->
 
 <div class="service-area-shortcode">
   <h4>Areas We Serve</h4>
@@ -160,20 +160,22 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- Usage Examples in Markdown Content:
 
 ## In a service page:
-{{< emergency-notice title="Emergency Plumbing" phone="+1-555-911-HELP" >}}
+{{ "{{< emergency-notice title=\"Emergency Plumbing\" phone=\"+1-555-911-HELP\" >}}" }}
 Don't let a plumbing emergency flood your home. Call us now for immediate assistance!
-{{< /emergency-notice >}}
+{{ "{{< /emergency-notice >}}" }}
 
-{{< feature-list features="Licensed & Insured,24/7 Emergency Service,Free Estimates,1 Year Warranty,Same Day Service" >}}
+{{ "{{< feature-list features=\"Licensed & Insured,24/7 Emergency Service,Free Estimates,1 Year Warranty,Same Day Service\" >}}" }}
 
 ## In a blog post:
-{{< testimonial name="Sarah Johnson" location="Manhattan, NY" rating="5" >}}
+{{ "{{< testimonial name=\"Sarah Johnson\" location=\"Manhattan, NY\" rating=\"5\" >}}" }}
 The team was professional, prompt, and did excellent work. Our kitchen renovation exceeded our expectations!
-{{< /testimonial >}}
+{{ "{{< /testimonial >}}" }}
 
-{{< before-after before="/images/kitchen-before.jpg" after="/images/kitchen-after.jpg" title="Kitchen Renovation Project" >}}
+{{ "{{< before-after before=\"/images/kitchen-before.jpg\" after=\"/images/kitchen-after.jpg\" title=\"Kitchen Renovation Project\" >}}" }}
 
 ## In any page:
-{{< cta title="Ready to Transform Your Home?" button-text="Get Free Estimate" button-link="/contact" >}}
+{{ "{{< cta title=\"Ready to Transform Your Home?\" button-text=\"Get Free Estimate\" button-link=\"/contact\" >}}" }}
 Contact us today for a free consultation and see how we can improve your home.
-{{< /cta >}}
+{{ "{{< /cta >}}" }}
+
+-->
