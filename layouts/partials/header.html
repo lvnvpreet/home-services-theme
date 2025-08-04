@@ -39,51 +39,8 @@
     </div>
   </div>
   
-  <!-- Main Header (Logo & Navigation) -->
-  <nav class="main-navbar navbar navbar-expand-lg navbar-light">
-    <div class="container">
-      <!-- Logo -->
-      <a class="navbar-brand" href="{{ .Site.BaseURL }}">
-        {{ if .Site.Params.logo }}
-        <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Params.business_name | default .Site.Title }}" height="50">
-        {{ else }}
-        <div class="logo-text">
-          <i class="fas fa-tools me-2"></i>
-          <span class="brand-name">{{ .Site.Params.business_name | default .Site.Title }}</span>
-        </div>
-        {{ end }}
-      </a>
-      
-      <!-- Mobile Toggle -->
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <!-- Navigation Menu -->
-      <div class="collapse navbar-collapse" id="navbarMain">
-        <ul class="navbar-nav mx-auto">
-          {{ $currentPage := . }}
-          {{ range .Site.Menus.main }}
-          <li class="nav-item">
-            <a class="nav-link{{ if eq $currentPage.RelPermalink .URL }} active{{ end }}" href="{{ .URL }}">
-              {{ .Name }}
-            </a>
-          </li>
-          {{ end }}
-        </ul>
-        
-        <!-- Search Bar -->
-        <form class="d-flex search-form" action="{{ "/search" | relURL }}" method="get">
-          <div class="input-group">
-            <input class="form-control" type="search" placeholder="Search services..." name="q">
-            <button class="btn btn-outline-primary" type="submit">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </nav>
+  <!-- Navigation -->
+  {{ partial "navigation.html" . }}
   
   <!-- Contact Header Bar -->
   <div class="contact-header-bar">

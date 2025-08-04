@@ -1,0 +1,383 @@
+{{ define "main" }}
+<div class="location-homepage">
+  <!-- Location Hero Section -->
+  <section class="hero-section position-relative overflow-hidden">
+    <div class="hero-bg position-absolute w-100 h-100">
+      {{ if .Params.hero_image }}
+      <img src="{{ .Params.hero_image | relURL }}" alt="{{ .Title }}" class="w-100 h-100 object-cover">
+      {{ else }}
+      <div class="bg-primary w-100 h-100"></div>
+      {{ end }}
+      <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
+    </div>
+    
+    <div class="container position-relative" style="z-index: 2;">
+      <div class="row min-vh-75 align-items-center">
+        <div class="col-lg-8">
+          <div class="hero-content text-white">
+            <!-- Location Badge -->
+            <div class="location-badge mb-3">
+              <span class="badge bg-primary fs-6 px-3 py-2">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                Serving {{ .Title }}
+              </span>
+            </div>
+            
+            <h1 class="display-3 fw-bold mb-4">
+              {{ .Params.hero_title | default (printf "%s's #1 Rated Home Services" .Title) }}
+            </h1>
+            
+            <p class="lead fs-4 mb-4 text-light">
+              {{ .Params.hero_subtitle | default (printf "Professional plumbing, HVAC, and electrical services in %s. Licensed, insured, and available 24/7 for emergencies." .Title) }}
+            </p>
+            
+            <!-- Key Features -->
+            <div class="hero-features mb-5">
+              <div class="row g-3">
+                {{ range .Params.key_features | default (slice "24/7 Emergency Service" "Licensed & Insured" "Same-Day Service" "Local Experts") }}
+                <div class="col-auto">
+                  <div class="feature-item d-flex align-items-center text-white">
+                    <i class="fas fa-check-circle text-success me-2"></i>
+                    <span>{{ . }}</span>
+                  </div>
+                </div>
+                {{ end }}
+              </div>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="hero-cta d-flex flex-wrap gap-3">
+              <a href="tel:{{ .Params.phone | default .Site.Params.phone }}" class="btn btn-danger btn-lg px-4 py-3">
+                <i class="fas fa-phone me-2"></i>
+                Call {{ .Params.phone | default .Site.Params.phone }}
+              </a>
+              <a href="#quote-form" class="btn btn-light btn-lg px-4 py-3">
+                <i class="fas fa-calculator me-2"></i>
+                Get Free Quote
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-4">
+          <!-- Quick Quote Form -->
+          <div class="quote-card bg-white rounded-lg shadow-lg p-4">
+            <h3 class="h4 text-center mb-4 text-dark">
+              <i class="fas fa-calculator text-primary me-2"></i>
+              Get Instant Quote
+            </h3>
+            
+            <form class="quote-form" action="#" method="post">
+              <div class="mb-3">
+                <select class="form-select" required>
+                  <option value="">Select Service</option>
+                  {{ range .Params.services | default (slice "Emergency Plumbing" "HVAC Repair" "Electrical Work" "Water Heater" "Drain Cleaning") }}
+                  <option value="{{ . | urlize }}">{{ . }}</option>
+                  {{ end }}
+                </select>
+              </div>
+              
+              <div class="mb-3">
+                <input type="text" class="form-control" placeholder="Your Name" required>
+              </div>
+              
+              <div class="mb-3">
+                <input type="tel" class="form-control" placeholder="Phone Number" required>
+              </div>
+              
+              <div class="mb-3">
+                <input type="email" class="form-control" placeholder="Email Address" required>
+              </div>
+              
+              <div class="mb-3">
+                <textarea class="form-control" rows="3" placeholder="Describe your issue..."></textarea>
+              </div>
+              
+              <button type="submit" class="btn btn-primary w-100 py-2">
+                <i class="fas fa-paper-plane me-2"></i>
+                Get My Quote
+              </button>
+              
+              <p class="text-center small text-muted mt-2 mb-0">
+                <i class="fas fa-shield-alt me-1"></i>
+                Your information is secure and confidential
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Emergency Notice -->
+  {{ if .Params.show_emergency_notice | default true }}
+  <section class="emergency-notice bg-danger text-white py-3">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <div class="d-flex align-items-center">
+            <i class="fas fa-exclamation-triangle fa-2x me-3"></i>
+            <div>
+              <h4 class="mb-1">24/7 Emergency Service in {{ .Title }}</h4>
+              <p class="mb-0">Burst pipes, no heat, electrical emergencies - we're here when you need us most!</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+          <a href="tel:{{ .Params.emergency_phone | default .Params.phone | default .Site.Params.phone }}" class="btn btn-light btn-lg">
+            <i class="fas fa-phone-alt me-2"></i>
+            Emergency: {{ .Params.emergency_phone | default .Params.phone | default .Site.Params.phone }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  <!-- Location Services -->
+  <section class="services-section py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-5">
+          <h2 class="display-5 fw-bold mb-3">Our {{ .Title }} Home Services</h2>
+          <p class="lead text-muted">Professional, reliable, and affordable home services tailored to {{ .Title }} residents</p>
+        </div>
+      </div>
+      
+      <div class="row g-4">
+        {{ $location := .Title }}
+        {{ range $index, $service := (.Params.featured_services | default (slice 
+          (dict "name" "Emergency Plumbing" "icon" "fas fa-wrench" "description" "24/7 plumbing repairs and installations")
+          (dict "name" "HVAC Services" "icon" "fas fa-thermometer-half" "description" "Heating and cooling installation, repair, and maintenance")
+          (dict "name" "Electrical Work" "icon" "fas fa-bolt" "description" "Safe and reliable electrical services for your home")
+          (dict "name" "Water Heater Service" "icon" "fas fa-fire" "description" "Water heater repair, replacement, and maintenance")
+          (dict "name" "Drain Cleaning" "icon" "fas fa-tint" "description" "Professional drain and sewer line cleaning services")
+          (dict "name" "Home Maintenance" "icon" "fas fa-home" "description" "Comprehensive home maintenance and repair services")
+        )) }}
+        <div class="col-lg-4 col-md-6">
+          <div class="service-card bg-white rounded-lg shadow-sm p-4 h-100 text-center hover-lift">
+            <div class="service-icon mb-3">
+              <i class="{{ .icon }} fa-3x text-primary"></i>
+            </div>
+            <h3 class="h5 mb-3">{{ .name }}</h3>
+            <p class="text-muted mb-4">{{ .description }}</p>
+            <div class="service-meta">
+              <small class="text-primary">
+                <i class="fas fa-map-marker-alt me-1"></i>
+                Available in {{ $location }}
+              </small>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+      
+      <div class="row mt-5">
+        <div class="col-lg-8 mx-auto text-center">
+          <a href="{{ "/services" | relURL }}" class="btn btn-outline-primary btn-lg">
+            <i class="fas fa-list me-2"></i>
+            View All Services
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us for [Location] -->
+  <section class="why-choose-us bg-light py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h2 class="display-6 fw-bold mb-4">Why {{ .Title }} Chooses Us</h2>
+          
+          <div class="features-list">
+            {{ range .Params.why_choose_us | default (slice 
+              (dict "icon" "fas fa-users" "title" "Local Expertise" "description" "We know the unique needs of homes and buildings in your area")
+              (dict "icon" "fas fa-clock" "title" "Fast Response" "description" "Quick response times across all neighborhoods we serve")
+              (dict "icon" "fas fa-shield-alt" "title" "Licensed & Insured" "description" "Fully licensed, bonded, and insured for your protection")
+              (dict "icon" "fas fa-star" "title" "5-Star Service" "description" "Consistently rated 5 stars by satisfied customers")
+            ) }}
+            <div class="feature-item d-flex mb-4">
+              <div class="feature-icon me-3">
+                <i class="{{ .icon }} fa-2x text-primary"></i>
+              </div>
+              <div>
+                <h4 class="h5 mb-2">{{ .title }}</h4>
+                <p class="text-muted mb-0">{{ .description }}</p>
+              </div>
+            </div>
+            {{ end }}
+          </div>
+          
+          <div class="cta-buttons mt-4">
+            <a href="#testimonials" class="btn btn-primary me-3">
+              <i class="fas fa-comments me-2"></i>
+              Read Reviews
+            </a>
+            <a href="{{ "/about" | relURL }}" class="btn btn-outline-primary">
+              <i class="fas fa-info-circle me-2"></i>
+              About Us
+            </a>
+          </div>
+        </div>
+        
+        <div class="col-lg-6 text-center">
+          {{ if .Params.why_choose_image }}
+          <img src="{{ .Params.why_choose_image | relURL }}" alt="Why choose us in {{ .Title }}" class="img-fluid rounded-lg shadow">
+          {{ else }}
+          <div class="placeholder-image bg-primary text-white rounded-lg d-flex align-items-center justify-content-center" style="height: 400px;">
+            <div class="text-center">
+              <i class="fas fa-home fa-5x mb-3 opacity-75"></i>
+              <h4>Serving {{ .Title }}</h4>
+              <p class="mb-0">Professional Home Services</p>
+            </div>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Local Testimonials -->
+  {{ if .Params.testimonials }}
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-5">
+          <h2 class="display-6 fw-bold mb-3">What {{ .Title }} Customers Say</h2>
+          <p class="lead text-muted">Real reviews from satisfied customers in your area</p>
+        </div>
+      </div>
+      
+      <div class="row g-4">
+        {{ range .Params.testimonials }}
+        <div class="col-lg-6">
+          <div class="testimonial-card bg-white rounded shadow-sm p-4">
+            <div class="d-flex mb-3">
+              {{ range seq .rating }}
+              <i class="fas fa-star text-warning"></i>
+              {{ end }}
+            </div>
+            <p class="mb-3 fst-italic">"{{ .review }}"</p>
+            <div class="d-flex align-items-center">
+              <div class="avatar bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-3" style="width: 40px; height: 40px;">
+                {{ substr .name 0 1 }}
+              </div>
+              <div>
+                <strong>{{ .name }}</strong>
+                {{ if .location }}
+                <small class="text-muted d-block">{{ .location }}</small>
+                {{ end }}
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  <!-- Contact CTA -->
+  <section id="contact" class="py-5 bg-primary text-white">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2 class="display-6 fw-bold mb-3">Ready to Get Started?</h2>
+          <p class="lead mb-4">Contact our {{ .Title }} team today for a free consultation and quote.</p>
+          
+          <div class="row g-3 justify-content-center">
+            <div class="col-auto">
+              <a href="tel:{{ .Params.phone | default .Site.Params.phone }}" class="btn btn-light btn-lg">
+                <i class="fas fa-phone me-2"></i>
+                Call Now
+              </a>
+            </div>
+            <div class="col-auto">
+              <a href="{{ "/contact" | relURL }}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-envelope me-2"></i>
+                Get Quote
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+.min-vh-75 {
+  min-height: 75vh;
+}
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1) !important;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+.rounded-lg {
+  border-radius: 1rem !important;
+}
+
+.quote-card {
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+.hero-features .feature-item {
+  font-weight: 500;
+}
+
+.service-card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.service-card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-5px);
+}
+
+.testimonial-card {
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--primary-color);
+}
+
+.placeholder-image {
+  min-height: 400px;
+}
+
+.emergency-notice {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.8; }
+  100% { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .hero-cta {
+    flex-direction: column;
+  }
+  
+  .hero-cta .btn {
+    width: 100%;
+  }
+  
+  .quote-card {
+    margin-top: 2rem;
+  }
+}
+</style>
+{{ end }}

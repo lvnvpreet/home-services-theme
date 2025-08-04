@@ -1,0 +1,276 @@
+{{ define "main" }}
+<div class="service-areas-page">
+  <!-- Hero Section -->
+  <section class="hero-section bg-primary text-white py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-8">
+          <h1 class="display-4 fw-bold mb-3">{{ .Params.hero_title | default "Our Service Areas" }}</h1>
+          <p class="lead mb-4">{{ .Params.hero_subtitle | default "We proudly serve customers across multiple locations with our professional home services. Find your area and discover our local expertise." }}</p>
+        </div>
+        <div class="col-lg-4 text-center">
+          <i class="fas fa-map-marked-alt fa-5x opacity-75"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Areas Grid -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-5">
+          <h2 class="h1 mb-3">Areas We Serve</h2>
+          <p class="lead text-muted">Click on any area below to learn more about our services in that location</p>
+        </div>
+      </div>
+      
+      <div class="row g-4">
+        {{ range .Params.locations }}
+        <div class="col-lg-4 col-md-6">
+          <div class="area-card h-100">
+            <div class="card border-0 shadow-sm h-100 hover-lift">
+              {{ if .image }}
+              <div class="card-img-top position-relative overflow-hidden" style="height: 200px;">
+                <img src="{{ .image | relURL }}" 
+                     alt="{{ .title }}" 
+                     class="w-100 h-100 object-cover">
+                <div class="overlay position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-25"></div>
+              </div>
+              {{ end }}
+              
+              <div class="card-body d-flex flex-column">
+                <h3 class="card-title h4 mb-3">
+                  <i class="fas fa-map-marker-alt text-primary me-2"></i>
+                  {{ .title }}
+                </h3>
+                
+                {{ if .description }}
+                <p class="card-text text-muted mb-3">{{ .description }}</p>
+                {{ end }}
+                
+                <!-- Service Highlights -->
+                {{ if .services }}
+                <div class="services-preview mb-3">
+                  <small class="text-muted d-block mb-2">Services Available:</small>
+                  <div class="d-flex flex-wrap gap-1">
+                    {{ range first 3 .services }}
+                    <span class="badge bg-light text-dark">{{ . }}</span>
+                    {{ end }}
+                    {{ if gt (len .services) 3 }}
+                    <span class="badge bg-primary">+{{ sub (len .services) 3 }} more</span>
+                    {{ end }}
+                  </div>
+                </div>
+                {{ end }}
+                
+                <!-- Location Info -->
+                <div class="location-info mb-3">
+                  {{ if .zip_codes }}
+                  <small class="text-muted d-block">
+                    <i class="fas fa-mail-bulk me-1"></i>
+                    ZIP: {{ delimit .zip_codes ", " }}
+                  </small>
+                  {{ end }}
+                  
+                  {{ if .phone }}
+                  <small class="text-muted d-block">
+                    <i class="fas fa-phone me-1"></i>
+                    {{ .phone }}
+                  </small>
+                  {{ end }}
+                  
+                  {{ if .neighborhoods }}
+                  <small class="text-muted d-block">
+                    <i class="fas fa-map me-1"></i>
+                    {{ delimit (first 3 .neighborhoods) ", " }}{{ if gt (len .neighborhoods) 3 }} & more{{ end }}
+                  </small>
+                  {{ end }}
+                </div>
+                
+                <!-- CTA Button -->
+                <div class="mt-auto">
+                  <a href="{{ .link | relURL }}" class="btn btn-primary w-100">
+                    <i class="fas fa-arrow-right me-2"></i>
+                    View {{ .title }} Services
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us Section -->
+  {{ if .Params.why_choose_us }}
+  <section class="why-choose-us py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-5">
+          <h2 class="h1 mb-3">Why Choose Our Service Areas</h2>
+          <p class="lead text-muted">Consistent quality and expertise across all locations we serve</p>
+        </div>
+      </div>
+      
+      <div class="row g-4">
+        {{ range .Params.why_choose_us }}
+        <div class="col-lg-3 col-md-6">
+          <div class="feature-card text-center bg-white rounded-lg shadow-sm p-4 h-100">
+            <div class="feature-icon mb-3">
+              <i class="{{ .icon }} fa-3x text-primary"></i>
+            </div>
+            <h4 class="h5 mb-3">{{ .title }}</h4>
+            <p class="text-muted mb-0">{{ .description }}</p>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
+  {{ end }}
+
+  <!-- Interactive Map Section -->
+  <section class="bg-light py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center mb-4">
+          <h2 class="h1 mb-3">Our Coverage Map</h2>
+          <p class="lead text-muted">See all the areas we serve at a glance</p>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-12">
+          <div class="map-container bg-white rounded shadow-sm p-4">
+            {{ if .Params.map_embed }}
+            <div class="ratio ratio-16x9">
+              {{ .Params.map_embed | safeHTML }}
+            </div>
+            {{ else }}
+            <div id="service-areas-map" style="height: 400px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+              <div class="text-center text-muted">
+                <i class="fas fa-map fa-3x mb-3"></i>
+                <p>Interactive map will be displayed here</p>
+                <small>Integrate with Google Maps or your preferred mapping service</small>
+              </div>
+            </div>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <h2 class="h1 mb-3">Don't See Your Area?</h2>
+          <p class="lead text-muted mb-4">We're always expanding our service areas. Contact us to see if we can help you!</p>
+          <a href="{{ "/contact" | relURL }}" class="btn btn-outline-primary btn-lg">
+            <i class="fas fa-envelope me-2"></i>
+            Contact Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<style>
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15) !important;
+}
+
+.object-cover {
+  object-fit: cover;
+}
+
+.area-card .badge {
+  font-size: 0.7rem;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+}
+
+.services-preview .badge {
+  font-size: 0.65rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.location-info small {
+  line-height: 1.6;
+}
+
+.rounded-lg {
+  border-radius: 1rem !important;
+}
+
+.feature-card {
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.feature-card:hover {
+  border-color: var(--primary-color);
+  transform: translateY(-3px);
+}
+
+.feature-icon {
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+.area-card {
+  transition: all 0.3s ease;
+}
+
+.area-card:hover {
+  transform: translateY(-2px);
+}
+
+.card-img-top img {
+  transition: transform 0.3s ease;
+}
+
+.area-card:hover .card-img-top img {
+  transform: scale(1.05);
+}
+
+.btn-primary {
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+@media (max-width: 768px) {
+  .area-card {
+    margin-bottom: 1.5rem;
+  }
+  
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+  
+  .feature-card {
+    margin-bottom: 1rem;
+  }
+}
+</style>
+{{ end }}

@@ -23,29 +23,42 @@
     <div class="collapse navbar-collapse" id="navbarMain">
       <ul class="navbar-nav mx-auto">
         {{ $currentPage := . }}
-        {{ range .Site.Menus.main }}
-        <li class="nav-item {{ if .HasChildren }}dropdown{{ end }}">
-          {{ if .HasChildren }}
-          <!-- Dropdown Menu -->
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown{{ .Name }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            {{ .Name }}
-            <i class="fas fa-chevron-down ms-1"></i>
+        
+        <!-- Home -->
+        <li class="nav-item">
+          <a class="nav-link{{ if eq $currentPage.RelPermalink "/" }} active{{ end }}" href="{{ .Site.BaseURL }}">
+            Home
           </a>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown{{ .Name }}">
-            {{ range .Children }}
-            <li><a class="dropdown-item" href="{{ .URL }}">{{ .Name }}</a></li>
-            {{ end }}
-          </ul>
-          {{ else }}
-          <!-- Regular Menu Item -->
-          <a class="nav-link{{ if eq $currentPage.RelPermalink .URL }} active{{ end }}" href="{{ .URL }}">
-            {{ if .Pre }}{{ .Pre | safeHTML }}{{ end }}
-            {{ .Name }}
-            {{ if .Post }}{{ .Post | safeHTML }}{{ end }}
-          </a>
-          {{ end }}
         </li>
-        {{ end }}
+        
+        <!-- About -->
+        <li class="nav-item">
+          <a class="nav-link{{ if eq $currentPage.Section "about" }} active{{ end }}" href="{{ "/about" | relURL }}">
+            About
+          </a>
+        </li>
+        
+        <!-- Services -->
+        <li class="nav-item">
+          <a class="nav-link{{ if eq $currentPage.Section "services" }} active{{ end }}" href="{{ "/services" | relURL }}">
+            Services
+          </a>
+        </li>
+        
+        <!-- Contact -->
+        <li class="nav-item">
+          <a class="nav-link{{ if eq $currentPage.Section "contact" }} active{{ end }}" href="{{ "/contact" | relURL }}">
+            Contact
+          </a>
+        </li>
+        
+        <!-- Services Area -->
+        <li class="nav-item">
+          <a class="nav-link{{ if eq $currentPage.Section "service-area" }} active{{ end }}" href="{{ "/service-area" | relURL }}">
+            Services Area
+          </a>
+        </li>
+        
       </ul>
       
       <!-- Right Side Items -->
@@ -98,23 +111,20 @@
       
       <!-- Navigation Links -->
       <div class="mobile-nav-links">
-        {{ range .Site.Menus.main }}
-        {{ if .HasChildren }}
-        <div class="mobile-nav-group">
-          <div class="mobile-nav-group-title">
-            <span>{{ .Name }}</span>
-            <i class="fas fa-chevron-down"></i>
-          </div>
-          <div class="mobile-nav-submenu">
-            {{ range .Children }}
-            <a href="{{ .URL }}" class="mobile-nav-link submenu">{{ .Name }}</a>
-            {{ end }}
-          </div>
-        </div>
-        {{ else }}
-        <a href="{{ .URL }}" class="mobile-nav-link">{{ .Name }}</a>
-        {{ end }}
-        {{ end }}
+        <!-- Home -->
+        <a href="{{ .Site.BaseURL }}" class="mobile-nav-link">Home</a>
+        
+        <!-- About -->
+        <a href="{{ "/about" | relURL }}" class="mobile-nav-link">About</a>
+        
+        <!-- Services -->
+        <a href="{{ "/services" | relURL }}" class="mobile-nav-link">Services</a>
+        
+        <!-- Contact -->
+        <a href="{{ "/contact" | relURL }}" class="mobile-nav-link">Contact</a>
+        
+        <!-- Services Area -->
+        <a href="{{ "/service-area" | relURL }}" class="mobile-nav-link">Services Area</a>
       </div>
       
       <!-- Mobile CTA -->
