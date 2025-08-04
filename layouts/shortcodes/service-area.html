@@ -16,7 +16,7 @@
       {{ range $areas }}
       <div class="area-item">
         <i class="fas fa-map-marker-alt"></i>
-        <span>{{ . | trim }}</span>
+        <span>{{ . | strings.TrimSpace }}</span>
       </div>
       {{ end }}
     </div>

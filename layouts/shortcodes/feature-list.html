@@ -7,7 +7,7 @@
     {{ range $features }}
     <div class="feature-item">
       <i class="fas fa-check-circle"></i>
-      <span>{{ . | trim }}</span>
+      <span>{{ . | strings.TrimSpace }}</span>
     </div>
     {{ end }}
   </div>
