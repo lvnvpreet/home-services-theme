@@ -254,11 +254,13 @@
             </div>
             
             <div class="surrounding-areas">
+              {{ if .Site.Params.service_areas }}
               {{ range .Site.Params.service_areas }}
               <div class="area-item">
                 <i class="fas fa-map-marker-alt"></i>
                 <span>{{ . }}</span>
               </div>
+              {{ end }}
               {{ end }}
             </div>
           </div>

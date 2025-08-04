@@ -98,12 +98,14 @@
       {{ end }}
     },
     "areaServed": [
+      {{ if .Site.Params.service_areas }}
       {{ range $index, $area := .Site.Params.service_areas }}
       {{ if $index }},{{ end }}
       {
         "@type": "City",
         "name": "{{ $area }}"
       }
+      {{ end }}
       {{ end }}
     ],
     "openingHours": [
@@ -146,12 +148,14 @@
       }
     },
     "areaServed": [
+      {{ if .Site.Params.service_areas }}
       {{ range $index, $area := .Site.Params.service_areas }}
       {{ if $index }},{{ end }}
       {
         "@type": "City",
         "name": "{{ $area }}"
       }
+      {{ end }}
       {{ end }}
     ]
     {{ if .Params.starting_price }}

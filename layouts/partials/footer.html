@@ -189,11 +189,13 @@
                   <i class="fas fa-map-marker-alt"></i>
                   <span>{{ .Site.Params.primary_location }}</span>
                 </div>
+                {{ if .Site.Params.service_areas }}
                 {{ range .Site.Params.service_areas }}
                 <div class="area-item">
                   <i class="fas fa-map-marker-alt"></i>
                   <span>{{ . }}</span>
                 </div>
+                {{ end }}
                 {{ end }}
               </div>
               <p class="areas-note">

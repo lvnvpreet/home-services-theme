@@ -227,11 +227,13 @@
                   <i class="fas fa-map-marker-alt"></i>
                   <span>{{ .Site.Params.primary_location }}</span>
                 </div>
+                {{ if .Site.Params.service_areas }}
                 {{ range .Site.Params.service_areas }}
                 <div class="area-item">
                   <i class="fas fa-map-marker-alt"></i>
                   <span>{{ . }}</span>
                 </div>
+                {{ end }}
                 {{ end }}
               </div>
               <p class="areas-note">Don't see your area? Contact us to check availability.</p>
@@ -328,7 +330,7 @@
               </h3>
               <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#contactFaqAccordion">
                 <div class="accordion-body">
-                  We serve {{ .Site.Params.primary_location }} and surrounding areas including {{ delimit .Site.Params.service_areas ", " }}. Contact us to confirm service availability in your specific location.
+                  We serve {{ .Site.Params.primary_location }} and surrounding areas{{ if .Site.Params.service_areas }} including {{ delimit .Site.Params.service_areas ", " }}{{ end }}. Contact us to confirm service availability in your specific location.
                 </div>
               </div>
             </div>

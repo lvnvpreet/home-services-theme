@@ -285,7 +285,7 @@
               </h3>
               <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
                 <div class="accordion-body">
-                  We serve {{ .Site.Params.primary_location }} and surrounding areas including {{ delimit .Site.Params.service_areas ", " }}. Contact us to confirm service availability in your area.
+                  We serve {{ .Site.Params.primary_location }} and surrounding areas{{ if .Site.Params.service_areas }} including {{ delimit .Site.Params.service_areas ", " }}{{ end }}. Contact us to confirm service availability in your area.
                 </div>
               </div>
             </div>
@@ -562,8 +562,10 @@
               <h4>Service Areas</h4>
               <ul class="service-areas">
                 <li><i class="fas fa-map-marker-alt"></i> {{ .Site.Params.primary_location }}</li>
+                {{ if .Site.Params.service_areas }}
                 {{ range .Site.Params.service_areas }}
                 <li><i class="fas fa-map-marker-alt"></i> {{ . }}</li>
+                {{ end }}
                 {{ end }}
               </ul>
             </div>
