@@ -87,6 +87,8 @@ body {
   justify-content: center;
   color: white;
   overflow: hidden;
+  /* Fallback background when no image is available */
+  background: linear-gradient(135deg, rgba(0, 123, 255, 0.8) 0%, rgba(0, 86, 179, 0.9) 100%);
 }
 
 .hero-bg {
@@ -96,6 +98,8 @@ body {
   width: 100%;
   height: 100%;
   z-index: -2;
+  /* Fallback background color */
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
 }
 
 .hero-background {
@@ -238,6 +242,23 @@ body {
 .service-image {
   height: 200px;
   overflow: hidden;
+  /* Fallback background when no image is available */
+  background: linear-gradient(135deg, var(--light-color) 0%, #e9ecef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.service-image::before {
+  content: '\f0ad';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 3rem;
+  color: var(--secondary-color);
+  opacity: 0.3;
+  position: absolute;
+  z-index: 1;
 }
 
 .service-image img {
@@ -245,6 +266,8 @@ body {
   height: 100%;
   object-fit: cover;
   transition: var(--transition);
+  position: relative;
+  z-index: 2;
 }
 
 .service-card:hover .service-image img {
@@ -305,6 +328,36 @@ body {
 .about-image img {
   border-radius: var(--border-radius-lg);
   box-shadow: var(--shadow-lg);
+  width: 100%;
+  height: auto;
+}
+
+/* Fallback for about section when no image */
+.about-image {
+  min-height: 400px;
+  background: linear-gradient(135deg, var(--light-color) 0%, #e9ecef 100%);
+  border-radius: var(--border-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.about-image::before {
+  content: '\f0c0';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 5rem;
+  color: var(--secondary-color);
+  opacity: 0.2;
+  position: absolute;
+  z-index: 1;
+}
+
+.about-image img {
+  position: relative;
+  z-index: 2;
 }
 
 .about-placeholder {
@@ -560,12 +613,31 @@ body {
 .team-image {
   height: 250px;
   overflow: hidden;
+  /* Fallback background when no team image */
+  background: linear-gradient(135deg, var(--secondary-color) 0%, #5a6268 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.team-image::before {
+  content: '\f007';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 4rem;
+  color: white;
+  opacity: 0.3;
+  position: absolute;
+  z-index: 1;
 }
 
 .team-image img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  position: relative;
+  z-index: 2;
 }
 
 .team-placeholder {
@@ -746,6 +818,23 @@ body {
 .blog-image {
   height: 200px;
   overflow: hidden;
+  /* Fallback background when no blog image */
+  background: linear-gradient(135deg, var(--info-color) 0%, #138496 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.blog-image::before {
+  content: '\f15c';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 3rem;
+  color: white;
+  opacity: 0.3;
+  position: absolute;
+  z-index: 1;
 }
 
 .blog-image img {
@@ -753,6 +842,8 @@ body {
   height: 100%;
   object-fit: cover;
   transition: var(--transition);
+  position: relative;
+  z-index: 2;
 }
 
 .blog-card:hover .blog-image img {
@@ -1037,6 +1128,253 @@ body {
 }
 
 /* ===== UTILITIES ===== */
+/* Image fallback utilities */
+.img-fallback {
+  background: linear-gradient(135deg, var(--light-color) 0%, #e9ecef 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  color: var(--secondary-color);
+}
+
+.img-fallback::before {
+  content: '\f03e';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 2rem;
+  opacity: 0.3;
+}
+
+/* Hide broken image icons */
+img {
+  font-size: 0;
+}
+
+img::before {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(135deg, var(--light-color) 0%, #e9ecef 100%);
+}
+
+img::after {
+  content: '\f03e';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: var(--secondary-color);
+  opacity: 0.3;
+}
+
+/* Gallery/Portfolio image fallbacks */
+.gallery-item {
+  background: linear-gradient(135deg, var(--warning-color) 0%, #e0a800 100%);
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+}
+
+.gallery-item::before {
+  content: '\f302';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 3rem;
+  color: white;
+  opacity: 0.4;
+  position: absolute;
+  z-index: 1;
+}
+
+.gallery-item img {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Logo fallback */
+.logo-container {
+  background: var(--primary-color);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+  border-radius: var(--border-radius);
+  font-weight: 700;
+}
+
+.logo-container::before {
+  content: '\f0ad';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  margin-right: 0.5rem;
+}
+
+/* Testimonial avatar fallback */
+.testimonial-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--success-color) 0%, #1e7e34 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.testimonial-avatar::before {
+  content: '\f007';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  color: white;
+  font-size: 1.5rem;
+  opacity: 0.8;
+}
+
+.testimonial-avatar img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 2;
+}
+
+/* Enhanced image error handling */
+img[src=""], img:not([src]), img[src*="placeholder"] {
+  background: linear-gradient(135deg, var(--light-color) 0%, #e9ecef 100%);
+  position: relative;
+  display: inline-block;
+  min-height: 100px;
+  min-width: 100px;
+}
+
+img[src=""]:before, img:not([src]):before, img[src*="placeholder"]:before {
+  content: '\f03e';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: var(--secondary-color);
+  opacity: 0.3;
+}
+
+/* Specific fallbacks for different sections */
+.hero-section img[src=""], .hero-section img:not([src]) {
+  display: none;
+}
+
+.service-image img[src=""], .service-image img:not([src]) {
+  display: none;
+}
+
+.team-image img[src=""], .team-image img:not([src]) {
+  display: none;
+}
+
+.blog-image img[src=""], .blog-image img:not([src]) {
+  display: none;
+}
+
+.about-image img[src=""], .about-image img:not([src]) {
+  display: none;
+}
+
+/* JavaScript-triggered fallback classes */
+.hero-fallback {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%) !important;
+}
+
+.service-image-fallback {
+  background: linear-gradient(135deg, var(--light-color) 0%, #e9ecef 100%) !important;
+}
+
+.service-image-fallback::after {
+  content: '\f0ad';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 3rem;
+  color: var(--secondary-color);
+  opacity: 0.3;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.team-image-fallback {
+  background: linear-gradient(135deg, var(--secondary-color) 0%, #5a6268 100%) !important;
+}
+
+.team-image-fallback::after {
+  content: '\f007';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 4rem;
+  color: white;
+  opacity: 0.3;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.blog-image-fallback {
+  background: linear-gradient(135deg, var(--info-color) 0%, #138496 100%) !important;
+}
+
+.blog-image-fallback::after {
+  content: '\f15c';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 3rem;
+  color: white;
+  opacity: 0.3;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.about-image-fallback {
+  background: linear-gradient(135deg, var(--light-color) 0%, #e9ecef 100%) !important;
+}
+
+.about-image-fallback::after {
+  content: '\f0c0';
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  font-size: 5rem;
+  color: var(--secondary-color);
+  opacity: 0.2;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
 .py-5 {
   padding-top: var(--spacing-xxl);
   padding-bottom: var(--spacing-xxl);
