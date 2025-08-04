@@ -11,38 +11,40 @@
     </div>
     <div class="hero-content">
       <div class="container">
-        <div class="row align-items-center">
-          <div class="col-lg-8">
-            <h1 class="hero-title">{{ .Site.Params.hero_title | default "Professional Home Services in Your Area" }}</h1>
-            <p class="hero-subtitle">{{ .Site.Params.hero_subtitle | default "Licensed, insured, and trusted by homeowners" }}</p>
-            
-            <div class="hero-badges mb-4">
-              <span class="badge bg-success me-2">
-                <i class="fas fa-certificate me-1"></i>
-                Licensed & Insured
-              </span>
-              <span class="badge bg-warning me-2">
-                <i class="fas fa-clock me-1"></i>
-                24/7 Emergency
-              </span>
-              <span class="badge bg-info">
-                <i class="fas fa-thumbs-up me-1"></i>
-                {{ .Site.Params.years_in_business }}+ Years Experience
-              </span>
-            </div>
-            
-            <div class="hero-actions">
-              <a href="{{ "/contact" | relURL }}" class="btn btn-primary btn-lg me-3">
-                <i class="fas fa-phone me-2"></i>
-                Get Free Quote
-              </a>
-              <a href="{{ "/services" | relURL }}" class="btn btn-outline-light btn-lg">
-                <i class="fas fa-tools me-2"></i>
-                Our Services
-              </a>
+        <div class="row align-items-center justify-content-center">
+          <div class="col-lg-8 col-md-10 col-12">
+            <div class="hero-text-content">
+              <h1 class="hero-title">{{ .Site.Params.hero_title | default "Professional Home Services in Your Area" }}</h1>
+              <p class="hero-subtitle">{{ .Site.Params.hero_subtitle | default "Licensed, insured, and trusted by homeowners" }}</p>
+              
+              <div class="hero-badges mb-4">
+                <span class="badge bg-success me-2">
+                  <i class="fas fa-certificate me-1"></i>
+                  Licensed & Insured
+                </span>
+                <span class="badge bg-warning me-2">
+                  <i class="fas fa-clock me-1"></i>
+                  24/7 Emergency
+                </span>
+                <span class="badge bg-info">
+                  <i class="fas fa-thumbs-up me-1"></i>
+                  {{ .Site.Params.years_in_business }}+ Years Experience
+                </span>
+              </div>
+              
+              <div class="hero-actions">
+                <a href="{{ "/contact" | relURL }}" class="btn btn-primary btn-lg me-3">
+                  <i class="fas fa-phone me-2"></i>
+                  Get Free Quote
+                </a>
+                <a href="{{ "/services" | relURL }}" class="btn btn-outline-light btn-lg">
+                  <i class="fas fa-tools me-2"></i>
+                  Our Services
+                </a>
+              </div>
             </div>
           </div>
-          <div class="col-lg-4">
+          <div class="col-lg-4 col-md-8 col-12">
             <div class="hero-contact-card">
               <h3>Need Service Now?</h3>
               <p class="mb-3">Call for immediate assistance</p>
