@@ -21,32 +21,38 @@
           <p class="lead">From emergency repairs to major renovations, we provide comprehensive home services with professional quality and guaranteed satisfaction.</p>
           
           <div class="service-highlights">
-            <div class="highlights-container">
-              <div class="highlight-item">
-                <div class="highlight-icon">
-                  <i class="fas fa-tools"></i>
-                </div>
-                <div class="highlight-content">
-                  <h5>Expert Technicians</h5>
-                  <p>Certified professionals with years of experience</p>
-                </div>
-              </div>
-              <div class="highlight-item">
-                <div class="highlight-icon">
-                  <i class="fas fa-clock"></i>
-                </div>
-                <div class="highlight-content">
-                  <h5>24/7 Emergency</h5>
-                  <p>Available when you need us most</p>
+            <div class="row justify-content-center">
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-tools"></i>
+                  </div>
+                  <div class="highlight-content">
+                    <h5>Expert Technicians</h5>
+                    <p>Certified professionals with years of experience</p>
+                  </div>
                 </div>
               </div>
-              <div class="highlight-item">
-                <div class="highlight-icon">
-                  <i class="fas fa-shield-alt"></i>
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-clock"></i>
+                  </div>
+                  <div class="highlight-content">
+                    <h5>24/7 Emergency</h5>
+                    <p>Available when you need us most</p>
+                  </div>
                 </div>
-                <div class="highlight-content">
-                  <h5>Licensed & Insured</h5>
-                  <p>Full protection for your peace of mind</p>
+              </div>
+              <div class="col-lg-4 col-md-6 mb-4">
+                <div class="highlight-item">
+                  <div class="highlight-icon">
+                    <i class="fas fa-shield-alt"></i>
+                  </div>
+                  <div class="highlight-content">
+                    <h5>Licensed & Insured</h5>
+                    <p>Full protection for your peace of mind</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -312,17 +318,56 @@
 
 .services-overview .highlight-item {
   text-align: center;
-  padding: 20px;
+  padding: 30px 20px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.services-overview .highlight-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.services-overview .highlight-item .highlight-icon {
+  width: 80px;
+  height: 80px;
+  background: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: all 0.3s ease;
+}
+
+.services-overview .highlight-item:hover .highlight-icon {
+  background: var(--primary-dark);
+  transform: scale(1.1);
 }
 
 .services-overview .highlight-item i {
-  font-size: 2.5rem;
-  margin-bottom: 15px;
+  font-size: 2rem;
+  margin-bottom: 0;
 }
 
 .services-overview .highlight-item h5 {
   margin-bottom: 10px;
   color: var(--dark-color);
+  font-weight: 600;
+}
+
+.services-overview .highlight-item p {
+  color: var(--muted-color);
+  margin-bottom: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 /* Service Filters */
