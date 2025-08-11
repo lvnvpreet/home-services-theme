@@ -5,7 +5,7 @@
         <!-- Column 1: Practice Info -->
         <div class="col-lg-2-4 col-md-6 mb-4">
           <div class="footer-section">
-            <h5 class="footer-title">{{ .Site.Params.business_name | default .Site.Title }}</h5>
+            <h5 class="footer-title">{{ .Site.Params.business_name | default "Kalu Plumber Service-111" }}</h5>
             <p class="footer-description">
               {{ .Site.Params.footer_description | default "Providing Quality Dental Care Environment Since 2020" }}
             </p>
@@ -20,10 +20,10 @@
           <div class="footer-section">
             <h5 class="footer-title">Quick Links</h5>
             <ul class="footer-links">
-              <li><a href="{{ "/" | relURL }}">About Us</a></li>
+              <li><a href="{{ "/about" | relURL }}">About Us</a></li>
               <li><a href="{{ "/services" | relURL }}">Services</a></li>
-              <li><a href="{{ "/blog" | relURL }}">Our Team</a></li>
-              <li><a href="{{ "/contact" | relURL }}">Pricing Plans</a></li>
+              <li><a href="{{ "/team" | relURL }}">Our Team</a></li>
+              <li><a href="{{ "/pricing" | relURL }}">Pricing Plans</a></li>
             </ul>
           </div>
         </div>
@@ -36,10 +36,13 @@
               {{ if .Site.Params.address }}
               <div class="contact-item">
                 <i class="fas fa-map-marker-alt"></i>
-                <span>{{ .Site.Params.address | default "6 A Devta Colony Ward no 24" }}</span>
+                <span>{{ .Site.Params.address | default "undefined, undefined," }}</span>
               </div>
               <div class="contact-item">
-                <span>{{ .Site.Params.address2 | default "Behind Govt Hospital, Sri Karanpur" }}</span>
+                <span>{{ .Site.Params.address2 | default "undefined undefined" }}</span>
+              </div>
+              <div class="contact-item">
+                <span>{{ .Site.Params.address3 | default "Behind Govt Hospital, Sri Karanpur" }}</span>
               </div>
               {{ end }}
               
@@ -75,20 +78,6 @@
           <div class="footer-section">
             <h5 class="footer-title">Follow Us</h5>
             <div class="footer-social">
-              {{ if .Site.Params.social.telegram }}
-              <a href="{{ .Site.Params.social.telegram }}" target="_blank" rel="noopener" class="social-link">
-                <i class="fab fa-telegram"></i>
-                <span>Telegram</span>
-              </a>
-              {{ end }}
-              
-              {{ if .Site.Params.social.whatsapp }}
-              <a href="{{ .Site.Params.social.whatsapp }}" target="_blank" rel="noopener" class="social-link">
-                <i class="fab fa-whatsapp"></i>
-                <span>WhatsApp</span>
-              </a>
-              {{ end }}
-              
               {{ if .Site.Params.social.facebook }}
               <a href="{{ .Site.Params.social.facebook }}" target="_blank" rel="noopener" class="social-link">
                 <i class="fab fa-facebook"></i>
@@ -124,9 +113,9 @@
 </footer>
 
 <style>
-/* Simple Footer Styles */
+/* Simple Footer Styles - Using Theme Colors */
 .site-footer {
-  background: #4a4a4a;
+  background: #2c3e50;
   color: #ffffff;
 }
 
@@ -147,7 +136,7 @@
 }
 
 .footer-title {
-  color: #ffc107;
+  color: #007bff;
   font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 20px;
@@ -187,7 +176,7 @@
 }
 
 .footer-links a:hover {
-  color: #ffc107;
+  color: #007bff;
   padding-left: 5px;
 }
 
@@ -205,7 +194,7 @@
 }
 
 .contact-item i {
-  color: #ffc107;
+  color: #007bff;
   width: 20px;
   margin-right: 10px;
   margin-top: 2px;
@@ -219,7 +208,7 @@
 }
 
 .contact-item a:hover {
-  color: #ffc107;
+  color: #007bff;
 }
 
 .contact-item:not(.contact-item:has(i)) {
@@ -252,7 +241,7 @@
 }
 
 .hour-item span:last-child {
-  color: #ffc107;
+  color: #007bff;
   font-weight: 500;
 }
 
@@ -273,7 +262,7 @@
 }
 
 .social-link:hover {
-  color: #ffc107;
+  color: #007bff;
   padding-left: 5px;
 }
 
@@ -285,7 +274,7 @@
 
 /* Footer Bottom */
 .footer-bottom {
-  background: rgba(0, 0, 0, 0.3);
+  background: #1e2a36;
   padding: 20px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
