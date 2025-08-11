@@ -3,7 +3,7 @@
 <nav class="main-navbar navbar navbar-expand-lg navbar-light">
   <div class="container">
     <!-- Logo -->
-    <a class="navbar-brand" href="{{ / }}">
+    <a class="navbar-brand" href="{{ "/" | relURL }}">
       {{ if .Site.Params.logo }}
       <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Params.business_name | default .Site.Title }}" height="50">
       {{ else }}
@@ -25,7 +25,7 @@
         
         <!-- Home -->
         <li class="nav-item">
-          <a class="nav-link{{ if eq $currentPage.RelPermalink "/" }} active{{ end }}" href="{{ "/" }}">
+          <a class="nav-link{{ if eq $currentPage.RelPermalink "/" }} active{{ end }}" href="{{ "/" | relURL }}">
             Home
           </a>
         </li>
