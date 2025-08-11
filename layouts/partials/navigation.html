@@ -8,7 +8,7 @@
       <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Params.business_name | default .Site.Title }}" height="50">
       {{ else }}
       <div class="logo-text">
-        <i class="fas fa-tools me-2"></i>
+        <i class="fas fa-tooth me-2"></i>
         <span class="brand-name">{{ .Site.Params.business_name | default .Site.Title }}</span>
       </div>
       {{ end }}
@@ -39,10 +39,17 @@
         </li>
         
         <!-- Services -->
-        <li class="nav-item">
-          <a class="nav-link{{ if eq $currentPage.Section "services" }} active{{ end }}" href="{{ "/services" | relURL }}">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle{{ if eq $currentPage.Section "services" }} active{{ end }}" href="{{ "/services" | relURL }}" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Services
           </a>
+          <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
+            <li><a class="dropdown-item" href="{{ "/services" | relURL }}">All Services</a></li>
+            <li><a class="dropdown-item" href="{{ "/services/general-dentistry" | relURL }}">General Dentistry</a></li>
+            <li><a class="dropdown-item" href="{{ "/services/cosmetic-dentistry" | relURL }}">Cosmetic Dentistry</a></li>
+            <li><a class="dropdown-item" href="{{ "/services/orthodontics" | relURL }}">Orthodontics</a></li>
+            <li><a class="dropdown-item" href="{{ "/services/oral-surgery" | relURL }}">Oral Surgery</a></li>
+          </ul>
         </li>
         
         <!-- Contact -->
@@ -52,36 +59,36 @@
           </a>
         </li>
         
-        <!-- Services Area -->
+        <!-- Blog -->
         <li class="nav-item">
-          <a class="nav-link{{ if eq $currentPage.Section "service-area" }} active{{ end }}" href="{{ "/service-area" | relURL }}">
-            Services Area
+          <a class="nav-link{{ if eq $currentPage.Section "blog" }} active{{ end }}" href="{{ "/blog" | relURL }}">
+            Blog
           </a>
         </li>
-        
       </ul>
       
-      <!-- Right Side Items -->
+      <!-- Right Side Items - Contact Button Only -->
       <div class="navbar-nav ms-auto d-flex align-items-center">
         
-        <!-- Search Form -->
-        <form class="d-flex search-form me-3" action="{{ "/search" | relURL }}" method="get">
-          <div class="input-group">
-            <input class="form-control" type="search" placeholder="Search..." name="q" aria-label="Search">
-            <button class="btn btn-outline-primary" type="submit" aria-label="Search">
-              <i class="fas fa-search"></i>
-            </button>
-          </div>
-        </form>
-        
-        <!-- CTA Button -->
+        <!-- Contact Button (Replaces Free Quote) -->
         <div class="d-none d-lg-block">
           <a href="{{ "/contact" | relURL }}" class="btn btn-primary">
             <i class="fas fa-calendar-check me-2"></i>
-            Free Quote
+            Contact
           </a>
         </div>
         
+        <!-- Emergency Contact for Mobile -->
+        <div class="d-lg-none mt-2">
+          <a href="tel:{{ .Site.Params.phone }}" class="btn btn-outline-primary w-100 mb-2">
+            <i class="fas fa-phone me-2"></i>
+            Call Now
+          </a>
+          <a href="{{ "/contact" | relURL }}" class="btn btn-primary w-100">
+            <i class="fas fa-calendar-check me-2"></i>
+            Contact
+          </a>
+        </div>
       </div>
     </div>
   </div>
@@ -107,35 +114,34 @@
             <span>{{ .Site.Params.phone }}</span>
           </div>
         </a>
+        
+        <a href="mailto:{{ .Site.Params.email }}" class="mobile-contact-item">
+          <i class="fas fa-envelope"></i>
+          <div>
+            <strong>Email Us</strong>
+            <span>{{ .Site.Params.email }}</span>
+          </div>
+        </a>
       </div>
       
       <!-- Navigation Links -->
       <div class="mobile-nav-links">
-        <!-- Home -->
         <a href="{{ .Site.BaseURL }}" class="mobile-nav-link">Home</a>
-        
-        <!-- About -->
         <a href="{{ "/about" | relURL }}" class="mobile-nav-link">About</a>
-        
-        <!-- Services -->
         <a href="{{ "/services" | relURL }}" class="mobile-nav-link">Services</a>
-        
-        <!-- Contact -->
         <a href="{{ "/contact" | relURL }}" class="mobile-nav-link">Contact</a>
-        
-        <!-- Services Area -->
-        <a href="{{ "/service-area" | relURL }}" class="mobile-nav-link">Services Area</a>
+        <a href="{{ "/blog" | relURL }}" class="mobile-nav-link">Blog</a>
       </div>
       
       <!-- Mobile CTA -->
       <div class="mobile-nav-cta">
         <a href="{{ "/contact" | relURL }}" class="btn btn-primary w-100 mb-2">
           <i class="fas fa-calendar-check me-2"></i>
-          Get Free Quote
+          Schedule Appointment
         </a>
         <a href="{{ "/services" | relURL }}" class="btn btn-outline-primary w-100">
-          <i class="fas fa-tools me-2"></i>
-          View Services
+          <i class="fas fa-tooth me-2"></i>
+          Our Services
         </a>
       </div>
     </div>
@@ -146,13 +152,13 @@
 /* Navigation Styles */
 .main-navbar {
   background: #fff;
-  padding: 15px 0;
+  padding: 20px 0;
   border-bottom: 1px solid #e9ecef;
   transition: all 0.3s ease;
 }
 
 .main-navbar.scrolled {
-  padding: 10px 0;
+  padding: 15px 0;
   box-shadow: 0 2px 20px rgba(0,0,0,0.1);
 }
 
@@ -168,28 +174,29 @@
 .navbar-brand .logo-text {
   display: flex;
   align-items: center;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   font-weight: bold;
-  color: var(--primary-color);
+  color: #007bff;
   text-decoration: none;
 }
 
 .navbar-brand .brand-name {
-  color: var(--dark-color);
+  color: #2c3e50;
 }
 
 /* Navigation Links */
 .navbar-nav .nav-link {
   font-weight: 500;
-  color: var(--dark-color);
-  padding: 10px 15px;
+  color: #2c3e50;
+  padding: 12px 18px;
   transition: all 0.3s ease;
   position: relative;
+  font-size: 1.05rem;
 }
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active {
-  color: var(--primary-color);
+  color: #007bff;
 }
 
 .navbar-nav .nav-link::after {
@@ -198,10 +205,11 @@
   bottom: 0;
   left: 50%;
   width: 0;
-  height: 2px;
-  background: var(--primary-color);
+  height: 3px;
+  background: #007bff;
   transition: all 0.3s ease;
   transform: translateX(-50%);
+  border-radius: 2px;
 }
 
 .navbar-nav .nav-link:hover::after,
@@ -212,40 +220,44 @@
 /* Dropdown Menu */
 .dropdown-menu {
   border: none;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-  border-radius: 8px;
-  padding: 10px 0;
-  margin-top: 10px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  border-radius: 10px;
+  padding: 15px 0;
+  margin-top: 15px;
+  min-width: 220px;
 }
 
 .dropdown-item {
-  padding: 10px 20px;
+  padding: 12px 25px;
   transition: all 0.3s ease;
-  color: var(--dark-color);
+  color: #2c3e50;
+  font-weight: 500;
 }
 
 .dropdown-item:hover {
-  background: var(--primary-color);
+  background: #007bff;
   color: white;
+  transform: translateX(5px);
 }
 
-/* Search Form */
-.search-form .input-group {
-  width: 250px;
+/* Contact Button */
+.btn-primary {
+  background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+  border: none;
+  border-radius: 25px;
+  padding: 12px 25px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
 }
 
-.search-form .form-control {
-  border-radius: 25px 0 0 25px;
-  border-right: none;
-  font-size: 0.9rem;
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+  background: linear-gradient(135deg, #0056b3 0%, #004085 100%);
 }
 
-.search-form .btn {
-  border-radius: 0 25px 25px 0;
-  border-left: none;
-}
-
-/* Mobile Navigation Overlay */
+/* Mobile Navigation Styles */
 .mobile-nav-overlay {
   position: fixed;
   top: 0;
@@ -268,7 +280,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  width: 300px;
+  width: 320px;
   height: 100%;
   background: white;
   transform: translateX(100%);
@@ -284,51 +296,69 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 25px;
   border-bottom: 1px solid #eee;
+  background: #f8f9fa;
 }
 
 .mobile-nav-header h5 {
   margin: 0;
-  color: var(--dark-color);
+  color: #2c3e50;
+  font-weight: 600;
 }
 
 .mobile-nav-close {
   background: none;
   border: none;
   font-size: 1.5rem;
-  color: var(--secondary-color);
+  color: #6c757d;
   cursor: pointer;
+  padding: 5px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+}
+
+.mobile-nav-close:hover {
+  background: #e9ecef;
+  color: #007bff;
 }
 
 .mobile-contact-section {
-  padding: 20px;
+  padding: 25px;
   border-bottom: 1px solid #eee;
+  background: #f8f9fa;
 }
 
 .mobile-contact-item {
   display: flex;
   align-items: center;
   gap: 15px;
-  padding: 10px 0;
+  padding: 15px 0;
   text-decoration: none;
-  color: var(--dark-color);
+  color: #2c3e50;
   transition: color 0.3s ease;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.mobile-contact-item:last-child {
+  border-bottom: none;
 }
 
 .mobile-contact-item:hover {
-  color: var(--primary-color);
+  color: #007bff;
 }
 
 .mobile-contact-item i {
-  width: 20px;
+  width: 25px;
   text-align: center;
   font-size: 1.25rem;
+  color: #007bff;
 }
 
 .mobile-contact-item strong {
   display: block;
-  margin-bottom: 2px;
+  margin-bottom: 3px;
+  font-weight: 600;
 }
 
 .mobile-contact-item span {
@@ -337,187 +367,81 @@
 }
 
 .mobile-nav-links {
-  padding: 20px;
+  padding: 25px;
 }
 
 .mobile-nav-link {
   display: block;
-  padding: 12px 0;
-  color: var(--dark-color);
+  padding: 15px 0;
+  color: #2c3e50;
   text-decoration: none;
   font-weight: 500;
+  font-size: 1.1rem;
   border-bottom: 1px solid #eee;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 .mobile-nav-link:hover {
-  color: var(--primary-color);
-}
-
-.mobile-nav-link.submenu {
-  padding-left: 20px;
-  font-size: 0.9rem;
-  border-bottom: none;
-}
-
-.mobile-nav-group-title {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 0;
-  font-weight: 600;
-  color: var(--dark-color);
-  cursor: pointer;
-  border-bottom: 1px solid #eee;
-}
-
-.mobile-nav-submenu {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.mobile-nav-submenu.active {
-  max-height: 200px;
+  color: #007bff;
+  padding-left: 10px;
 }
 
 .mobile-nav-cta {
-  padding: 20px;
-  border-top: 1px solid #eee;
+  padding: 25px;
+  border-top: 2px solid #eee;
+  background: #f8f9fa;
 }
 
 /* Responsive Design */
 @media (max-width: 991px) {
-  .search-form {
-    margin-top: 15px;
-    width: 100%;
-  }
-  
-  .search-form .input-group {
-    width: 100%;
-  }
-  
   .navbar-nav {
-    margin-top: 15px;
+    margin-top: 20px;
   }
   
   .navbar-nav .nav-link {
-    padding: 8px 0;
+    padding: 10px 0;
     border-bottom: 1px solid #eee;
   }
   
   .dropdown-menu {
     position: static;
-    float: none;
-    width: auto;
+    display: block;
+    width: 100%;
     box-shadow: none;
-    border: none;
-    background: var(--light-color);
-    margin: 10px 0;
+    border: 1px solid #eee;
+    margin-top: 0;
     border-radius: 0;
+  }
+  
+  .dropdown-item {
+    padding-left: 30px;
+    font-size: 0.95rem;
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 768px) {
+  .navbar-brand .logo-text {
+    font-size: 1.5rem;
+  }
+  
   .mobile-nav-content {
     width: 100%;
   }
   
-  .search-form .input-group {
-    flex-direction: column;
+  .main-navbar {
+    padding: 15px 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .mobile-contact-section,
+  .mobile-nav-links,
+  .mobile-nav-cta {
+    padding: 20px;
   }
   
-  .search-form .form-control,
-  .search-form .btn {
-    border-radius: 25px;
-    margin-bottom: 5px;
+  .mobile-nav-header {
+    padding: 20px;
   }
 }
 </style>
-
-<script>
-// Navigation JavaScript
-document.addEventListener('DOMContentLoaded', function() {
-  initMobileNavigation();
-  initStickyNavigation();
-  initDropdownMenus();
-});
-
-function initMobileNavigation() {
-  const mobileToggle = document.querySelector('.navbar-toggler');
-  const mobileOverlay = document.getElementById('mobileNavOverlay');
-  const mobileClose = document.getElementById('mobileNavClose');
-  
-  if (mobileToggle && mobileOverlay) {
-    mobileToggle.addEventListener('click', function() {
-      mobileOverlay.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
-    
-    // Close mobile nav
-    function closeMobileNav() {
-      mobileOverlay.classList.remove('active');
-      document.body.style.overflow = 'auto';
-    }
-    
-    if (mobileClose) {
-      mobileClose.addEventListener('click', closeMobileNav);
-    }
-    
-    // Close on overlay click
-    mobileOverlay.addEventListener('click', function(e) {
-      if (e.target === mobileOverlay) {
-        closeMobileNav();
-      }
-    });
-    
-    // Close on link click
-    const mobileLinks = document.querySelectorAll('.mobile-nav-link');
-    mobileLinks.forEach(link => {
-      link.addEventListener('click', closeMobileNav);
-    });
-  }
-  
-  // Mobile submenu toggles
-  const groupTitles = document.querySelectorAll('.mobile-nav-group-title');
-  groupTitles.forEach(title => {
-    title.addEventListener('click', function() {
-      const submenu = this.nextElementSibling;
-      const icon = this.querySelector('i');
-      
-      submenu.classList.toggle('active');
-      icon.style.transform = submenu.classList.contains('active') ? 'rotate(180deg)' : 'rotate(0deg)';
-    });
-  });
-}
-
-function initStickyNavigation() {
-  const navbar = document.querySelector('.main-navbar');
-  let lastScrollTop = 0;
-  
-  window.addEventListener('scroll', function() {
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    
-    // Add scrolled class
-    if (scrollTop > 100) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
-    
-    lastScrollTop = scrollTop;
-  });
-}
-
-function initDropdownMenus() {
-  // Close dropdowns when clicking outside
-  document.addEventListener('click', function(e) {
-    const dropdowns = document.querySelectorAll('.dropdown-menu.show');
-    dropdowns.forEach(dropdown => {
-      if (!dropdown.parentNode.contains(e.target)) {
-        dropdown.classList.remove('show');
-      }
-    });
-  });
-}
-</script>

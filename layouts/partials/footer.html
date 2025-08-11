@@ -2,205 +2,106 @@
   <div class="footer-main">
     <div class="container">
       <div class="row">
-        <!-- Column 1: Company Info -->
-        <div class="col-lg-3 col-md-6 mb-4">
+        <!-- Column 1: Practice Info -->
+        <div class="col-lg-2-4 col-md-6 mb-4">
           <div class="footer-section">
-            <div class="footer-logo mb-3">
-              {{ if .Site.Params.logo }}
-              <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Params.business_name | default .Site.Title }}" height="40">
-              {{ else }}
-              <div class="logo-text">
-                <i class="fas fa-tools me-2"></i>
-                <span class="brand-name">{{ .Site.Params.business_name | default .Site.Title }}</span>
-              </div>
-              {{ end }}
-            </div>
+            <h5 class="footer-title">{{ .Site.Params.business_name | default .Site.Title }}</h5>
             <p class="footer-description">
-              Professional home services in {{ .Site.Params.primary_location }}. Licensed, insured, and trusted by homeowners for over {{ .Site.Params.years_in_business }} years.
+              {{ .Site.Params.footer_description | default "Providing Quality Dental Care Environment Since 2020" }}
             </p>
-            
-            <!-- Credentials -->
-            <div class="credentials mb-3">
-              <div class="credential-item">
-                <i class="fas fa-certificate me-2"></i>
-                <span>License #{{ .Site.Params.license_number }}</span>
-              </div>
-              <div class="credential-item">
-                <i class="fas fa-shield-alt me-2"></i>
-                <span>Fully Insured & Bonded</span>
-              </div>
-            </div>
-            
-            <!-- Social Media -->
-            <div class="social-links">
-              {{ if .Site.Params.social.facebook }}
-              <a href="{{ .Site.Params.social.facebook }}" target="_blank" rel="noopener" title="Facebook">
-                <i class="fab fa-facebook-f"></i>
-              </a>
-              {{ end }}
-              {{ if .Site.Params.social.twitter }}
-              <a href="{{ .Site.Params.social.twitter }}" target="_blank" rel="noopener" title="Twitter">
-                <i class="fab fa-twitter"></i>
-              </a>
-              {{ end }}
-              {{ if .Site.Params.social.instagram }}
-              <a href="{{ .Site.Params.social.instagram }}" target="_blank" rel="noopener" title="Instagram">
-                <i class="fab fa-instagram"></i>
-              </a>
-              {{ end }}
-              {{ if .Site.Params.social.linkedin }}
-              <a href="{{ .Site.Params.social.linkedin }}" target="_blank" rel="noopener" title="LinkedIn">
-                <i class="fab fa-linkedin-in"></i>
-              </a>
-              {{ end }}
-              {{ if .Site.Params.social.youtube }}
-              <a href="{{ .Site.Params.social.youtube }}" target="_blank" rel="noopener" title="YouTube">
-                <i class="fab fa-youtube"></i>
-              </a>
-              {{ end }}
-              {{ if .Site.Params.social.yelp }}
-              <a href="{{ .Site.Params.social.yelp }}" target="_blank" rel="noopener" title="Yelp">
-                <i class="fab fa-yelp"></i>
-              </a>
-              {{ end }}
-              {{ if .Site.Params.social.google_business }}
-              <a href="{{ .Site.Params.social.google_business }}" target="_blank" rel="noopener" title="Google Business">
-                <i class="fab fa-google"></i>
-              </a>
-              {{ end }}
-            </div>
+            <p class="footer-location">
+              {{ .Site.Params.city | default "Your City" }}, {{ .Site.Params.state | default "Your State" }}
+            </p>
           </div>
         </div>
         
-        <!-- Column 2: Services List -->
-        <div class="col-lg-3 col-md-6 mb-4">
+        <!-- Column 2: Quick Links -->
+        <div class="col-lg-2-4 col-md-6 mb-4">
           <div class="footer-section">
-            <h5>Our Services</h5>
+            <h5 class="footer-title">Quick Links</h5>
             <ul class="footer-links">
-              {{ range where .Site.RegularPages "Section" "services" | first 8 }}
-              <li>
-                <a href="{{ .Permalink }}">
-                  {{ if .Params.icon }}<i class="{{ .Params.icon }} me-2"></i>{{ end }}
-                  {{ .Title }}
-                </a>
-              </li>
-              {{ end }}
-              <li>
-                <a href="{{ "/services" | relURL }}" class="view-all">
-                  <i class="fas fa-arrow-right me-2"></i>
-                  View All Services
-                </a>
-              </li>
+              <li><a href="{{ "/" | relURL }}">About Us</a></li>
+              <li><a href="{{ "/services" | relURL }}">Services</a></li>
+              <li><a href="{{ "/blog" | relURL }}">Our Team</a></li>
+              <li><a href="{{ "/contact" | relURL }}">Pricing Plans</a></li>
             </ul>
           </div>
         </div>
         
-        <!-- Column 3: Contact Information -->
-        <div class="col-lg-3 col-md-6 mb-4">
+        <!-- Column 3: Contact Info -->
+        <div class="col-lg-2-4 col-md-6 mb-4">
           <div class="footer-section">
-            <h5>Contact Information</h5>
-            <div class="contact-info">
+            <h5 class="footer-title">Contact Info</h5>
+            <div class="footer-contact">
               {{ if .Site.Params.address }}
               <div class="contact-item">
                 <i class="fas fa-map-marker-alt"></i>
-                <div>
-                  <strong>Address</strong>
-                  <p>{{ .Site.Params.address }}</p>
-                </div>
+                <span>{{ .Site.Params.address | default "6 A Devta Colony Ward no 24" }}</span>
+              </div>
+              <div class="contact-item">
+                <span>{{ .Site.Params.address2 | default "Behind Govt Hospital, Sri Karanpur" }}</span>
               </div>
               {{ end }}
               
               {{ if .Site.Params.phone }}
               <div class="contact-item">
-                <i class="fas fa-phone-alt"></i>
-                <div>
-                  <strong>Phone</strong>
-                  <p><a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a></p>
-                </div>
-              </div>
-              {{ end }}
-              
-              {{ if .Site.Params.emergency_phone }}
-              <div class="contact-item emergency">
-                <i class="fas fa-exclamation-triangle"></i>
-                <div>
-                  <strong>Emergency</strong>
-                  <p><a href="tel:{{ .Site.Params.emergency_phone }}" class="emergency-link">{{ .Site.Params.emergency_phone }}</a></p>
-                </div>
-              </div>
-              {{ end }}
-              
-              {{ if .Site.Params.email }}
-              <div class="contact-item">
-                <i class="fas fa-envelope"></i>
-                <div>
-                  <strong>Email</strong>
-                  <p><a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></p>
-                </div>
+                <i class="fas fa-phone"></i>
+                <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone | default "086999 31293" }}</a>
               </div>
               {{ end }}
             </div>
-            
-            <!-- Business Hours -->
-            <div class="business-hours mt-4">
-              <h6>Business Hours</h6>
-              <div class="hours-list">
-                <div class="hour-item">
-                  <span>Monday - Friday:</span>
-                  <span>{{ .Site.Params.business_hours.monday }}</span>
-                </div>
-                <div class="hour-item">
-                  <span>Saturday:</span>
-                  <span>{{ .Site.Params.business_hours.saturday }}</span>
-                </div>
-                <div class="hour-item">
-                  <span>Sunday:</span>
-                  <span>{{ .Site.Params.business_hours.sunday }}</span>
-                </div>
+          </div>
+        </div>
+        
+        <!-- Column 4: Practice Hours -->
+        <div class="col-lg-2-4 col-md-6 mb-4">
+          <div class="footer-section">
+            <h5 class="footer-title">Practice Hours</h5>
+            <div class="footer-hours">
+              <div class="hour-item">
+                <span>Monday - Saturday:</span>
+                <span>{{ .Site.Params.weekday_hours | default "7 AM - 10 PM" }}</span>
+              </div>
+              <div class="hour-item">
+                <span>Sunday:</span>
+                <span>{{ .Site.Params.sunday_hours | default "9 AM - 7 PM" }}</span>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Column 4: Newsletter & Service Areas -->
-        <div class="col-lg-3 col-md-6 mb-4">
+        <!-- Column 5: Follow Us -->
+        <div class="col-lg-2-4 col-md-6 mb-4">
           <div class="footer-section">
-            <h5>Newsletter & Updates</h5>
-            <p class="newsletter-description">
-              Get home maintenance tips, special offers, and updates delivered to your inbox.
-            </p>
-            
-            <!-- Newsletter Form -->
-            <form class="newsletter-form" method="POST" action="#" netlify>
-              <div class="input-group">
-                <input type="email" class="form-control" placeholder="Your email address" name="email" required>
-                <button class="btn btn-primary" type="submit">
-                  <i class="fas fa-paper-plane"></i>
-                </button>
-              </div>
-              <div class="form-text">We respect your privacy. Unsubscribe anytime.</div>
-            </form>
-            
-            <!-- Service Areas -->
-            <div class="service-areas mt-4">
-              <h6>Service Areas</h6>
-              <div class="areas-grid">
-                <div class="area-item primary">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>{{ .Site.Params.primary_location }}</span>
-                </div>
-                {{ if .Site.Params.service_areas }}
-                {{ range .Site.Params.service_areas }}
-                <div class="area-item">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>{{ . }}</span>
-                </div>
-                {{ end }}
-                {{ end }}
-              </div>
-              <p class="areas-note">
-                Don't see your area? <a href="{{ "/contact" | relURL }}">Contact us</a> to check availability.
-              </p>
+            <h5 class="footer-title">Follow Us</h5>
+            <div class="footer-social">
+              {{ if .Site.Params.social.telegram }}
+              <a href="{{ .Site.Params.social.telegram }}" target="_blank" rel="noopener" class="social-link">
+                <i class="fab fa-telegram"></i>
+                <span>Telegram</span>
+              </a>
+              {{ end }}
+              
+              {{ if .Site.Params.social.whatsapp }}
+              <a href="{{ .Site.Params.social.whatsapp }}" target="_blank" rel="noopener" class="social-link">
+                <i class="fab fa-whatsapp"></i>
+                <span>WhatsApp</span>
+              </a>
+              {{ end }}
+              
+              {{ if .Site.Params.social.facebook }}
+              <a href="{{ .Site.Params.social.facebook }}" target="_blank" rel="noopener" class="social-link">
+                <i class="fab fa-facebook"></i>
+                <span>Facebook</span>
+              </a>
+              {{ end }}
+              
+              {{ if .Site.Params.social.instagram }}
+              <a href="{{ .Site.Params.social.instagram }}" target="_blank" rel="noopener" class="social-link">
+                <i class="fab fa-instagram"></i>
+                <span>Instagram</span>
+              </a>
+              {{ end }}
             </div>
           </div>
         </div>
@@ -211,19 +112,11 @@
   <!-- Footer Bottom -->
   <div class="footer-bottom">
     <div class="container">
-      <div class="row align-items-center">
-        <div class="col-md-6">
+      <div class="row">
+        <div class="col-12 text-center">
           <p class="copyright">
-            &copy; {{ now.Format "2006" }} {{ .Site.Params.business_name | default .Site.Title }}. All rights reserved.
+            &copy; {{ .Site.Params.business_name | default .Site.Title }}. All rights reserved.
           </p>
-        </div>
-        <div class="col-md-6 text-md-end">
-          <ul class="footer-legal">
-            <li><a href="{{ "/privacy" | relURL }}">Privacy Policy</a></li>
-            <li><a href="{{ "/terms" | relURL }}">Terms of Service</a></li>
-            <li><a href="{{ "/sitemap" | relURL }}">Sitemap</a></li>
-            <li><a href="{{ "/accessibility" | relURL }}">Accessibility</a></li>
-          </ul>
         </div>
       </div>
     </div>
@@ -231,92 +124,50 @@
 </footer>
 
 <style>
-/* Footer Styles */
+/* Simple Footer Styles */
 .site-footer {
-  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
-  color: #ecf0f1;
+  background: #4a4a4a;
+  color: #ffffff;
 }
 
 .footer-main {
-  padding: 60px 0 40px;
+  padding: 50px 0 30px;
 }
 
-.footer-section h5,
-.footer-section h6 {
-  color: #fff;
+/* Custom 5-column grid */
+@media (min-width: 992px) {
+  .col-lg-2-4 {
+    flex: 0 0 20%;
+    max-width: 20%;
+  }
+}
+
+.footer-section {
+  height: 100%;
+}
+
+.footer-title {
+  color: #ffc107;
+  font-size: 1.1rem;
   font-weight: 600;
   margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid var(--primary-color);
-  display: inline-block;
+  letter-spacing: 0.5px;
 }
 
 .footer-description {
-  color: #bdc3c7;
+  color: #cccccc;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
 }
 
-/* Logo */
-.footer-logo .logo-text {
-  display: flex;
-  align-items: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #fff;
+.footer-location {
+  color: #cccccc;
+  font-size: 0.95rem;
+  margin: 0;
 }
 
-/* Credentials */
-.credentials {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 15px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-}
-
-.credential-item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-  color: #ecf0f1;
-}
-
-.credential-item:last-child {
-  margin-bottom: 0;
-}
-
-.credential-item i {
-  color: var(--primary-color);
-  width: 20px;
-}
-
-/* Social Links */
-.social-links {
-  display: flex;
-  gap: 10px;
-  margin-top: 20px;
-}
-
-.social-links a {
-  width: 40px;
-  height: 40px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ecf0f1;
-  transition: all 0.3s ease;
-  text-decoration: none;
-}
-
-.social-links a:hover {
-  background: var(--primary-color);
-  color: white;
-  transform: translateY(-3px);
-}
-
-/* Footer Links */
+/* Quick Links */
 .footer-links {
   list-style: none;
   padding: 0;
@@ -328,299 +179,185 @@
 }
 
 .footer-links a {
-  color: #bdc3c7;
+  color: #cccccc;
   text-decoration: none;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
   font-size: 0.95rem;
+  transition: color 0.3s ease;
+  display: block;
 }
 
 .footer-links a:hover {
-  color: var(--primary-color);
+  color: #ffc107;
   padding-left: 5px;
 }
 
-.footer-links a i {
-  width: 20px;
-  font-size: 0.875rem;
-}
-
-.footer-links .view-all {
-  color: var(--primary-color);
-  font-weight: 600;
-  margin-top: 10px;
-}
-
-/* Contact Information */
-.contact-info {
-  margin-bottom: 25px;
+/* Contact Info */
+.footer-contact {
+  color: #cccccc;
 }
 
 .contact-item {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 20px;
-  gap: 15px;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  line-height: 1.5;
 }
 
 .contact-item i {
-  color: var(--primary-color);
-  font-size: 1.25rem;
-  margin-top: 3px;
+  color: #ffc107;
   width: 20px;
-  text-align: center;
-}
-
-.contact-item strong {
-  display: block;
-  color: #fff;
-  margin-bottom: 5px;
-  font-size: 0.95rem;
-}
-
-.contact-item p {
-  margin: 0;
-  color: #bdc3c7;
+  margin-right: 10px;
+  margin-top: 2px;
   font-size: 0.9rem;
-  line-height: 1.4;
 }
 
 .contact-item a {
-  color: #bdc3c7;
+  color: #cccccc;
   text-decoration: none;
   transition: color 0.3s ease;
 }
 
 .contact-item a:hover {
-  color: var(--primary-color);
+  color: #ffc107;
 }
 
-.contact-item.emergency .emergency-link {
-  color: #e74c3c;
-  font-weight: 600;
+.contact-item:not(.contact-item:has(i)) {
+  padding-left: 30px;
+  margin-top: -8px;
 }
 
-.contact-item.emergency .emergency-link:hover {
-  color: #c0392b;
-}
-
-/* Business Hours */
-.business-hours {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.hours-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+/* Practice Hours */
+.footer-hours {
+  color: #cccccc;
 }
 
 .hour-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.9rem;
-  color: #bdc3c7;
-  padding: 5px 0;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  padding-bottom: 8px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .hour-item:last-child {
   border-bottom: none;
+  margin-bottom: 0;
 }
 
 .hour-item span:first-child {
   font-weight: 500;
 }
 
-/* Newsletter */
-.newsletter-description {
-  color: #bdc3c7;
-  font-size: 0.95rem;
-  margin-bottom: 20px;
-  line-height: 1.5;
+.hour-item span:last-child {
+  color: #ffc107;
+  font-weight: 500;
 }
 
-.newsletter-form .input-group {
-  margin-bottom: 10px;
+/* Social Media */
+.footer-social {
+  color: #cccccc;
 }
 
-.newsletter-form .form-control {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  border-radius: 25px 0 0 25px;
-  padding: 12px 15px;
-}
-
-.newsletter-form .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.newsletter-form .form-control:focus {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: var(--primary-color);
-  color: #fff;
-  box-shadow: none;
-}
-
-.newsletter-form .btn {
-  border-radius: 0 25px 25px 0;
-  padding: 12px 20px;
-  border: none;
-}
-
-.newsletter-form .form-text {
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 0.8rem;
-  text-align: center;
-}
-
-/* Service Areas */
-.service-areas {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 15px;
-  border-radius: 8px;
-}
-
-.areas-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 8px;
-  margin-bottom: 15px;
-}
-
-.area-item {
+.social-link {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: #bdc3c7;
+  color: #cccccc;
+  text-decoration: none;
+  margin-bottom: 12px;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
   padding: 5px 0;
 }
 
-.area-item.primary {
-  color: var(--primary-color);
-  font-weight: 600;
+.social-link:hover {
+  color: #ffc107;
+  padding-left: 5px;
 }
 
-.area-item i {
-  color: var(--primary-color);
-  width: 15px;
-  font-size: 0.8rem;
-}
-
-.areas-note {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0;
-  text-align: center;
-}
-
-.areas-note a {
-  color: var(--primary-color);
-  text-decoration: none;
-}
-
-.areas-note a:hover {
-  text-decoration: underline;
+.social-link i {
+  width: 20px;
+  margin-right: 10px;
+  font-size: 1rem;
 }
 
 /* Footer Bottom */
 .footer-bottom {
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.3);
   padding: 20px 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .copyright {
-  color: #bdc3c7;
+  color: #cccccc;
   margin: 0;
   font-size: 0.9rem;
-}
-
-.footer-legal {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.footer-legal li {
-  margin: 0;
-}
-
-.footer-legal a {
-  color: #bdc3c7;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.3s ease;
-}
-
-.footer-legal a:hover {
-  color: var(--primary-color);
+  letter-spacing: 0.5px;
 }
 
 /* Responsive Design */
-@media (max-width: 992px) {
+@media (max-width: 991px) {
   .footer-main {
-    padding: 40px 0 30px;
+    padding: 40px 0 20px;
   }
   
   .footer-section {
-    margin-bottom: 40px;
+    margin-bottom: 35px;
+  }
+  
+  .footer-section:last-child {
+    margin-bottom: 0;
   }
 }
 
 @media (max-width: 768px) {
-  .footer-bottom .row {
-    text-align: center;
+  .footer-main {
+    padding: 30px 0 15px;
   }
   
-  .footer-legal {
-    justify-content: center;
-    margin-top: 15px;
+  .footer-title {
+    font-size: 1rem;
+    margin-bottom: 15px;
   }
   
-  .areas-grid {
-    grid-template-columns: 1fr 1fr;
+  .hour-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
   }
   
-  .social-links {
-    justify-content: center;
+  .contact-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 3px;
+  }
+  
+  .contact-item i {
+    margin-bottom: 3px;
   }
 }
 
 @media (max-width: 576px) {
   .footer-main {
-    padding: 30px 0 20px;
+    padding: 25px 0 10px;
   }
   
-  .contact-item {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 10px;
+  .footer-section {
+    margin-bottom: 30px;
   }
   
-  .hour-item {
-    flex-direction: column;
-    gap: 5px;
-    text-align: center;
+  .footer-title {
+    margin-bottom: 12px;
   }
   
-  .areas-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .footer-legal {
-    flex-direction: column;
-    gap: 10px;
+  .footer-description,
+  .footer-links a,
+  .contact-item,
+  .hour-item,
+  .social-link {
+    font-size: 0.9rem;
   }
 }
 </style>
