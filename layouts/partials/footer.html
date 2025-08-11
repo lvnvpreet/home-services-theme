@@ -1,16 +1,18 @@
 <footer class="site-footer">
+  {{ $isHomeServices := or (eq .Site.Params.businessCategory "home-services") (eq .Site.Params.business_category "home-services") (eq .Site.Params.businessCategory "plumber") (eq .Site.Params.businessCategory "electrician") (eq .Site.Params.businessCategory "hvac-contractor") (eq .Site.Params.businessCategory "general-contractor") (eq .Site.Params.businessCategory "landscaper") (eq .Site.Params.businessCategory "cleaning-service") }}
+{{ if $isHomeServices }}
   <div class="footer-main">
     <div class="container">
       <div class="row">
-        <!-- Column 1: Practice Info -->
+        <!-- Column 1: Business Info -->
         <div class="col-lg-2-4 col-md-6 mb-4">
           <div class="footer-section">
-            <h5 class="footer-title">{{ .Site.Params.business_name | default "Kalu Plumber Service-111" }}</h5>
+            <h5 class="footer-title">{{ .Site.Params.business_name }}</h5>
             <p class="footer-description">
-              {{ .Site.Params.footer_description | default "Providing Quality Dental Care Environment Since 2020" }}
+              {{ .Site.Params.footer_description | default (printf "Professional %s Services Since %s" .Site.Params.subcategory .Site.Params.years_in_business) }}
             </p>
             <p class="footer-location">
-              {{ .Site.Params.city | default "Your City" }}, {{ .Site.Params.state | default "Your State" }}
+              {{ .Site.Params.service_area | default "Serving Your Local Area" }}
             </p>
           </div>
         </div>
@@ -33,16 +35,13 @@
           <div class="footer-section">
             <h5 class="footer-title">Contact Info</h5>
             <div class="footer-contact">
-              {{ if .Site.Params.address }}
+              {{ with .Site.Params.address }}
               <div class="contact-item">
                 <i class="fas fa-map-marker-alt"></i>
-                <span>{{ .Site.Params.address | default "undefined, undefined," }}</span>
+                <span>{{ .street }}</span>
               </div>
               <div class="contact-item">
-                <span>{{ .Site.Params.address2 | default "undefined undefined" }}</span>
-              </div>
-              <div class="contact-item">
-                <span>{{ .Site.Params.address3 | default "Behind Govt Hospital, Sri Karanpur" }}</span>
+                <span>{{ .city }}, {{ .state }} {{ .zipCode }}</span>
               </div>
               {{ end }}
               
