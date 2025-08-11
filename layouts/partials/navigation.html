@@ -3,12 +3,11 @@
 <nav class="main-navbar navbar navbar-expand-lg navbar-light">
   <div class="container">
     <!-- Logo -->
-    <a class="navbar-brand" href="{{ .Site.BaseURL }}">
+    <a class="navbar-brand" href="{{ / }}">
       {{ if .Site.Params.logo }}
       <img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Params.business_name | default .Site.Title }}" height="50">
       {{ else }}
       <div class="logo-text">
-        <i class="fas fa-tooth me-2"></i>
         <span class="brand-name">{{ .Site.Params.business_name | default .Site.Title }}</span>
       </div>
       {{ end }}
@@ -26,7 +25,7 @@
         
         <!-- Home -->
         <li class="nav-item">
-          <a class="nav-link{{ if eq $currentPage.RelPermalink "/" }} active{{ end }}" href="{{ .Site.BaseURL }}">
+          <a class="nav-link{{ if eq $currentPage.RelPermalink "/" }} active{{ end }}" href="{{ "/" }}">
             Home
           </a>
         </li>
