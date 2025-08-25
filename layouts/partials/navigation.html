@@ -44,12 +44,26 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
             <li><a class="dropdown-item" href="{{ "/services" | relURL }}">All Services</a></li>
-            <li><a class="dropdown-item" href="{{ "/services/electrical-installation" | relURL }}">Electrical Installation</a></li>
-            <li><a class="dropdown-item" href="{{ "/services/electrical-panel-upgrade" | relURL }}">Panel Upgrades</a></li>
-            <li><a class="dropdown-item" href="{{ "/services/lighting-installation" | relURL }}">Lighting Installation</a></li>
+            {{ range where .Site.RegularPages "Section" "services" }}
+            <li><a class="dropdown-item" href="{{ .Permalink }}">{{ .Title }}</a></li>
+            {{ end }}
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ "/contact" | relURL }}">Emergency Service</a></li>
           </ul>
+        </li>
+        
+        <!-- Service Area -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle{{ if eq $currentPage.Section "service-area" }} active{{ end }}" href="{{ "/service-area" | relURL }}" id="serviceAreaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Service Area
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="serviceAreaDropdown">
+            <li><a class="dropdown-item" href="{{ "/service-area" | relURL }}">All Service Areas</a></li>
+            {{ range where .Site.RegularPages "Section" "service-area" }}
+            <li><a class="dropdown-item" href="{{ .Permalink }}">{{ .Title }}</a></li>
+            {{ end }}
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="{{ "/contact" | relURL }}">Request Service Quote</a></li>
           </ul>
         </li>
         
@@ -57,13 +71,6 @@
         <li class="nav-item">
           <a class="nav-link{{ if eq $currentPage.Section "contact" }} active{{ end }}" href="{{ "/contact" | relURL }}">
             Contact
-          </a>
-        </li>
-        
-        <!-- Blog -->
-        <li class="nav-item">
-          <a class="nav-link{{ if eq $currentPage.Section "blog" }} active{{ end }}" href="{{ "/blog" | relURL }}">
-            Blog
           </a>
         </li>
       </ul>
@@ -130,8 +137,8 @@
         <a href="{{ .Site.BaseURL }}" class="mobile-nav-link">Home</a>
         <a href="{{ "/about" | relURL }}" class="mobile-nav-link">About</a>
         <a href="{{ "/services" | relURL }}" class="mobile-nav-link">Services</a>
+        <a href="{{ "/service-area" | relURL }}" class="mobile-nav-link">Service Area</a>
         <a href="{{ "/contact" | relURL }}" class="mobile-nav-link">Contact</a>
-        <a href="{{ "/blog" | relURL }}" class="mobile-nav-link">Blog</a>
       </div>
       
       <!-- Mobile CTA -->
@@ -189,7 +196,8 @@
 .navbar-nav .nav-link {
   font-weight: 500;
   color: #2c3e50;
-  padding: 12px 18px;
+  padding: 12px 25px;
+  margin: 0 8px;
   transition: all 0.3s ease;
   position: relative;
   font-size: 1.05rem;
@@ -224,8 +232,39 @@
   box-shadow: 0 8px 25px rgba(0,0,0,0.15);
   border-radius: 10px;
   padding: 15px 0;
-  margin-top: 15px;
+  margin-top: 0px;
   min-width: 220px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  top: 100%;
+  left: 0;
+}
+
+/* Show dropdown on hover - includes both the link and menu area */
+.dropdown:hover .dropdown-menu,
+.dropdown-menu:hover {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  display: block;
+}
+
+/* Add padding to dropdown container to prevent gap issues */
+.dropdown {
+  position: relative;
+}
+
+.dropdown::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: transparent;
+  z-index: 999;
 }
 
 .dropdown-item {
