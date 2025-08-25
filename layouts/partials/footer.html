@@ -25,7 +25,8 @@
               <li><a href="{{ "/about" | relURL }}">About Us</a></li>
               <li><a href="{{ "/services" | relURL }}">Services</a></li>
               <li><a href="{{ "/team" | relURL }}">Our Team</a></li>
-              <li><a href="{{ "/pricing" | relURL }}">Pricing Plans</a></li>
+              <li><a href="{{ "/service-area" | relURL }}">Service Areas</a></li>
+              <li><a href="{{ "/contact" | relURL }}">Contact</a></li>
             </ul>
           </div>
         </div>
@@ -35,39 +36,58 @@
           <div class="footer-section">
             <h5 class="footer-title">Contact Info</h5>
             <div class="footer-contact">
-              {{ with .Site.Params.address }}
+              {{ with .Site.Home.Params.contact_info }}
               <div class="contact-item">
                 <i class="fas fa-map-marker-alt"></i>
-                <span>{{ .street }}</span>
+                <span>{{ .address | default "123 Main Street, Gharsana, Rajasthan" }}</span>
               </div>
-              <div class="contact-item">
-                <span>{{ .city }}, {{ .state }} {{ .zipCode }}</span>
-              </div>
-              {{ end }}
               
-              {{ if .Site.Params.phone }}
               <div class="contact-item">
                 <i class="fas fa-phone"></i>
-                <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone | default "086999 31293" }}</a>
+                <a href="tel:{{ .phone }}">{{ .phone }}</a>
+              </div>
+              
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:{{ .email }}">{{ .email }}</a>
+              </div>
+              {{ else }}
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a>
               </div>
               {{ end }}
             </div>
           </div>
         </div>
         
-        <!-- Column 4: Practice Hours -->
+        <!-- Column 4: Service Hours -->
         <div class="col-lg-2-4 col-md-6 mb-4">
           <div class="footer-section">
-            <h5 class="footer-title">Practice Hours</h5>
+            <h5 class="footer-title">Service Hours</h5>
             <div class="footer-hours">
+              {{ with .Site.Home.Params.contact_info.hours }}
               <div class="hour-item">
-                <span>Monday - Saturday:</span>
-                <span>{{ .Site.Params.weekday_hours | default "7 AM - 10 PM" }}</span>
+                <span>{{ . }}</span>
+              </div>
+              {{ else }}
+              <div class="hour-item">
+                <span>Monday - Friday:</span>
+                <span>8AM - 6PM</span>
+              </div>
+              <div class="hour-item">
+                <span>Saturday:</span>
+                <span>9AM - 5PM</span>
               </div>
               <div class="hour-item">
                 <span>Sunday:</span>
-                <span>{{ .Site.Params.sunday_hours | default "9 AM - 7 PM" }}</span>
+                <span>Closed</span>
               </div>
+              <div class="hour-item emergency-hours">
+                <span>Emergency Service:</span>
+                <span>24/7 Available</span>
+              </div>
+              {{ end }}
             </div>
           </div>
         </div>

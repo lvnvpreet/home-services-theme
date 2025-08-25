@@ -1,0 +1,142 @@
+/* Custom styles for electrical services theme */
+
+/* Emergency Badge */
+.emergency-badge {
+  background: #dc3545;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  margin-left: 8px;
+}
+
+.emergency-badge i {
+  margin-right: 2px;
+}
+
+/* Feature Card Styles */
+.feature-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.feature-icon {
+  font-size: 3rem;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.feature-card h4 {
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Service Area Cards */
+.service-area-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease;
+}
+
+.service-area-card:hover {
+  transform: translateY(-5px);
+}
+
+.area-icon {
+  font-size: 2.5rem;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+
+.service-area-card h4 {
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+/* Team Card Enhancements */
+.team-experience {
+  color: #6c757d;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.cert-badge {
+  background: #e9ecef;
+  color: #495057;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  margin: 2px;
+  display: inline-block;
+}
+
+/* Service Card Price Display */
+.service-features {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.price {
+  font-weight: 600;
+  color: #28a745;
+}
+
+/* Rating Stars */
+.rating {
+  margin-bottom: 1rem;
+}
+
+.rating i {
+  color: #ffc107;
+  margin-right: 2px;
+}
+
+/* Service Areas Section */
+.service-areas-section {
+  background: #f8f9fa;
+}
+
+/* Why Choose Us Section */
+.why-choose-section .feature-card {
+  height: 100%;
+}
+
+/* Footer Emergency Hours */
+.emergency-hours {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.emergency-hours span {
+  color: #dc3545 !important;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .service-features {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .emergency-badge {
+    margin-left: 0;
+    margin-top: 5px;
+  }
+  
+  .feature-card,
+  .service-area-card {
+    margin-bottom: 2rem;
+  }
+}

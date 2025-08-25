@@ -1,0 +1,58 @@
+baseURL: "https://example.com"
+languageCode: "en-us"
+title: "Star Electrician - Professional Electrical Services"
+theme: "home-services-theme"
+
+# Site Parameters - Configure these to match your content
+params:
+  # Business Information
+  business_name: "Star Electrician"
+  hero_title: "Professional Electrical Services in Gharsana"
+  hero_subtitle: "Licensed, insured, and trusted by homeowners for reliable electrical solutions"
+  years_in_business: "15"
+  primary_location: "Gharsana"
+  
+  # Contact Information
+  phone: "(080) 058-7669"
+  emergency_phone: "(080) 058-7669"
+  email: "dhillonlovepreet147@gmail.com"
+  
+  # Business Category
+  business_category: "electrician"
+  
+  # Footer Description
+  footer_description: "Professional Electrical Services Since 2009"
+  
+  # Service Area
+  service_area: "Gharsana, Lunia, Narawali & Surrounding Areas"
+
+# Menu Configuration
+menu:
+  main:
+    - name: "Home"
+      url: "/"
+      weight: 10
+    - name: "About"
+      url: "/about/"
+      weight: 20
+    - name: "Services"
+      url: "/services/"
+      weight: 30
+    - name: "Team"
+      url: "/team/"
+      weight: 40
+    - name: "Service Areas"
+      url: "/service-area/"
+      weight: 50
+    - name: "Blog"
+      url: "/blog/"
+      weight: 60
+    - name: "Contact"
+      url: "/contact/"
+      weight: 70
+
+# Markup Configuration
+markup:
+  goldmark:
+    renderer:
+      unsafe: true

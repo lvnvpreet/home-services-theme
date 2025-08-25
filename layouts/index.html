@@ -14,8 +14,8 @@
         <div class="row align-items-center justify-content-center">
           <div class="col-lg-8 col-md-10 col-12">
             <div class="hero-text-content">
-              <h1 class="hero-title">{{ .Site.Params.hero_title | default "Professional Home Services in Your Area" }}</h1>
-              <p class="hero-subtitle">{{ .Site.Params.hero_subtitle | default "Licensed, insured, and trusted by homeowners" }}</p>
+              <h1 class="hero-title">{{ .Params.hero_title | default .Site.Params.hero_title | default "Professional Home Services in Your Area" }}</h1>
+              <p class="hero-subtitle">{{ .Params.hero_subtitle | default .Site.Params.hero_subtitle | default "Licensed, insured, and trusted by homeowners" }}</p>
               
               <div class="hero-badges mb-4">
                 <span class="badge bg-success me-2">
@@ -28,14 +28,14 @@
                 </span>
                 <span class="badge bg-info">
                   <i class="fas fa-thumbs-up me-1"></i>
-                  {{ .Site.Params.years_in_business }}+ Years Experience
+                  {{ .Site.Params.years_in_business | default "15" }}+ Years Experience
                 </span>
               </div>
               
               <div class="hero-actions">
-                <a href="{{ "/contact" | relURL }}" class="btn btn-primary btn-lg me-3">
+                <a href="{{ .Params.contact_info.phone | default .Site.Params.phone | printf "tel:%s" }}" class="btn btn-primary btn-lg me-3">
                   <i class="fas fa-phone me-2"></i>
-                  Get Free Quote
+                  {{ .Params.contact_info.phone | default .Site.Params.phone }}
                 </a>
                 <a href="{{ "/services" | relURL }}" class="btn btn-outline-light btn-lg">
                   <i class="fas fa-tools me-2"></i>
@@ -48,10 +48,10 @@
             <div class="hero-contact-card">
               <h3>Need Service Now?</h3>
               <p class="mb-3">Call for immediate assistance</p>
-              <a href="tel:{{ .Site.Params.phone }}" class="contact-phone">
-                {{ .Site.Params.phone }}
+              <a href="tel:{{ .Params.contact_info.phone | default .Site.Params.phone }}" class="contact-phone">
+                {{ .Params.contact_info.phone | default .Site.Params.phone }}
               </a>
-              <p class="service-area">Serving {{ .Site.Params.primary_location }} & Surrounding Areas</p>
+              <p class="service-area">Serving {{ .Site.Params.primary_location | default "Your Area" }} & Surrounding Areas</p>
             </div>
           </div>
         </div>
@@ -59,39 +59,38 @@
     </div>
   </section>
   
-  <!-- 2. Our Services Section -->
+  <!-- 2. Featured Services Section -->
   <section class="services-section py-5">
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2 class="section-title">Our Home Services</h2>
-          <p class="section-subtitle">Professional solutions for all your home improvement and maintenance needs</p>
+          <h2 class="section-title">Our Electrical Services</h2>
+          <p class="section-subtitle">Professional electrical solutions for all your home and business needs</p>
         </div>
       </div>
       <div class="row">
-        {{ range where .Site.RegularPages "Section" "services" | first 6 }}
+        {{ range .Params.featured_services }}
         <div class="col-lg-4 col-md-6 mb-4">
           <div class="service-card">
-            {{ if .Params.image }}
-            <div class="service-image">
-              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid">
-            </div>
-            {{ end }}
             <div class="service-content">
-              {{ if .Params.icon }}
+              {{ if .icon }}
               <div class="service-icon">
-                <i class="{{ .Params.icon }}"></i>
+                <i class="{{ .icon }}"></i>
               </div>
               {{ end }}
-              <h4>{{ .Title }}</h4>
-              <p>{{ .Summary | truncate 120 }}</p>
+              <h4>{{ .title }}</h4>
+              <p>{{ .description }}</p>
               <div class="service-features">
-                {{ if .Params.starting_price }}
-                <span class="price">Starting at {{ .Params.starting_price }}</span>
+                {{ if .price }}
+                <span class="price">{{ .price }}</span>
                 {{ end }}
-                <span class="service-type">{{ .Params.service_type | default "Residential & Commercial" }}</span>
+                {{ if .emergency }}
+                <span class="emergency-badge">
+                  <i class="fas fa-bolt"></i> Emergency Available
+                </span>
+                {{ end }}
               </div>
-              <a href="{{ .Permalink }}" class="btn btn-outline-primary">Learn More</a>
+              <a href="{{ .link }}" class="btn btn-outline-primary">Learn More</a>
             </div>
           </div>
         </div>
@@ -104,9 +103,34 @@
       </div>
     </div>
   </section>
+
+  <!-- 2.5. Why Choose Us Section -->
+  <section class="why-choose-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2 class="section-title">Why Choose Star Electrician?</h2>
+          <p class="section-subtitle">Here's what sets us apart from other electrical service providers</p>
+        </div>
+      </div>
+      <div class="row">
+        {{ range .Params.why_choose_us }}
+        <div class="col-lg-3 col-md-6 mb-4">
+          <div class="feature-card text-center">
+            <div class="feature-icon">
+              <i class="{{ .icon }}"></i>
+            </div>
+            <h4>{{ .title }}</h4>
+            <p>{{ .description }}</p>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </section>
   
   <!-- 3. About Us Section -->
-  <section class="about-section py-5 bg-light">
+  <section class="about-section py-5">
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-6 mb-4 mb-lg-0">
@@ -127,28 +151,28 @@
         </div>
         <div class="col-lg-6">
           <div class="about-content">
-            <h2 class="section-title text-start">About Our Company</h2>
-            <p class="lead">Professional home services you can trust, with over {{ .Site.Params.years_in_business }} years of experience serving {{ .Site.Params.primary_location }}.</p>
+            <h2 class="section-title text-start">About Star Electrician</h2>
+            <p class="lead">Professional electrical services you can trust, with over 15 years of experience serving Gharsana and surrounding areas.</p>
             <div class="about-highlights">
               <div class="highlight-item">
                 <i class="fas fa-shield-alt text-primary"></i>
                 <div>
                   <strong>Licensed & Insured</strong>
-                  <p>License #{{ .Site.Params.license_number | default "LIC-12345" }}</p>
+                  <p>Fully licensed electrical contractors in Rajasthan</p>
                 </div>
               </div>
               <div class="highlight-item">
                 <i class="fas fa-award text-primary"></i>
                 <div>
                   <strong>Quality Guarantee</strong>
-                  <p>100% satisfaction guaranteed on all work</p>
+                  <p>100% satisfaction guaranteed on all electrical work</p>
                 </div>
               </div>
               <div class="highlight-item">
                 <i class="fas fa-users text-primary"></i>
                 <div>
                   <strong>Expert Team</strong>
-                  <p>Certified professionals with extensive training</p>
+                  <p>Certified electrical professionals with extensive training</p>
                 </div>
               </div>
             </div>
@@ -165,74 +189,31 @@
       <div class="row">
         <div class="col-12 text-center mb-5">
           <h2 class="section-title">What Our Customers Say</h2>
-          <p class="section-subtitle">Real reviews from satisfied homeowners in {{ .Site.Params.primary_location }}</p>
+          <p class="section-subtitle">Real reviews from satisfied customers in Gharsana and surrounding areas</p>
         </div>
       </div>
       <div class="row">
         <div class="col-12">
           <div class="testimonials-carousel">
-            <!-- Testimonial 1 -->
+            {{ range .Params.testimonials }}
             <div class="testimonial-card">
               <div class="testimonial-content">
                 <div class="rating">
+                  {{ range seq .rating }}
                   <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
+                  {{ end }}
                 </div>
-                <p>"Excellent service! They fixed our plumbing issue quickly and professionally. The technician was knowledgeable and explained everything clearly. Highly recommended!"</p>
+                <p>"{{ .content }}"</p>
                 <div class="testimonial-author">
                   <div class="author-info">
-                    <strong>Sarah Johnson</strong>
-                    <span>Manhattan, NY</span>
+                    <strong>{{ .name }}</strong>
+                    <span>{{ .location }}</span>
                   </div>
-                  <div class="service-type">Plumbing Service</div>
+                  <div class="service-type">{{ .service }}</div>
                 </div>
               </div>
             </div>
-            
-            <!-- Testimonial 2 -->
-            <div class="testimonial-card">
-              <div class="testimonial-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p>"Outstanding electrical work! They upgraded our entire electrical panel and did it safely and efficiently. Fair pricing and excellent workmanship."</p>
-                <div class="testimonial-author">
-                  <div class="author-info">
-                    <strong>Mike Rodriguez</strong>
-                    <span>Brooklyn, NY</span>
-                  </div>
-                  <div class="service-type">Electrical Service</div>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Testimonial 3 -->
-            <div class="testimonial-card">
-              <div class="testimonial-content">
-                <div class="rating">
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                  <i class="fas fa-star"></i>
-                </div>
-                <p>"Great HVAC service! Our air conditioning was repaired quickly and has been working perfectly ever since. Professional team and reasonable rates."</p>
-                <div class="testimonial-author">
-                  <div class="author-info">
-                    <strong>Lisa Chen</strong>
-                    <span>Queens, NY</span>
-                  </div>
-                  <div class="service-type">HVAC Service</div>
-                </div>
-              </div>
-            </div>
+            {{ end }}
           </div>
         </div>
       </div>
@@ -245,98 +226,92 @@
       <div class="row">
         <div class="col-12 text-center mb-5">
           <h2 class="section-title">Frequently Asked Questions</h2>
-          <p class="section-subtitle">Get answers to common questions about our home services</p>
+          <p class="section-subtitle">Get answers to common questions about our electrical services</p>
         </div>
       </div>
       <div class="row">
         <div class="col-lg-8 mx-auto">
           <div class="accordion" id="faqAccordion">
+            {{ range $index, $faq := .Params.faqs }}
             <div class="accordion-item">
               <h3 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                  Are you licensed and insured?
+                <button class="accordion-button{{ if ne $index 0 }} collapsed{{ end }}" type="button" data-bs-toggle="collapse" data-bs-target="#faq{{ add $index 1 }}">
+                  {{ $faq.question }}
                 </button>
               </h3>
-              <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+              <div id="faq{{ add $index 1 }}" class="accordion-collapse collapse{{ if eq $index 0 }} show{{ end }}" data-bs-parent="#faqAccordion">
                 <div class="accordion-body">
-                  Yes, we are fully licensed (License #{{ .Site.Params.license_number }}) and insured. We carry both liability and workers' compensation insurance for your protection and peace of mind.
+                  {{ $faq.answer }}
                 </div>
               </div>
             </div>
-            
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                  Do you provide free estimates?
-                </button>
-              </h3>
-              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                  Yes, we provide free, no-obligation estimates for all our services. Contact us to schedule your free consultation and estimate.
-                </div>
-              </div>
-            </div>
-            
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                  What areas do you serve?
-                </button>
-              </h3>
-              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                  We serve {{ .Site.Params.primary_location }} and surrounding areas{{ if .Site.Params.service_areas }} including {{ delimit .Site.Params.service_areas ", " }}{{ end }}. Contact us to confirm service availability in your area.
-                </div>
-              </div>
-            </div>
-            
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                  Do you offer emergency services?
-                </button>
-              </h3>
-              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-                <div class="accordion-body">
-                  Yes, we offer 24/7 emergency services for urgent repairs. Call our emergency line at {{ .Site.Params.emergency_phone }} for immediate assistance.
-                </div>
-              </div>
-            </div>
+            {{ end }}
           </div>
         </div>
       </div>
     </div>
   </section>
-  
-  <!-- 6. Expert Team Section -->
-  <section class="team-section py-5">
+
+  <!-- 5.5. Service Areas Section -->
+  <section class="service-areas-section py-5">
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2 class="section-title">Our Expert Team</h2>
-          <p class="section-subtitle">Experienced professionals dedicated to quality workmanship</p>
+          <h2 class="section-title">Areas We Serve</h2>
+          <p class="section-subtitle">Professional electrical services throughout Gharsana and surrounding areas</p>
         </div>
       </div>
       <div class="row">
-        {{ range where .Site.RegularPages "Section" "team" | first 4 }}
+        {{ range .Params.service_areas_highlight }}
+        <div class="col-lg-4 col-md-6 mb-4">
+          <div class="service-area-card text-center">
+            <div class="area-icon">
+              <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <h4>{{ .name }}</h4>
+            <p>{{ .description }}</p>
+            <a href="tel:{{ .phone }}" class="btn btn-outline-primary">
+              <i class="fas fa-phone me-2"></i>
+              {{ .phone }}
+            </a>
+          </div>
+        </div>
+        {{ end }}
+      </div>
+      <div class="text-center">
+        <a href="{{ "/service-area" | relURL }}" class="btn btn-primary">
+          View All Service Areas <i class="fas fa-arrow-right ms-2"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- 6. Expert Team Section -->
+  <section class="team-section py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center mb-5">
+          <h2 class="section-title">Meet Our Expert Team</h2>
+          <p class="section-subtitle">Licensed electrical professionals with years of experience</p>
+        </div>
+      </div>
+      <div class="row">
+        {{ range first 4 .Params.team_members }}
         <div class="col-lg-3 col-md-6 mb-4">
           <div class="team-card">
             <div class="team-image">
-              {{ if .Params.image }}
-              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid">
-              {{ else }}
               <div class="team-placeholder">
                 <i class="fas fa-user-tie"></i>
               </div>
-              {{ end }}
             </div>
             <div class="team-info">
-              <h4>{{ .Title }}</h4>
-              <p class="team-role">{{ .Params.position | default "Service Technician" }}</p>
-              <p class="team-specialty">{{ .Params.specialty | default "General Services" }}</p>
-              {{ if .Params.certifications }}
+              <h4>{{ .name }}</h4>
+              <p class="team-role">{{ .position }}</p>
+              <p class="team-specialty">{{ .specialty }}</p>
+              <p class="team-experience">{{ .experience }} experience</p>
+              {{ if .certifications }}
               <div class="certifications">
-                {{ range .Params.certifications }}
+                {{ range first 2 .certifications }}
                 <span class="cert-badge">{{ . }}</span>
                 {{ end }}
               </div>
@@ -346,35 +321,15 @@
         </div>
         {{ end }}
       </div>
-    </div>
-  </section>
-  
-  <!-- 7. Why Choose Us Section -->
-  <section class="why-choose-section py-5 bg-primary text-white">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center mb-5">
-          <h2 class="section-title text-white">Why Choose Us</h2>
-          <p class="section-subtitle text-white-50">What sets us apart from other home service providers</p>
-        </div>
-      </div>
-      <div class="row">
-        {{ range .Site.Params.why_choose_features }}
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="feature-box text-center">
-            <div class="feature-icon">
-              <i class="{{ .icon }}"></i>
-            </div>
-            <h4>{{ .title }}</h4>
-            <p>{{ .description }}</p>
-          </div>
-        </div>
-        {{ end }}
+      <div class="text-center">
+        <a href="{{ "/team" | relURL }}" class="btn btn-primary">
+          Meet Our Full Team <i class="fas fa-arrow-right ms-2"></i>
+        </a>
       </div>
     </div>
   </section>
   
-  <!-- 8. Special Offers Section -->
+  <!-- 7. Special Offers Section -->
   <section class="offers-section py-5">
     <div class="container">
       <div class="row">
