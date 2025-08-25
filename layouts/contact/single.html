@@ -5,24 +5,25 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-          <h1 class="page-title">Contact Us</h1>
-          <p class="page-subtitle">Get in touch for a free estimate or emergency service</p>
+          <h1 class="page-title">{{ .Title | default "Contact Us" }}</h1>
+          <p class="page-subtitle">{{ .Params.hero_subtitle | default "Get in touch for all your needs" }}</p>
         </div>
       </div>
     </div>
   </section>
   
-  <!-- Main Contact Section -->
-  <section class="contact-main py-5">
+  <!-- Contact Content -->
+  <section class="contact-content-section py-5">
     <div class="container">
       <div class="row">
-        
-        <!-- Left Side: Contact Form -->
         <div class="col-lg-8">
-          <div class="contact-form-wrapper">
-            <h2>Send Us a Message</h2>
-            <p class="form-description">Fill out the form below and we'll get back to you within 24 hours.</p>
-            
+          <div class="contact-content">
+            {{ .Content }}
+          </div>
+          
+          <!-- Contact Form -->
+          <div class="contact-form-wrapper mt-5">
+            <h3>Send Us a Message</h3>
             <form class="contact-form" method="POST" action="#" netlify data-netlify="true">
               <div class="row">
                 <div class="col-md-6 mb-3">
@@ -44,313 +45,80 @@
                   <label for="service_type" class="form-label">Service Needed</label>
                   <select class="form-select" id="service_type" name="service_type">
                     <option value="">Select a service</option>
-                    <option value="general_contractor">General Contracting</option>
-                    <option value="electrician">Electrical Work</option>
-                    <option value="plumber">Plumbing</option>
-                    <option value="hvac">HVAC Services</option>
-                    <option value="roofing">Roofing</option>
-                    <option value="painter">Painting</option>
-                    <option value="handyman">Handyman Services</option>
-                    <option value="flooring">Flooring</option>
-                    <option value="landscaping">Landscaping</option>
-                    <option value="pest_control">Pest Control</option>
-                    <option value="cleaning">Cleaning Services</option>
-                    <option value="moving">Moving Services</option>
-                    <option value="storage">Storage</option>
+                    <option value="electrical_installation">Electrical Installation</option>
+                    <option value="panel_upgrade">Panel Upgrade</option>
+                    <option value="lighting">Lighting Installation</option>
+                    <option value="electrical_repair">Electrical Repair</option>
                     <option value="emergency">Emergency Service</option>
                     <option value="other">Other</option>
                   </select>
                 </div>
               </div>
               
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="property_type" class="form-label">Property Type</label>
-                  <select class="form-select" id="property_type" name="property_type">
-                    <option value="residential">Residential</option>
-                    <option value="commercial">Commercial</option>
-                    <option value="industrial">Industrial</option>
-                  </select>
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="urgency" class="form-label">Urgency Level</label>
-                  <select class="form-select" id="urgency" name="urgency">
-                    <option value="normal">Normal (within a week)</option>
-                    <option value="urgent">Urgent (within 2-3 days)</option>
-                    <option value="emergency">Emergency (same day)</option>
-                  </select>
-                </div>
-              </div>
-              
               <div class="mb-3">
                 <label for="address" class="form-label">Service Address</label>
-                <input type="text" class="form-control" id="address" name="address" placeholder="Street address where service is needed">
+                <input type="text" class="form-control" id="address" name="address" placeholder="Where do you need service?">
               </div>
               
               <div class="mb-3">
-                <label for="message" class="form-label">Project Description *</label>
-                <textarea class="form-control" id="message" name="message" rows="5" placeholder="Please describe the work you need done in detail..." required></textarea>
+                <label for="message" class="form-label">Message</label>
+                <textarea class="form-control" id="message" name="message" rows="4" placeholder="Tell us about your electrical needs..."></textarea>
               </div>
               
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <label for="preferred_date" class="form-label">Preferred Date</label>
-                  <input type="date" class="form-control" id="preferred_date" name="preferred_date" min="{{ now.Format "2006-01-02" }}">
-                </div>
-                <div class="col-md-6 mb-3">
-                  <label for="budget" class="form-label">Estimated Budget</label>
-                  <select class="form-select" id="budget" name="budget">
-                    <option value="">Select budget range</option>
-                    <option value="under_500">Under $500</option>
-                    <option value="500_1000">$500 - $1,000</option>
-                    <option value="1000_2500">$1,000 - $2,500</option>
-                    <option value="2500_5000">$2,500 - $5,000</option>
-                    <option value="5000_10000">$5,000 - $10,000</option>
-                    <option value="over_10000">Over $10,000</option>
-                  </select>
-                </div>
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="emergency" name="emergency">
+                <label class="form-check-label" for="emergency">
+                  This is an emergency (we'll call you immediately)
+                </label>
               </div>
               
-              <div class="mb-3">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="marketing_consent" name="marketing_consent">
-                  <label class="form-check-label" for="marketing_consent">
-                    I would like to receive updates about special offers and home maintenance tips
-                  </label>
-                </div>
-              </div>
-              
-              <div class="mb-4">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="consent" name="consent" required>
-                  <label class="form-check-label" for="consent">
-                    I consent to being contacted regarding my service request *
-                  </label>
-                </div>
-              </div>
-              
-              <div class="form-actions">
-                <button type="submit" class="btn btn-primary btn-lg">
-                  <i class="fas fa-paper-plane me-2"></i>
-                  Send Message
-                </button>
-                <p class="form-note">We'll respond within 24 hours with a free estimate</p>
-              </div>
+              <button type="submit" class="btn btn-primary btn-lg">
+                <i class="fas fa-paper-plane me-2"></i>
+                Send Message
+              </button>
             </form>
           </div>
+          
+          <!-- Map Section -->
+          {{ if .Params.map_embed }}
+          <div class="map-section mt-5">
+            <h3>Our Location</h3>
+            <div class="map-container-large">
+              {{ .Params.map_embed | safeHTML }}
+            </div>
+          </div>
+          {{ end }}
         </div>
         
-        <!-- Right Side: Contact Information Card -->
+        <!-- Sidebar -->
         <div class="col-lg-4">
-          <div class="contact-info-card">
-            <h3>Get In Touch</h3>
-            
-            <!-- Contact Methods -->
-            <div class="contact-methods">
-              
-              <!-- Phone -->
-              <div class="contact-method">
-                <div class="method-icon">
-                  <i class="fas fa-phone-alt"></i>
-                </div>
-                <div class="method-info">
-                  <h4>Call Us</h4>
-                  <p><a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a></p>
-                  <small>Monday - Friday: {{ .Site.Params.business_hours.monday }}</small>
-                </div>
-              </div>
-              
-              <!-- Emergency -->
-              {{ if .Site.Params.emergency_phone }}
-              <div class="contact-method emergency">
-                <div class="method-icon">
-                  <i class="fas fa-exclamation-triangle"></i>
-                </div>
-                <div class="method-info">
-                  <h4>Emergency Line</h4>
-                  <p><a href="tel:{{ .Site.Params.emergency_phone }}" class="emergency-link">{{ .Site.Params.emergency_phone }}</a></p>
-                  <small>24/7 Emergency Service</small>
-                </div>
-              </div>
+          <div class="contact-info-sidebar">
+            <!-- Quick Contact -->
+            <div class="contact-info-card mb-4">
+              <h4><i class="fas fa-phone-alt me-2"></i>Call Us</h4>
+              <p class="mb-2">
+                <strong>Main:</strong> <a href="tel:{{ .Params.phone | default .Site.Params.phone }}">{{ .Params.phone | default .Site.Params.phone }}</a>
+              </p>
+              {{ if .Params.emergency_phone }}
+              <p class="mb-0">
+                <strong>Emergency:</strong> <a href="tel:{{ .Params.emergency_phone }}">{{ .Params.emergency_phone }}</a>
+              </p>
               {{ end }}
-              
-              <!-- Email -->
-              <div class="contact-method">
-                <div class="method-icon">
-                  <i class="fas fa-envelope"></i>
-                </div>
-                <div class="method-info">
-                  <h4>Email Us</h4>
-                  <p><a href="mailto:{{ .Site.Params.email }}">{{ .Site.Params.email }}</a></p>
-                  <small>We respond within 24 hours</small>
-                </div>
-              </div>
-              
-              <!-- Address -->
-              <div class="contact-method">
-                <div class="method-icon">
-                  <i class="fas fa-map-marker-alt"></i>
-                </div>
-                <div class="method-info">
-                  <h4>Visit Us</h4>
-                  <p>{{ .Site.Params.address }}</p>
-                  <small>By appointment only</small>
-                </div>
-              </div>
-              
             </div>
             
-            <!-- Business Hours -->
-            <div class="business-hours-card">
-              <h4>Business Hours</h4>
-              <div class="hours-grid">
-                <div class="hour-row">
-                  <span class="day">Monday - Friday:</span>
-                  <span class="time">{{ .Site.Params.business_hours.monday }}</span>
-                </div>
-                <div class="hour-row">
-                  <span class="day">Saturday:</span>
-                  <span class="time">{{ .Site.Params.business_hours.saturday }}</span>
-                </div>
-                <div class="hour-row">
-                  <span class="day">Sunday:</span>
-                  <span class="time">{{ .Site.Params.business_hours.sunday }}</span>
-                </div>
-              </div>
+            <!-- Email -->
+            <div class="contact-info-card mb-4">
+              <h4><i class="fas fa-envelope me-2"></i>Email Us</h4>
+              <p class="mb-0">
+                <a href="mailto:{{ .Params.email | default .Site.Params.email }}">{{ .Params.email | default .Site.Params.email }}</a>
+              </p>
             </div>
             
-            <!-- Service Areas -->
-            <div class="service-areas-card">
-              <h4>Service Areas</h4>
-              <div class="areas-list">
-                <div class="area-item primary">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>{{ .Site.Params.primary_location }}</span>
-                </div>
-                {{ if .Site.Params.service_areas }}
-                {{ range .Site.Params.service_areas }}
-                <div class="area-item">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>{{ . }}</span>
-                </div>
-                {{ end }}
-                {{ end }}
-              </div>
-              <p class="areas-note">Don't see your area? Contact us to check availability.</p>
+            <!-- Address -->
+            <div class="contact-info-card mb-4">
+              <h4><i class="fas fa-map-marker-alt me-2"></i>Visit Us</h4>
+              <p class="mb-0">{{ .Params.business_address | default .Site.Params.address }}</p>
             </div>
-            
-            <!-- Credentials -->
-            <div class="credentials-card">
-              <h4>Licensed & Insured</h4>
-              <div class="credential-items">
-                <div class="credential">
-                  <i class="fas fa-certificate"></i>
-                  <span>License #{{ .Site.Params.license_number }}</span>
-                </div>
-                <div class="credential">
-                  <i class="fas fa-shield-alt"></i>
-                  <span>Fully Insured & Bonded</span>
-                </div>
-                <div class="credential">
-                  <i class="fas fa-award"></i>
-                  <span>{{ .Site.Params.years_in_business }}+ Years Experience</span>
-                </div>
-              </div>
-            </div>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
-  <!-- Google Map Integration -->
-  <section class="map-section" id="map">
-    <div class="container-fluid p-0">
-      <div class="map-container">
-        <div id="google-map" class="google-map"></div>        
-      </div>
-    </div>
-  </section>
-  
-  <!-- FAQ Section -->
-  <section class="contact-faq py-5 bg-light" id="faq">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center mb-5">
-          <h2>Frequently Asked Questions</h2>
-          <p>Quick answers to common questions about our services</p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-8 mx-auto">
-          <div class="accordion" id="contactFaqAccordion">
-            
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
-                  Do you provide free estimates?
-                </button>
-              </h3>
-              <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#contactFaqAccordion">
-                <div class="accordion-body">
-                  Yes, we provide free, no-obligation estimates for all our services. Simply fill out our contact form or give us a call to schedule your free estimate.
-                </div>
-              </div>
-            </div>
-            
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                  How quickly can you respond to emergency calls?
-                </button>
-              </h3>
-              <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#contactFaqAccordion">
-                <div class="accordion-body">
-                  We offer 24/7 emergency service and typically respond to emergency calls within 1-2 hours. Call our emergency line at {{ .Site.Params.emergency_phone }} for immediate assistance.
-                </div>
-              </div>
-            </div>
-            
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
-                  What areas do you service?
-                </button>
-              </h3>
-              <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#contactFaqAccordion">
-                <div class="accordion-body">
-                  We serve {{ .Site.Params.primary_location }} and surrounding areas{{ if .Site.Params.service_areas }} including {{ delimit .Site.Params.service_areas ", " }}{{ end }}. Contact us to confirm service availability in your specific location.
-                </div>
-              </div>
-            </div>
-            
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
-                  Are you licensed and insured?
-                </button>
-              </h3>
-              <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#contactFaqAccordion">
-                <div class="accordion-body">
-                  Yes, we are fully licensed (License #{{ .Site.Params.license_number }}) and carry comprehensive liability and workers' compensation insurance for your protection.
-                </div>
-              </div>
-            </div>
-            
-            <div class="accordion-item">
-              <h3 class="accordion-header">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
-                  What payment methods do you accept?
-                </button>
-              </h3>
-              <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#contactFaqAccordion">
-                <div class="accordion-body">
-                  We accept cash, all major credit cards, and checks. We also offer financing options for larger projects. Payment is typically due upon completion of work.
-                </div>
-              </div>
-            </div>
-            
           </div>
         </div>
       </div>
@@ -361,11 +129,10 @@
 
 <style>
 /* Contact Page Styles */
-.page-header {
+.contact-page .page-header {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
   color: white;
-  padding: 60px 0;
-  text-align: center;
+  padding: 80px 0;
 }
 
 .page-title {
@@ -375,424 +142,148 @@
 }
 
 .page-subtitle {
-  font-size: 1.125rem;
-  opacity: 0.9;
-}
-
-.contact-main {
-  background: #fff;
-}
-
-/* Contact Form */
-.contact-form-wrapper {
-  background: #fff;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-}
-
-.contact-form-wrapper h2 {
-  color: var(--dark-color);
-  margin-bottom: 10px;
-}
-
-.form-description {
-  color: var(--secondary-color);
-  margin-bottom: 30px;
-}
-
-.form-actions {
-  text-align: center;
-}
-
-.form-note {
-  margin-top: 15px;
-  color: var(--secondary-color);
-  font-size: 0.9rem;
-}
-
-/* Contact Info Card */
-.contact-info-card {
-  background: var(--light-color);
-  padding: 30px;
-  border-radius: 12px;
-  height: fit-content;
-  position: sticky;
-  top: 100px;
-}
-
-.contact-info-card h3 {
-  color: var(--dark-color);
-  margin-bottom: 25px;
-  text-align: center;
-  border-bottom: 2px solid var(--primary-color);
-  padding-bottom: 10px;
-}
-
-.contact-methods {
-  margin-bottom: 30px;
-}
-
-.contact-method {
-  display: flex;
-  align-items: flex-start;
-  gap: 15px;
-  margin-bottom: 25px;
-  padding: 15px;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.contact-method.emergency {
-  border-left: 4px solid var(--danger-color);
-}
-
-.method-icon {
-  width: 50px;
-  height: 50px;
-  background: var(--primary-color);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
   font-size: 1.25rem;
-  flex-shrink: 0;
-}
-
-.contact-method.emergency .method-icon {
-  background: var(--danger-color);
-}
-
-.method-info h4 {
-  margin-bottom: 5px;
-  color: var(--dark-color);
-  font-size: 1.1rem;
-}
-
-.method-info p {
-  margin-bottom: 3px;
-  font-size: 1rem;
-}
-
-.method-info a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.method-info .emergency-link {
-  color: var(--danger-color);
-}
-
-.method-info small {
-  color: var(--secondary-color);
-  font-size: 0.85rem;
-}
-
-/* Business Hours Card */
-.business-hours-card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 25px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.business-hours-card h4 {
-  color: var(--dark-color);
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.hours-grid {
-  display: grid;
-  gap: 8px;
-}
-
-.hour-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.hour-row:last-child {
-  border-bottom: none;
-}
-
-.day {
-  font-weight: 500;
-  color: var(--dark-color);
-}
-
-.time {
-  color: var(--secondary-color);
-}
-
-/* Service Areas Card */
-.service-areas-card {
-  background: white;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 25px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-.service-areas-card h4 {
-  color: var(--dark-color);
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.areas-list {
-  display: grid;
-  gap: 8px;
-  margin-bottom: 15px;
-}
-
-.area-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 5px 0;
-  color: var(--secondary-color);
-}
-
-.area-item.primary {
-  color: var(--primary-color);
-  font-weight: 600;
-}
-
-.area-item i {
-  color: var(--primary-color);
-  width: 15px;
-}
-
-.areas-note {
-  font-size: 0.85rem;
-  color: var(--secondary-color);
-  text-align: center;
+  opacity: 0.9;
   margin: 0;
 }
 
-/* Credentials Card */
-.credentials-card {
-  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-  color: white;
-  padding: 20px;
+.contact-content-section {
+  background: white;
+}
+
+.contact-content h1,
+.contact-content h2,
+.contact-content h3,
+.contact-content h4 {
+  color: var(--primary-color);
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.contact-content h1:first-child,
+.contact-content h2:first-child {
+  margin-top: 0;
+}
+
+.contact-content p {
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.contact-form-wrapper {
+  background: #f8f9fa;
+  padding: 2rem;
   border-radius: 8px;
-  text-align: center;
+  border: 1px solid #e9ecef;
 }
 
-.credentials-card h4 {
-  color: white;
-  margin-bottom: 15px;
+.contact-form .form-control,
+.contact-form .form-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-.credential-items {
-  display: grid;
-  gap: 10px;
+.contact-form .form-control:focus,
+.contact-form .form-select:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-color-rgb), 0.25);
 }
 
-.credential {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  font-size: 0.9rem;
+.contact-info-sidebar {
+  padding-left: 2rem;
 }
 
-.credential i {
-  color: rgba(255, 255, 255, 0.9);
+.contact-info-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-/* Map Section */
-.map-section {
-  position: relative;
+.contact-info-card h4 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.contact-info-card a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.contact-info-card a:hover {
+  text-decoration: underline;
 }
 
 .map-container {
   position: relative;
-  height: 400px;
+  width: 100%;
+  height: 250px;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
-.google-map {
+.map-container iframe {
   width: 100%;
   height: 100%;
+  border: 0;
 }
 
-.map-overlay {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  padding: 20px;
+.map-section {
+  background: white;
+  padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-  max-width: 300px;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.map-info h3 {
-  color: var(--dark-color);
-  margin-bottom: 10px;
-  font-size: 1.25rem;
+.map-section h3 {
+  color: var(--primary-color);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
 }
 
-.map-info p {
-  color: var(--secondary-color);
-  margin-bottom: 15px;
+.map-container-large {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid #ddd;
 }
 
-/* Contact FAQ */
-.contact-faq {
-  background: var(--light-color);
+.map-container-large iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
-/* Responsive Design */
-@media (max-width: 992px) {
-  .contact-info-card {
-    position: static;
-    margin-top: 30px;
-  }
-  
-  .page-title {
-    font-size: 2.5rem;
-  }
-  
-  .contact-form-wrapper {
-    padding: 30px 20px;
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .contact-info-sidebar {
+    padding-left: 0;
+    margin-top: 2rem;
   }
 }
 
 @media (max-width: 768px) {
   .page-title {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
   
-  .contact-method {
-    flex-direction: column;
-    text-align: center;
+  .page-subtitle {
+    font-size: 1.1rem;
   }
   
-  .method-icon {
-    margin: 0 auto 10px;
-  }
-  
-  .map-overlay {
-    position: static;
-    margin: 20px;
-    max-width: none;
+  .contact-page .page-header {
+    padding: 60px 0;
   }
   
   .contact-form-wrapper {
-    padding: 20px;
-  }
-  
-  .contact-info-card {
-    padding: 20px;
+    padding: 1.5rem;
   }
 }
 </style>
-
-<script>
-// Google Maps Integration
-function initMap() {
-  {{ if .Site.Params.coordinates }}
-  {{ $coords := split .Site.Params.coordinates "," }}
-  const businessLocation = { lat: {{ index $coords 0 }}, lng: {{ index $coords 1 }} };
-  
-  const map = new google.maps.Map(document.getElementById("google-map"), {
-    zoom: 15,
-    center: businessLocation,
-    styles: [
-      {
-        featureType: "poi.business",
-        stylers: [{ visibility: "off" }]
-      },
-      {
-        featureType: "transit",
-        elementType: "labels.icon",
-        stylers: [{ visibility: "off" }]
-      }
-    ]
-  });
-  
-  const marker = new google.maps.Marker({
-    position: businessLocation,
-    map: map,
-    title: "{{ .Site.Title }}",
-    icon: {
-      url: "data:image/svg+xml;charset=UTF-8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 24 24' fill='%23007bff'><path d='M12 0C7.802 0 4.4 3.403 4.4 7.602 4.4 11.8 7.539 16.856 12 24c4.461-7.144 7.6-12.2 7.6-16.398C19.6 3.403 16.198 0 12 0zm0 11.2c-1.989 0-3.6-1.611-3.6-3.6S10.011 4 12 4s3.6 1.611 3.6 3.6S13.989 11.2 12 11.2z'/></svg>",
-      scaledSize: new google.maps.Size(40, 40)
-    }
-  });
-  
-  const infoWindow = new google.maps.InfoWindow({
-    content: `
-      <div style="padding: 10px; max-width: 200px;">
-        <h4 style="margin: 0 0 5px 0; color: #333;">{{ .Site.Title }}</h4>
-        <p style="margin: 0 0 10px 0; color: #666; font-size: 14px;">{{ .Site.Params.address }}</p>
-        <a href="tel:{{ .Site.Params.phone }}" style="color: #007bff; text-decoration: none; font-weight: 600;">{{ .Site.Params.phone }}</a>
-      </div>
-    `
-  });
-  
-  marker.addListener("click", () => {
-    infoWindow.open(map, marker);
-  });
-  {{ end }}
-}
-
-// Initialize map when page loads
-document.addEventListener('DOMContentLoaded', function() {
-  if (typeof google !== 'undefined') {
-    initMap();
-  }
-});
-
-// Form handling
-document.addEventListener('DOMContentLoaded', function() {
-  const contactForm = document.querySelector('.contact-form');
-  if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      
-      // Show loading state
-      const submitButton = this.querySelector('button[type="submit"]');
-      const originalText = submitButton.innerHTML;
-      submitButton.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Sending...';
-      submitButton.disabled = true;
-      
-      // Simulate form submission (replace with actual endpoint)
-      setTimeout(() => {
-        // Success state
-        submitButton.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
-        submitButton.classList.remove('btn-primary');
-        submitButton.classList.add('btn-success');
-        
-        // Reset form
-        this.reset();
-        
-        // Show success message
-        const successAlert = document.createElement('div');
-        successAlert.className = 'alert alert-success mt-3';
-        successAlert.innerHTML = '<i class="fas fa-check-circle me-2"></i>Thank you! We\'ll get back to you within 24 hours.';
-        this.appendChild(successAlert);
-        
-        // Reset button after delay
-        setTimeout(() => {
-          submitButton.innerHTML = originalText;
-          submitButton.disabled = false;
-          submitButton.classList.remove('btn-success');
-          submitButton.classList.add('btn-primary');
-          successAlert.remove();
-        }, 5000);
-      }, 2000);
-    });
-  }
-});
-</script>
 {{ end }}

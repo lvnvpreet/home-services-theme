@@ -10,15 +10,6 @@
   
   {{ partial "footer.html" . }}
   
-  <!-- Emergency Contact Float -->
-  {{ if .Site.Params.emergency_phone }}
-  <div class="emergency-float">
-    <a href="tel:{{ .Site.Params.emergency_phone }}" class="btn btn-danger rounded-pill">
-      <i class="fas fa-phone-alt me-2"></i>
-      Emergency: {{ .Site.Params.emergency_phone }}
-    </a>
-  </div>
-  {{ end }}
   
   <!-- Back to Top -->
   <button id="back-to-top" class="btn btn-primary rounded-circle" title="Back to Top">
