@@ -306,29 +306,58 @@
         </div>
       </div>
       <div class="row">
-        {{ range first 4 .Params.team_members }}
-        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
-          <div class="team-card">
-            <div class="team-image">
-              <div class="team-placeholder">
-                <i class="fas fa-user-tie"></i>
+        {{ $teamPages := where .Site.RegularPages "Section" "team" }}
+        {{ if $teamPages }}
+          {{ range first 4 $teamPages }}
+          <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
+            <div class="team-card">
+              <div class="team-image">
+                <div class="team-placeholder">
+                  <i class="fas fa-user-tie"></i>
+                </div>
               </div>
-            </div>
-            <div class="team-info">
-              <h4>{{ .name }}</h4>
-              <p class="team-role">{{ .position }}</p>
-              <p class="team-specialty">{{ .specialty }}</p>
-              <p class="team-experience">{{ .experience }} experience</p>
-              {{ if .certifications }}
-              <div class="certifications">
-                {{ range first 2 .certifications }}
-                <span class="cert-badge">{{ . }}</span>
+              <div class="team-info">
+                <h4>{{ .Params.name }}</h4>
+                <p class="team-role">{{ .Params.position }}</p>
+                <p class="team-specialty">{{ .Params.experience }} experience</p>
+                {{ if .Params.certifications }}
+                <div class="certifications">
+                  {{ range first 1 .Params.certifications }}
+                  <span class="cert-badge">{{ . }}</span>
+                  {{ end }}
+                </div>
                 {{ end }}
               </div>
-              {{ end }}
             </div>
           </div>
-        </div>
+          {{ end }}
+        {{ else }}
+          <!-- Fallback: Use team_members from team section page -->
+          {{ with .Site.GetPage "/team" }}
+            {{ if .Params.team_members }}
+              {{ range first 4 .Params.team_members }}
+              <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
+                <div class="team-card">
+                  <div class="team-image">
+                    <div class="team-placeholder">
+                      <i class="fas fa-user-tie"></i>
+                    </div>
+                  </div>
+                  <div class="team-info">
+                    <h4>{{ .name }}</h4>
+                    <p class="team-role">{{ .position }}</p>
+                    <p class="team-specialty">{{ .experience }} experience</p>
+                    {{ if .specialties }}
+                    <div class="certifications">
+                      <span class="cert-badge">{{ index .specialties 0 }}</span>
+                    </div>
+                    {{ end }}
+                  </div>
+                </div>
+              </div>
+              {{ end }}
+            {{ end }}
+          {{ end }}
         {{ end }}
       </div>
       <div class="text-center">
