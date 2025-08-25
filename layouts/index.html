@@ -66,39 +66,49 @@
         <div class="col-12 text-center mb-5">
           <h2 class="section-title">Our Electrical Services</h2>
           <p class="section-subtitle">Professional electrical solutions for all your home and business needs</p>
+          <div class="section-divider"></div>
         </div>
       </div>
-      <div class="row">
+      <div class="row g-4">
         {{ range .Params.featured_services }}
-        <div class="col-lg-4 col-md-6 mb-4">
-          <div class="service-card">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
+          <div class="service-card" data-aos="fade-up" data-aos-delay="{{ mul 100 (index (slice 0 1 2 3 4 5) 0) }}">
             <div class="service-content">
               {{ if .icon }}
               <div class="service-icon">
                 <i class="{{ .icon }}"></i>
+                <div class="icon-bg"></div>
               </div>
               {{ end }}
               <h4>{{ .title }}</h4>
               <p>{{ .description }}</p>
               <div class="service-features">
                 {{ if .price }}
-                <span class="price">{{ .price }}</span>
+                <span class="price">
+                  <i class="fas fa-tag"></i>
+                  {{ .price }}
+                </span>
                 {{ end }}
                 {{ if .emergency }}
                 <span class="emergency-badge">
-                  <i class="fas fa-bolt"></i> Emergency Available
+                  <i class="fas fa-bolt"></i> Emergency
                 </span>
                 {{ end }}
               </div>
-              <a href="{{ .link }}" class="btn btn-outline-primary">Learn More</a>
+              <a href="{{ .link }}" class="btn">
+                <span>Learn More</span>
+                <i class="fas fa-arrow-right"></i>
+              </a>
             </div>
           </div>
         </div>
         {{ end }}
       </div>
-      <div class="text-center">
+      <div class="text-center mt-5">
         <a href="{{ "/services" | relURL }}" class="btn btn-primary btn-lg">
-          View All Services <i class="fas fa-arrow-right ms-2"></i>
+          <i class="fas fa-tools me-2"></i>
+          View All Services
+          <i class="fas fa-arrow-right ms-2"></i>
         </a>
       </div>
     </div>
@@ -115,8 +125,8 @@
       </div>
       <div class="row">
         {{ range .Params.why_choose_us }}
-        <div class="col-lg-3 col-md-6 mb-4">
-          <div class="feature-card text-center">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
+          <div class="feature-card">
             <div class="feature-icon">
               <i class="{{ .icon }}"></i>
             </div>
@@ -263,7 +273,7 @@
       </div>
       <div class="row">
         {{ range .Params.service_areas_highlight }}
-        <div class="col-lg-4 col-md-6 mb-4">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
           <div class="service-area-card text-center">
             <div class="area-icon">
               <i class="fas fa-map-marker-alt"></i>
@@ -297,7 +307,7 @@
       </div>
       <div class="row">
         {{ range first 4 .Params.team_members }}
-        <div class="col-lg-3 col-md-6 mb-4">
+        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
           <div class="team-card">
             <div class="team-image">
               <div class="team-placeholder">
@@ -339,7 +349,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-4 col-md-6 mb-4">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
           <div class="offer-card">
             <div class="offer-badge">New Customer</div>
             <div class="offer-content">
@@ -355,7 +365,7 @@
           </div>
         </div>
         
-        <div class="col-lg-4 col-md-6 mb-4">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
           <div class="offer-card">
             <div class="offer-badge">Emergency</div>
             <div class="offer-content">
@@ -371,7 +381,7 @@
           </div>
         </div>
         
-        <div class="col-lg-4 col-md-6 mb-4">
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
           <div class="offer-card">
             <div class="offer-badge">Maintenance</div>
             <div class="offer-content">
