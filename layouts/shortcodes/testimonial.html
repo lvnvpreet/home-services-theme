@@ -5,7 +5,7 @@
   <div class="testimonial-content">
     <div class="testimonial-rating">
       {{ $rating := .Get "rating" | default "5" }}
-      {{ range seq (int $rating) }}
+      {{ range seq (int (float $rating)) }}
       <i class="fas fa-star"></i>
       {{ end }}
     </div>
