@@ -31,18 +31,15 @@
               {{ .Params.hero_subtitle | default (printf "Professional plumbing, HVAC, and electrical services in %s. Licensed, insured, and available 24/7 for emergencies." .Title) }}
             </p>
             
-            <!-- Key Features -->
+            <!-- Key Features as Vertical List -->
             <div class="hero-features mb-5">
-              <div class="row g-3">
+              <ul class="list-unstyled">
                 {{ range .Params.key_features | default (slice "24/7 Emergency Service" "Licensed & Insured" "Same-Day Service" "Local Experts") }}
-                <div class="col-auto">
-                  <div class="feature-item d-flex align-items-center text-white">
-                    <i class="fas fa-check-circle text-success me-2"></i>
-                    <span>{{ . }}</span>
-                  </div>
-                </div>
+                <li class="mb-2">
+                  <i class="fas fa-check-circle text-success me-2"></i>{{ . }}
+                </li>
                 {{ end }}
-              </div>
+              </ul>
             </div>
             
             <!-- CTA Buttons -->
@@ -51,58 +48,52 @@
                 <i class="fas fa-phone me-2"></i>
                 Call {{ .Params.phone | default .Site.Params.phone }}
               </a>
-              <a href="#quote-form" class="btn btn-light btn-lg px-4 py-3">
-                <i class="fas fa-calculator me-2"></i>
-                Get Free Quote
+              <a href="#contact" class="btn btn-light btn-lg px-4 py-3">
+                <i class="fas fa-clipboard-list me-2"></i>
+                Request Estimate
               </a>
             </div>
           </div>
         </div>
         
+        <!-- Map Card Instead of Form -->
         <div class="col-lg-4">
-          <!-- Quick Quote Form -->
-          <div class="quote-card bg-white rounded-lg shadow-lg p-4">
-            <h3 class="h4 text-center mb-4 text-dark">
-              <i class="fas fa-calculator text-primary me-2"></i>
-              Get Instant Quote
-            </h3>
-            
-            <form class="quote-form" action="#" method="post">
-              <div class="mb-3">
-                <select class="form-select" required>
-                  <option value="">Select Service</option>
-                  {{ range .Params.services | default (slice "Emergency Plumbing" "HVAC Repair" "Electrical Work" "Water Heater" "Drain Cleaning") }}
-                  <option value="{{ . | urlize }}">{{ . }}</option>
-                  {{ end }}
-                </select>
+          <div class="card shadow rounded-lg">
+            <div class="card-body">
+              <h5 class="card-title mb-3 text-dark">
+                <i class="fas fa-map-marked-alt text-primary me-2"></i>
+                Serving {{ .Title }}
+              </h5>
+              
+              <!-- Small Map Embed -->
+              <div class="map-container mb-3 rounded overflow-hidden" style="height: 200px;">
+                <iframe 
+                  width="100%" 
+                  height="100%" 
+                  frameborder="0" 
+                  scrolling="no" 
+                  marginheight="0" 
+                  marginwidth="0" 
+                  src="https://maps.google.com/maps?q={{ .Title }},New+York&z=12&output=embed">
+                </iframe>
               </div>
               
-              <div class="mb-3">
-                <input type="text" class="form-control" placeholder="Your Name" required>
+              <!-- Service Area Details -->
+              <div class="location-info">
+                <p class="mb-2">
+                  <i class="fas fa-hard-hat text-primary me-2"></i>
+                  <strong>Services available throughout {{ .Title }}</strong>
+                </p>
+                <p class="mb-2">
+                  <i class="fas fa-phone text-primary me-2"></i>
+                  <a href="tel:{{ .Params.phone | default .Site.Params.phone }}">{{ .Params.phone | default .Site.Params.phone }}</a>
+                </p>
+                <a href="#contact" class="btn btn-primary btn-sm w-100 mt-2">
+                  <i class="fas fa-clipboard-list me-2"></i>
+                  Request Service
+                </a>
               </div>
-              
-              <div class="mb-3">
-                <input type="tel" class="form-control" placeholder="Phone Number" required>
-              </div>
-              
-              <div class="mb-3">
-                <input type="email" class="form-control" placeholder="Email Address" required>
-              </div>
-              
-              <div class="mb-3">
-                <textarea class="form-control" rows="3" placeholder="Describe your issue..."></textarea>
-              </div>
-              
-              <button type="submit" class="btn btn-primary w-100 py-2">
-                <i class="fas fa-paper-plane me-2"></i>
-                Get My Quote
-              </button>
-              
-              <p class="text-center small text-muted mt-2 mb-0">
-                <i class="fas fa-shield-alt me-1"></i>
-                Your information is secure and confidential
-              </p>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -354,6 +345,34 @@
 
 .placeholder-image {
   min-height: 400px;
+}
+
+.map-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0,0,0,0.1);
+}
+
+.location-info {
+  font-size: 0.9rem;
+}
+
+.location-info i {
+  width: 20px;
+  text-align: center;
+}
+
+.hero-features ul li {
+  position: relative;
+  padding-left: 2rem;
+  color: white;
+}
+
+.hero-features ul li i {
+  position: absolute;
+  left: 0;
+  top: 0.2rem;
 }
 
 .emergency-notice {
