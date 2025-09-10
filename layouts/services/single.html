@@ -154,11 +154,32 @@
         <div class="col-lg-8">
           <!-- Main Content -->
           <div class="content-main">
-            {{ if .Params.image }}
             <div class="service-featured-image mb-4">
-              <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid rounded">
+              {{ if .Params.image }}
+              <div class="image-container">
+                <img src="{{ .Params.image | relURL }}" 
+                     alt="{{ .Title }}" 
+                     class="img-fluid rounded service-image"
+                     onerror="showFallbackImage(this)"
+                     onload="hideFallbackImage(this)">
+                <div class="service-fallback-image" style="display: none;">
+                  <div class="fallback-content">
+                    <i class="{{ .Params.icon | default "fas fa-tools" }} fallback-icon"></i>
+                    <h3 class="fallback-title">{{ .Title }}</h3>
+                    <p class="fallback-subtitle">Professional Service</p>
+                  </div>
+                </div>
+              </div>
+              {{ else }}
+              <div class="service-fallback-image">
+                <div class="fallback-content">
+                  <i class="{{ .Params.icon | default "fas fa-tools" }} fallback-icon"></i>
+                  <h3 class="fallback-title">{{ .Title }}</h3>
+                  <p class="fallback-subtitle">Professional Service</p>
+                </div>
+              </div>
+              {{ end }}
             </div>
-            {{ end }}
             
             <div class="service-description">
               {{ .Content }}
@@ -590,6 +611,70 @@
   text-align: center;
 }
 
+/* Image Container */
+.image-container {
+  position: relative;
+  width: 100%;
+}
+
+.service-image {
+  width: 100%;
+  height: auto;
+  transition: opacity 0.3s ease;
+}
+
+.service-image.error {
+  display: none;
+}
+
+/* Fallback Image Styles */
+.service-fallback-image {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  border-radius: 12px;
+  padding: 60px 30px;
+  text-align: center;
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-fallback-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  opacity: 0.1;
+  z-index: 1;
+}
+
+.fallback-content {
+  position: relative;
+  z-index: 2;
+}
+
+.fallback-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.9;
+  display: block;
+}
+
+.fallback-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: white;
+}
+
+.fallback-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
 .service-description {
   font-size: 1.1rem;
   line-height: 1.8;
@@ -1014,6 +1099,72 @@
   .service-areas-widget {
     padding: 20px;
   }
+  
+  /* Fallback image responsive styles */
+  .service-fallback-image {
+    padding: 40px 20px;
+  }
+  
+  .fallback-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+  }
+  
+  .fallback-title {
+    font-size: 1.5rem;
+  }
+  
+  .fallback-subtitle {
+    font-size: 1rem;
+  }
 }
 </style>
+
+<script>
+// Handle image loading errors and show fallback
+function showFallbackImage(img) {
+  // Hide the broken image
+  img.style.display = 'none';
+  img.classList.add('error');
+  
+  // Show the fallback
+  const fallback = img.nextElementSibling;
+  if (fallback && fallback.classList.contains('service-fallback-image')) {
+    fallback.style.display = 'block';
+  }
+}
+
+// Hide fallback when image loads successfully
+function hideFallbackImage(img) {
+  // Show the image
+  img.style.display = 'block';
+  img.classList.remove('error');
+  
+  // Hide the fallback
+  const fallback = img.nextElementSibling;
+  if (fallback && fallback.classList.contains('service-fallback-image')) {
+    fallback.style.display = 'none';
+  }
+}
+
+// Additional check for images that might fail after page load
+document.addEventListener('DOMContentLoaded', function() {
+  const serviceImages = document.querySelectorAll('.service-image');
+  
+  serviceImages.forEach(function(img) {
+    // Check if image is already broken
+    if (img.complete && img.naturalHeight === 0) {
+      showFallbackImage(img);
+    }
+    
+    // Set up a timeout fallback in case the image takes too long
+    setTimeout(function() {
+      if (!img.complete || img.naturalHeight === 0) {
+        showFallbackImage(img);
+      }
+    }, 5000); // 5 second timeout
+  });
+});
+</script>
+
 {{ end }}
