@@ -64,8 +64,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2 class="section-title">Our Electrical Services</h2>
-          <p class="section-subtitle">Professional electrical solutions for all your home and business needs</p>
+          <h2 class="section-title">{{ .Params.services_section_title | default "Our Services" }}</h2>
+          <p class="section-subtitle">{{ .Params.services_section_subtitle | default "Professional home services solutions for all your home and business needs" }}</p>
           <div class="section-divider"></div>
         </div>
       </div>
@@ -119,8 +119,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2 class="section-title">Why Choose Star Electrician?</h2>
-          <p class="section-subtitle">Here's what sets us apart from other electrical service providers</p>
+          <h2 class="section-title">{{ .Params.why_choose_us_title | default "Why Choose Us?" }}</h2>
+          <p class="section-subtitle">{{ .Params.why_choose_us_subtitle | default "Here's what sets us apart from other home service providers" }}</p>
         </div>
       </div>
       <div class="row">
@@ -161,8 +161,8 @@
         </div>
         <div class="col-lg-6">
           <div class="about-content">
-            <h2 class="section-title text-start">About Star Electrician</h2>
-            <p class="lead">Professional electrical services you can trust, with over 15 years of experience serving Gharsana and surrounding areas.</p>
+            <h2 class="section-title text-start">{{ .Params.about_us_title | default "About Us" }}</h2>
+            <p class="lead">{{ .Params.about_us_subtitle | default "Professional home services you can trust, with over 15 years of experience serving Gharsana and surrounding areas." }}</p>
             <div class="about-highlights">
               <div class="highlight-item">
                 <i class="fas fa-shield-alt text-primary"></i>
@@ -198,8 +198,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2 class="section-title">What Our Customers Say</h2>
-          <p class="section-subtitle">Real reviews from satisfied customers in Gharsana and surrounding areas</p>
+          <h2 class="section-title">{{ .Params.testimonials_title | default "What Our Customers Say" }}</h2>
+          <p class="section-subtitle">{{ .Params.testimonials_subtitle | default "Real reviews from satisfied customers in service area and surrounding areas" }}</p>
         </div>
       </div>
       <div class="row">
@@ -235,8 +235,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2 class="section-title">Frequently Asked Questions</h2>
-          <p class="section-subtitle">Get answers to common questions about our electrical services</p>
+          <h2 class="section-title">{{ .Params.faqs_title | default "Frequently Asked Questions" }}</h2>
+          <p class="section-subtitle">{{ .Params.faqs_subtitle | default "Get answers to common questions about our home services" }}</p>
         </div>
       </div>
       <div class="row">
@@ -267,66 +267,25 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2 class="section-title">Areas We Serve</h2>
-          <p class="section-subtitle">Professional construction services throughout New York City and surrounding areas</p>
+          <h2 class="section-title">{{ .Params.service_areas_title | default "Areas We Serve" }}</h2>
+          <p class="section-subtitle">{{ .Params.service_areas_subtitle | default "Professional home services throughout Gharsana and surrounding areas" }}</p>
         </div>
       </div>
       <div class="row">
-        {{ $serviceAreaPages := where .Site.RegularPages "Section" "service-area" }}
-        {{ if $serviceAreaPages }}
-          {{ range first 6 $serviceAreaPages }}
-          <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
-            <div class="service-area-card text-center">
-              <div class="area-icon">
-                <i class="fas fa-map-marker-alt"></i>
-              </div>
-              <h4>{{ .Title }}</h4>
-              <p>{{ .Params.description }}</p>
-              <a href="tel:{{ .Params.phone }}" class="btn btn-outline-primary">
-                <i class="fas fa-phone me-2"></i>
-                {{ .Params.phone }}
-              </a>
+        {{ range .Params.service_areas_highlight }}
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
+          <div class="service-area-card text-center">
+            <div class="area-icon">
+              <i class="fas fa-map-marker-alt"></i>
             </div>
+            <h4>{{ .name }}</h4>
+            <p>{{ .description }}</p>
+            <a href="tel:{{ .phone }}" class="btn btn-outline-primary">
+              <i class="fas fa-phone me-2"></i>
+              {{ .phone }}
+            </a>
           </div>
-          {{ end }}
-        {{ else }}
-          <!-- Fallback: Use service_areas from service-area section page -->
-          {{ with .Site.GetPage "/service-area" }}
-            {{ if .Params.service_areas }}
-              {{ range first 6 .Params.service_areas }}
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
-                <div class="service-area-card text-center">
-                  <div class="area-icon">
-                    <i class="fas fa-map-marker-alt"></i>
-                  </div>
-                  <h4>{{ .name }}</h4>
-                  <p>{{ .description }}</p>
-                  <a href="tel:{{ .phone }}" class="btn btn-outline-primary">
-                    <i class="fas fa-phone me-2"></i>
-                    {{ .phone }}
-                  </a>
-                </div>
-              </div>
-              {{ end }}
-            {{ else }}
-              <!-- If no service-area page or no service_areas in frontmatter, fall back to index page -->
-              {{ range $.Params.service_areas_highlight }}
-              <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 mb-4">
-                <div class="service-area-card text-center">
-                  <div class="area-icon">
-                    <i class="fas fa-map-marker-alt"></i>
-                  </div>
-                  <h4>{{ .name }}</h4>
-                  <p>{{ .description }}</p>
-                  <a href="tel:{{ .phone }}" class="btn btn-outline-primary">
-                    <i class="fas fa-phone me-2"></i>
-                    {{ .phone }}
-                  </a>
-                </div>
-              </div>
-              {{ end }}
-            {{ end }}
-          {{ end }}
+        </div>
         {{ end }}
       </div>
       <div class="text-center">
@@ -342,8 +301,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2 class="section-title">Meet Our Expert Team</h2>
-          <p class="section-subtitle">Licensed electrical professionals with years of experience</p>
+          <h2 class="section-title">{{ .Params.team_section_title | default "Meet Our Expert Team" }}</h2>
+          <p class="section-subtitle">{{ .Params.team_section_subtitle | default "Licensed home service professionals with years of experience" }}</p>
         </div>
       </div>
       <div class="row">
@@ -475,8 +434,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center mb-5">
-          <h2 class="section-title">Latest News & Tips</h2>
-          <p class="section-subtitle">Helpful information for homeowners</p>
+          <h2 class="section-title">{{ .Params.blog_section_title | default "From Our Blog" }}</h2>
+          <p class="section-subtitle">{{ .Params.blog_section_subtitle | default "Helpful information for homeowners" }}</p>
         </div>
       </div>
       <div class="row">
