@@ -9,7 +9,7 @@
             <!-- Breadcrumb -->
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{ .Site.BaseURL }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ "/" | relURL }}">Home</a></li>
                 <li class="breadcrumb-item"><a href="{{ "/services" | relURL }}">Services</a></li>
                 <li class="breadcrumb-item active">{{ .Title }}</li>
               </ol>

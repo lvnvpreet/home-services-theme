@@ -8,7 +8,7 @@
           <!-- Breadcrumb -->
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="{{ .Site.BaseURL }}">Home</a></li>
+              <li class="breadcrumb-item"><a href="{{ "/" | relURL }}">Home</a></li>
               <li class="breadcrumb-item"><a href="{{ "/blog" | relURL }}">Blog</a></li>
               {{ if .Params.category }}
               <li class="breadcrumb-item"><a href="{{ "/categories/" | relURL }}{{ .Params.category | urlize }}">{{ .Params.category }}</a></li>

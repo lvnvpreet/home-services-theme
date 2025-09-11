@@ -128,7 +128,7 @@
             <ul class="pagination justify-content-center">
               {{ if $paginator.HasPrev }}
               <li class="page-item">
-                <a class="page-link" href="{{ $paginator.Prev.URL }}">
+                <a class="page-link" href="{{ $paginator.Prev.URL | relURL }}">
                   <i class="fas fa-chevron-left me-1"></i>
                   Previous
                 </a>
@@ -137,13 +137,13 @@
               
               {{ range $paginator.Pagers }}
               <li class="page-item {{ if eq . $paginator }}active{{ end }}">
-                <a class="page-link" href="{{ .URL }}">{{ .PageNumber }}</a>
+                <a class="page-link" href="{{ .URL | relURL }}">{{ .PageNumber }}</a>
               </li>
               {{ end }}
               
               {{ if $paginator.HasNext }}
               <li class="page-item">
-                <a class="page-link" href="{{ $paginator.Next.URL }}">
+                <a class="page-link" href="{{ $paginator.Next.URL | relURL }}">
                   Next
                   <i class="fas fa-chevron-right ms-1"></i>
                 </a>
@@ -187,31 +187,31 @@
                 <!-- Default categories if none exist -->
                 {{ if not $.Site.Taxonomies.categories }}
                 <li>
-                  <a href="#">
+                  <a href="{{ "/categories/home-maintenance" | relURL }}">
                     <span class="category-name">Home Maintenance</span>
                     <span class="category-count">(8)</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="{{ "/categories/energy-efficiency" | relURL }}">
                     <span class="category-name">Energy Efficiency</span>
                     <span class="category-count">(6)</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="{{ "/categories/diy-tips" | relURL }}">
                     <span class="category-name">DIY Tips</span>
                     <span class="category-count">(12)</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="{{ "/categories/safety" | relURL }}">
                     <span class="category-name">Safety</span>
                     <span class="category-count">(5)</span>
                   </a>
                 </li>
                 <li>
-                  <a href="#">
+                  <a href="{{ "/categories/seasonal-tips" | relURL }}">
                     <span class="category-name">Seasonal Tips</span>
                     <span class="category-count">(9)</span>
                   </a>
@@ -252,16 +252,16 @@
                 
                 <!-- Default tags if none exist -->
                 {{ if not $.Site.Taxonomies.tags }}
-                <a href="#" class="tag-item">#plumbing</a>
-                <a href="#" class="tag-item">#electrical</a>
-                <a href="#" class="tag-item">#hvac</a>
-                <a href="#" class="tag-item">#maintenance</a>
-                <a href="#" class="tag-item">#diy</a>
-                <a href="#" class="tag-item">#safety</a>
-                <a href="#" class="tag-item">#energy-saving</a>
-                <a href="#" class="tag-item">#home-improvement</a>
-                <a href="#" class="tag-item">#repair</a>
-                <a href="#" class="tag-item">#installation</a>
+                <a href="{{ "/tags/plumbing" | relURL }}" class="tag-item">#plumbing</a>
+                <a href="{{ "/tags/electrical" | relURL }}" class="tag-item">#electrical</a>
+                <a href="{{ "/tags/hvac" | relURL }}" class="tag-item">#hvac</a>
+                <a href="{{ "/tags/maintenance" | relURL }}" class="tag-item">#maintenance</a>
+                <a href="{{ "/tags/diy" | relURL }}" class="tag-item">#diy</a>
+                <a href="{{ "/tags/safety" | relURL }}" class="tag-item">#safety</a>
+                <a href="{{ "/tags/energy-saving" | relURL }}" class="tag-item">#energy-saving</a>
+                <a href="{{ "/tags/home-improvement" | relURL }}" class="tag-item">#home-improvement</a>
+                <a href="{{ "/tags/repair" | relURL }}" class="tag-item">#repair</a>
+                <a href="{{ "/tags/installation" | relURL }}" class="tag-item">#installation</a>
                 {{ end }}
               </div>
             </div>
@@ -270,7 +270,7 @@
             <div class="sidebar-widget newsletter-widget">
               <h4>Get Home Tips</h4>
               <p>Subscribe to receive helpful home maintenance tips and special offers.</p>
-              <form class="newsletter-form" method="POST" action="#" netlify>
+              <form class="newsletter-form" method="POST" action="{{ "/newsletter" | relURL }}" netlify>
                 <div class="mb-3">
                   <input type="email" class="form-control" placeholder="Your email address" name="email" required>
                 </div>
