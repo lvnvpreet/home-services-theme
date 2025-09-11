@@ -453,7 +453,7 @@
                 <span class="blog-category">{{ .Params.category | default "Home Tips" }}</span>
               </div>
               <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
-              <p>{{ .Summary | truncate 120 }}</p>
+              <p>{{ .Params.description | default (.Summary | plainify | truncate 120) }}</p>
               <a href="{{ .Permalink }}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
@@ -547,7 +547,7 @@
                 </div>
                 <div class="phone-item emergency">
                   <strong>Emergency Line:</strong>
-                  <a href="tel:{{ .Site.Params.emergency_phone }}" class="emergency-link">{{ .Site.Params.emergency_phone }}</a>
+                  <a href="tel:{{ .Site.Params.emergency_phone | default .Site.Params.phone }}" class="emergency-link">{{ .Site.Params.emergency_phone | default .Site.Params.phone }}</a>
                 </div>
               </div>
             </div>
