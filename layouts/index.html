@@ -209,8 +209,12 @@
             <div class="testimonial-card">
               <div class="testimonial-content">
                 <div class="rating">
-                  {{ range seq .rating }}
+                  {{ $rating := float .rating }}
+                  {{ range seq (int $rating) }}
                   <i class="fas fa-star"></i>
+                  {{ end }}
+                  {{ if gt (sub $rating (int $rating)) 0 }}
+                  <i class="fas fa-star-half-alt"></i>
                   {{ end }}
                 </div>
                 <p>"{{ .content }}"</p>
@@ -547,7 +551,7 @@
                 </div>
                 <div class="phone-item emergency">
                   <strong>Emergency Line:</strong>
-                  <a href="tel:{{ .Site.Params.emergency_phone | default .Site.Params.phone }}" class="emergency-link">{{ .Site.Params.emergency_phone | default .Site.Params.phone }}</a>
+                  <a href="tel:{{ default .Site.Params.phone }}" class="emergency-link">{{ default .Site.Params.phone }}</a>
                 </div>
               </div>
             </div>
