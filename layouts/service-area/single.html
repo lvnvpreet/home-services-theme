@@ -68,8 +68,12 @@
               <!-- Small Map Embed -->
               <div class="map-container mb-3 rounded overflow-hidden" style="height: 200px;">
                 {{ if .Params.map_embed }}
-                {{ .Params.map_embed | safeHTML }}
+                  {{ .Params.map_embed | safeHTML }}
                 {{ else }}
+                  <div class="bg-light w-100 h-100 d-flex align-items-center justify-content-center text-muted">
+                    <i class="fas fa-map-marker-alt fa-2x me-2"></i> Map not available
+                  </div>
+                {{ end }}
               </div>
               
               <!-- Service Area Details -->
