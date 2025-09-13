@@ -45,7 +45,7 @@
           <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
             <li><a class="dropdown-item" href="{{ "/services" | relURL }}">All Services</a></li>
             {{ range where .Site.RegularPages "Section" "services" }}
-            <li><a class="dropdown-item" href="{{ .Permalink }}">{{ .Title }}</a></li>
+            <li><a class="dropdown-item" href="{{ .Params.link | default .Permalink }}">{{ .Title }}</a></li>
             {{ end }}
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ "/contact" | relURL }}">Emergency Service</a></li>

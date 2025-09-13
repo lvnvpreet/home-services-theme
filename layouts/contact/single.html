@@ -105,9 +105,9 @@
             <p class="mb-2">
               <strong>Main:</strong> <a href="tel:{{ .Params.phone | default .Site.Params.phone }}">{{ .Params.phone | default .Site.Params.phone }}</a>
             </p>
-            {{ if .Params.emergency_phone }}
+            {{ if .Site.Params.phone }}
             <p class="mb-0">
-              <strong>Emergency:</strong> <a href="tel:{{ .Params.emergency_phone }}">{{ .Params.emergency_phone }}</a>
+              <strong>Emergency:</strong> <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.phone }}</a>
             </p>
             {{ end }}
           </div>
