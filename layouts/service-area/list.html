@@ -69,7 +69,7 @@
                   {{ if .zip_codes }}
                   <small class="text-muted d-block">
                     <i class="fas fa-mail-bulk me-1"></i>
-                    ZIP: {{ delimit .zip_codes ", " }}
+                    ZIP: {{ .zip_codes }}
                   </small>
                   {{ end }}
                   
@@ -83,7 +83,7 @@
                   {{ if .neighborhoods }}
                   <small class="text-muted d-block">
                     <i class="fas fa-map me-1"></i>
-                    {{ delimit (first 3 .neighborhoods) ", " }}{{ if gt (len .neighborhoods) 3 }} & more{{ end }}
+                    {{ .neighborhoods }}
                   </small>
                   {{ end }}
                 </div>
