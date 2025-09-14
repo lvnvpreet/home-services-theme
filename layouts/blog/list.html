@@ -55,8 +55,8 @@
               </div>
               
               <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
-              <p class="post-excerpt">{{ .Summary | truncate 200 }}</p>
-              
+              <p class="post-excerpt">{{ .Description | truncate 200 }}</p>
+
               <div class="post-tags">
                 {{ range .Params.tags }}
                 <span class="tag">#{{ . }}</span>
@@ -310,7 +310,7 @@
 <style>
 /* Blog Page Styles */
 .blog-page .page-header {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+  background:linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
   color: white;
   padding: 80px 0;
 }
@@ -320,7 +320,7 @@
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
   position: relative;
 }
 
