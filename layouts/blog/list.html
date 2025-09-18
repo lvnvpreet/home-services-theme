@@ -246,7 +246,7 @@
               <div class="tag-cloud">
                 {{ range $.Site.Taxonomies.tags }}
                 <a href="{{ .Page.Permalink }}" class="tag-item" style="font-size: {{ add 0.8 (mul 0.3 (div .Count 2)) }}rem;">
-                  #{{ .Page.Title }}
+                  {{ .Page.Title }}
                 </a>
                 {{ end }}
                 
@@ -320,7 +320,7 @@
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  /* box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   position: relative;
 }
 

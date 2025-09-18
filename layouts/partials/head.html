@@ -35,7 +35,7 @@
   <meta property="og:title" content="{{ if .Title }}{{ .Title }}{{ else }}{{ .Site.Title }}{{ end }}">
   <meta property="og:description" content="{{ if .Description }}{{ .Description }}{{ else if .Summary }}{{ .Summary }}{{ else }}{{ .Site.Params.seo.description }}{{ end }}">
   <meta property="og:type" content="{{ if .IsHome }}website{{ else }}article{{ end }}">
-  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:url" content="{{ .RelPermalink | absURL }}">
   <meta property="og:site_name" content="{{ .Site.Title }}">
   {{ if .Params.image }}
   <meta property="og:image" content="{{ .Params.image | absURL }}">
@@ -55,7 +55,7 @@
   {{ end }}
   
   <!-- Canonical URL -->
-  <link rel="canonical" href="{{ .Permalink }}">
+  <link rel="canonical" href="{{ .RelPermalink | absURL }}">
   
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="{{ .Site.Params.favicon | default "/favicon.ico" | relURL }}">
