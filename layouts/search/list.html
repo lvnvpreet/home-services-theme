@@ -140,7 +140,7 @@ window.searchIndex = [
     "title": {{ $page.Title | jsonify }},
     "summary": {{ $page.Summary | jsonify }},
     "content": {{ $page.PlainWords | jsonify }},
-    "url": {{ $page.Permalink | jsonify }},
+    "url": {{ $page.RelPermalink  | jsonify }},
     "type": {{ $page.Type | jsonify }},
     "section": {{ $page.Section | jsonify }},
     "date": {{ $page.Date.Format "2006-01-02" | jsonify }},

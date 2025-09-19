@@ -456,9 +456,9 @@
                 <span class="blog-date">{{ .Date.Format "Jan 2, 2006" }}</span>
                 <span class="blog-category">{{ .Params.category | default "Home Tips" }}</span>
               </div>
-              <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+              <h4><a href="{{ .RelPermalink  }}">{{ .Title }}</a></h4>
               <p>{{ .Params.description | default (.Summary | plainify | truncate 120) }}</p>
-              <a href="{{ .Permalink }}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+              <a href="{{ .RelPermalink  }}" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
         </div>

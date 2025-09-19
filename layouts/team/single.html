@@ -109,7 +109,7 @@
                     </a>
                     {{ end }}
                   </div>
-                  <a href="{{ .Permalink }}" class="view-profile-btn">
+                  <a href="{{ .RelPermalink  }}" class="view-profile-btn">
                     View Profile
                   </a>
                 </div>
@@ -118,7 +118,7 @@
             
             <!-- Member Info -->
             <div class="member-info">
-              <h4><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+              <h4><a href="{{ .RelPermalink  }}">{{ .Title }}</a></h4>
               <p class="member-position">{{ .Params.position | default "Service Technician" }}</p>
               <p class="member-specialty">{{ .Params.specialty | default "General Services" }}</p>
               

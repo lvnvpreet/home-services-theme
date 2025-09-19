@@ -54,7 +54,7 @@
                 </span>
               </div>
               
-              <h2><a href="{{ .Permalink }}">{{ .Title }}</a></h2>
+              <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
               <p class="post-excerpt">{{ .Description | truncate 200 }}</p>
 
               <div class="post-tags">
@@ -63,7 +63,7 @@
                 {{ end }}
               </div>
               
-              <a href="{{ .Permalink }}" class="read-more-btn">
+              <a href="{{ .RelPermalink }}" class="read-more-btn">
                 Read Full Article <i class="fas fa-arrow-right ms-2"></i>
               </a>
             </div>
@@ -97,7 +97,7 @@
                   <span class="reading-time">{{ .ReadingTime }} min</span>
                 </div>
                 
-                <h3><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+                <h3><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
                 <p class="blog-excerpt">{{ .Summary | truncate 120 }}</p>
                 
                 {{ if .Params.tags }}
@@ -113,7 +113,7 @@
                     <i class="fas fa-user-circle me-1"></i>
                     {{ .Params.author | default "Home Services Team" }}
                   </div>
-                  <a href="{{ .Permalink }}" class="read-more">
+                  <a href="{{ .RelPermalink }}" class="read-more">
                     Read More <i class="fas fa-arrow-right ms-1"></i>
                   </a>
                 </div>
@@ -177,7 +177,7 @@
               <ul class="category-list">
                 {{ range $.Site.Taxonomies.categories }}
                 <li>
-                  <a href="{{ .Page.Permalink }}">
+                  <a href="{{ .Page.RelPermalink }}">
                     <span class="category-name">{{ .Page.Title }}</span>
                     <span class="category-count">({{ .Count }})</span>
                   </a>
@@ -232,7 +232,7 @@
                   </div>
                   {{ end }}
                   <div class="recent-post-content">
-                    <h6><a href="{{ .Permalink }}">{{ .Title | truncate 60 }}</a></h6>
+                    <h6><a href="{{ .RelPermalink }}">{{ .Title | truncate 60 }}</a></h6>
                     <span class="recent-post-date">{{ .Date.Format "Jan 2, 2006" }}</span>
                   </div>
                 </div>
@@ -245,7 +245,7 @@
               <h4>Popular Tags</h4>
               <div class="tag-cloud">
                 {{ range $.Site.Taxonomies.tags }}
-                <a href="{{ .Page.Permalink }}" class="tag-item" style="font-size: {{ add 0.8 (mul 0.3 (div .Count 2)) }}rem;">
+                <a href="{{ .Page.RelPermalink }}" class="tag-item" style="font-size: {{ add 0.8 (mul 0.3 (div .Count 2)) }}rem;">
                   {{ .Page.Title }}
                 </a>
                 {{ end }}

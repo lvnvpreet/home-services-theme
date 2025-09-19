@@ -152,23 +152,23 @@
             <div class="share-section">
               <h4>Share This Article</h4>
               <div class="share-buttons">
-                <a href="https://www.facebook.com/sharer/sharer.php?u={{ .Permalink }}" target="_blank" class="share-btn facebook">
+                <a href="https://www.facebook.com/sharer/sharer.php?u={{ .RelPermalink  }}" target="_blank" class="share-btn facebook">
                   <i class="fab fa-facebook-f"></i>
                   <span>Facebook</span>
                 </a>
-                <a href="https://twitter.com/intent/tweet?url={{ .Permalink }}&text={{ .Title }}" target="_blank" class="share-btn twitter">
+                <a href="https://twitter.com/intent/tweet?url={{ .RelPermalink  }}&text={{ .Title }}" target="_blank" class="share-btn twitter">
                   <i class="fab fa-twitter"></i>
                   <span>Twitter</span>
                 </a>
-                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink }}" target="_blank" class="share-btn linkedin">
+                <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ .RelPermalink  }}" target="_blank" class="share-btn linkedin">
                   <i class="fab fa-linkedin-in"></i>
                   <span>LinkedIn</span>
                 </a>
-                <a href="mailto:?subject={{ .Title }}&body=Check out this article: {{ .Permalink }}" class="share-btn email">
+                <a href="mailto:?subject={{ .Title }}&body=Check out this article: {{ .RelPermalink  }}" class="share-btn email">
                   <i class="fas fa-envelope"></i>
                   <span>Email</span>
                 </a>
-                <button class="share-btn copy-link" onclick="copyToClipboard('{{ .Permalink }}')">
+                <button class="share-btn copy-link" onclick="copyToClipboard('{{ .RelPermalink  }}')">
                   <i class="fas fa-link"></i>
                   <span>Copy Link</span>
                 </button>
@@ -238,7 +238,7 @@
                   </div>
                   {{ end }}
                   <div class="related-content">
-                    <h6><a href="{{ .Permalink }}">{{ .Title | truncate 60 }}</a></h6>
+                    <h6><a href="{{ .RelPermalink  }}">{{ .Title | truncate 60 }}</a></h6>
                     <span class="related-date">{{ .Date.Format "Jan 2, 2006" }}</span>
                   </div>
                 </div>
@@ -287,7 +287,7 @@
                 <div class="popular-post">
                   <div class="post-number">{{ add ($.Scratch.Get "counter") 1 }}{{ $.Scratch.Set "counter" (add ($.Scratch.Get "counter") 1) }}</div>
                   <div class="post-content">
-                    <h6><a href="{{ .Permalink }}">{{ .Title | truncate 50 }}</a></h6>
+                    <h6><a href="{{ .RelPermalink  }}">{{ .Title | truncate 50 }}</a></h6>
                     <span class="post-views">{{ .ReadingTime }} min read</span>
                   </div>
                 </div>
@@ -309,7 +309,7 @@
           <div class="nav-links">
             {{ if .PrevInSection }}
             <div class="nav-previous">
-              <a href="{{ .PrevInSection.Permalink }}" class="nav-link">
+              <a href="{{ .PrevInSection.RelPermalink  }}" class="nav-link">
                 <i class="fas fa-chevron-left me-2"></i>
                 <div class="nav-content">
                   <span class="nav-label">Previous Article</span>
@@ -321,7 +321,7 @@
             
             {{ if .NextInSection }}
             <div class="nav-next">
-              <a href="{{ .NextInSection.Permalink }}" class="nav-link">
+              <a href="{{ .NextInSection.RelPermalink  }}" class="nav-link">
                 <div class="nav-content">
                   <span class="nav-label">Next Article</span>
                   <span class="nav-title">{{ .NextInSection.Title | truncate 60 }}</span>
