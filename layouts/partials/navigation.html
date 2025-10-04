@@ -44,9 +44,15 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
             <li><a class="dropdown-item" href="{{ "/services" | relURL }}">All Services</a></li>
-            {{ range where .Site.RegularPages "Section" "services" }}
-            <li><a class="dropdown-item" href="{{ .Params.link | default .Permalink }}">{{ .Title }}</a></li>
+            {{ with .Site.GetPage "/" }}
+            {{ range .Params.featured_services }}
+            <li>
+              <a class="dropdown-item" href="{{ .link | relURL }}">
+                <i class="{{ .icon }} me-2"></i>{{ .title }}
+              </a>
+            </li>
             {{ end }}
+          {{ end }}
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ "/contact" | relURL }}">Emergency Service</a></li>
           </ul>
@@ -59,8 +65,10 @@
           </a>
           <ul class="dropdown-menu" aria-labelledby="serviceAreaDropdown">
             <li><a class="dropdown-item" href="{{ "/service-area" | relURL }}">All Service Areas</a></li>
-            {{ range where .Site.RegularPages "Section" "service-area" }}
-            <li><a class="dropdown-item" href="{{ .Permalink }}">{{ .Title }}</a></li>
+            {{ with .Site.GetPage "/" }}
+            {{ range .Params.service_areas_highlight }}
+              <li><a class="dropdown-item" href="{{ .link | relURL }}">{{ .name }}</a></li>
+            {{ end }}
             {{ end }}
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="{{ "/contact" | relURL }}">Request Service Quote</a></li>
