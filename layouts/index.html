@@ -4,8 +4,8 @@
   <!-- 1. Hero Section -->
   <section class="hero-section">
     <div class="hero-bg">
-      {{ if .Site.Params.hero_image }}
-      <img src="{{ .Site.Params.hero_image | relURL }}" alt="Professional Home Services" class="hero-background">
+      {{ if .Params.hero_image }}
+      <img src="{{ .Params.hero_image | relURL }}" alt="Professional Home Services" class="hero-background">
       {{ end }}
       <div class="hero-overlay"></div>
     </div>
@@ -145,8 +145,8 @@
       <div class="row align-items-center">
         <div class="col-lg-6 mb-4 mb-lg-0">
           <div class="about-image">
-            {{ if .Site.Params.about_image }}
-            <img src="{{ .Site.Params.about_image | relURL }}" alt="About Us" class="img-fluid rounded">
+            {{ if .Params.about_image }}
+            <img src="{{ .Params.about_image | relURL }}" alt="About Us" class="img-fluid rounded">
             {{ else }}
             <div class="about-placeholder">
               <i class="fas fa-hard-hat"></i>

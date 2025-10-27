@@ -5,8 +5,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
-          <h1 class="page-title">Our Expert Team</h1>
-          <p class="page-subtitle">Meet the certified professionals who make your home service projects successful</p>
+          <h1 class="page-title">{{ .Title | default "Our Expert Team" }}</h1>
+          <p class="page-subtitle">{{ .Params.description | default "Meet the certified professionals who make your home service projects successful" }}</p>
         </div>
       </div>
     </div>
@@ -17,14 +17,14 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto text-center mb-5">
-          <h2>Professional Excellence</h2>
-          <p class="lead">Our team consists of licensed, certified professionals with years of experience in their respective fields. Every team member is committed to delivering the highest quality service and customer satisfaction.</p>
+          <h2>{{ .Params.overview_title | default "Professional Excellence" }}</h2>
+          <p class="lead">{{ .Params.overview_subtitle | default "Our team consists of licensed, certified professionals with years of experience in their respective fields. Every team member is committed to delivering the highest quality service and customer satisfaction." }}</p>
           
           <div class="team-stats">
             <div class="row">
               <div class="col-md-3 mb-3">
                 <div class="stat-item">
-                  <h3>{{ len .Pages }}+</h3>
+                  <h3>{{ if .Params.team_members }}{{ len .Params.team_members }}{{ else }}{{ .Params.team_size | default (len .Pages) }}{{ end }}+</h3>
                   <p>Expert Technicians</p>
                 </div>
               </div>
@@ -60,12 +60,29 @@
         <div class="col-12 text-center">
           <div class="filter-buttons">
             <button class="filter-btn active" data-filter="all">All Team Members</button>
-            <button class="filter-btn" data-filter="electrician">Electricians</button>
-            <button class="filter-btn" data-filter="plumber">Plumbers</button>
-            <button class="filter-btn" data-filter="hvac">HVAC Specialists</button>
-            <button class="filter-btn" data-filter="contractor">Contractors</button>
-            <button class="filter-btn" data-filter="handyman">Handyman</button>
-            <button class="filter-btn" data-filter="management">Management</button>
+            {{ if .Params.team_members }}
+              {{ $specialties := slice }}
+              {{ range .Params.team_members }}
+                {{ $memberSpecialties := split .specialties ", " }}
+                {{ range $memberSpecialties }}
+                  {{ $specialty := trim . " " }}
+                  {{ if not (in $specialties $specialty) }}
+                    {{ $specialties = $specialties | append $specialty }}
+                  {{ end }}
+                {{ end }}
+              {{ end }}
+              {{ range $specialties }}
+                {{ $filterKey := . | lower | replaceRE "[^a-z0-9]+" "-" }}
+                <button class="filter-btn" data-filter="{{ $filterKey }}">{{ . }}</button>
+              {{ end }}
+            {{ else }}
+              <!-- Fallback filters for general contractor services -->
+              <button class="filter-btn" data-filter="home-renovation">Home Renovation</button>
+              <button class="filter-btn" data-filter="kitchen-remodeling">Kitchen Remodeling</button>
+              <button class="filter-btn" data-filter="bathroom-renovation">Bathroom Renovation</button>
+              <button class="filter-btn" data-filter="home-addition">Home Addition</button>
+              <button class="filter-btn" data-filter="management">Management</button>
+            {{ end }}
           </div>
         </div>
       </div>
@@ -181,10 +198,47 @@
         </div>
         {{ end }}
         
+        <!-- Team members from frontmatter -->
+        {{ if .Params.team_members }}
+        {{ range .Params.team_members }}
+        {{ $memberSpecialties := split .specialties ", " }}
+        {{ $categoryList := slice }}
+        {{ range $memberSpecialties }}
+          {{ $specialty := trim . " " }}
+          {{ $filterKey := $specialty | lower | replaceRE "[^a-z0-9]+" "-" }}
+          {{ $categoryList = $categoryList | append $filterKey }}
+        {{ end }}
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="{{ delimit $categoryList " " }}">
+          <div class="team-member-card h-100">
+            <div class="member-photo">
+              {{ if .image }}
+              <img src="{{ .image | relURL }}" alt="{{ .name }}" class="img-fluid">
+              {{ else }}
+              <div class="member-placeholder">
+                <i class="fas fa-user-tie"></i>
+              </div>
+              {{ end }}
+            </div>
+            <div class="member-info">
+              <h4>{{ .name }}</h4>
+              <p class="member-position">{{ .position }}</p>
+              <p class="member-specialty">{{ .specialties }}</p>
+              <div class="member-experience">
+                <i class="fas fa-calendar-alt"></i>
+                <span>{{ .experience }} experience</span>
+              </div>
+              <div class="member-description">
+                <p>{{ .bio }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{ end }}
+        {{ else if not .Pages }}
+        
         <!-- Default team members if none exist -->
-        {{ if not .Pages }}
-        <!-- Electrician -->
-        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="electrician">
+        <!-- Project Manager -->
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="home-renovation kitchen-remodeling management">
           <div class="team-member-card h-100">
             <div class="member-photo">
               <div class="member-placeholder">
@@ -193,26 +247,26 @@
             </div>
             <div class="member-info">
               <h4>John Smith</h4>
-              <p class="member-position">Master Electrician</p>
-              <p class="member-specialty">Electrical Systems & Safety</p>
+              <p class="member-position">Senior Project Manager</p>
+              <p class="member-specialty">Home Renovation & Kitchen Remodeling</p>
               <div class="member-experience">
                 <i class="fas fa-calendar-alt"></i>
                 <span>15 years experience</span>
               </div>
               <div class="member-certifications">
-                <span class="cert-badge">Licensed Electrician</span>
+                <span class="cert-badge">Licensed Contractor</span>
                 <span class="cert-badge">OSHA Certified</span>
-                <span class="cert-badge">Arc Flash Safety</span>
+                <span class="cert-badge">Project Management</span>
               </div>
               <div class="member-description">
-                <p>Expert in residential and commercial electrical installations, repairs, and safety inspections.</p>
+                <p>Expert in managing complex home renovation projects from planning to completion.</p>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- Plumber -->
-        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="plumber">
+        <!-- Design Specialist -->
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="bathroom-renovation kitchen-remodeling">
           <div class="team-member-card h-100">
             <div class="member-photo">
               <div class="member-placeholder">
@@ -221,26 +275,26 @@
             </div>
             <div class="member-info">
               <h4>Mike Rodriguez</h4>
-              <p class="member-position">Master Plumber</p>
-              <p class="member-specialty">Plumbing & Water Systems</p>
+              <p class="member-position">Lead Designer</p>
+              <p class="member-specialty">Bathroom & Kitchen Design</p>
               <div class="member-experience">
                 <i class="fas fa-calendar-alt"></i>
                 <span>12 years experience</span>
               </div>
               <div class="member-certifications">
-                <span class="cert-badge">Licensed Plumber</span>
-                <span class="cert-badge">Backflow Certified</span>
-                <span class="cert-badge">Water Heater Expert</span>
+                <span class="cert-badge">Interior Design</span>
+                <span class="cert-badge">CAD Certified</span>
+                <span class="cert-badge">Space Planning</span>
               </div>
               <div class="member-description">
-                <p>Specializes in emergency plumbing repairs, pipe installation, and water system maintenance.</p>
+                <p>Specializes in creating functional and beautiful bathroom and kitchen designs.</p>
               </div>
             </div>
           </div>
         </div>
         
-        <!-- HVAC Specialist -->
-        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="hvac">
+        <!-- Construction Manager -->
+        <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="home-addition basement-finishing">
           <div class="team-member-card h-100">
             <div class="member-photo">
               <div class="member-placeholder">
@@ -249,19 +303,19 @@
             </div>
             <div class="member-info">
               <h4>Sarah Johnson</h4>
-              <p class="member-position">HVAC Specialist</p>
-              <p class="member-specialty">Heating & Cooling Systems</p>
+              <p class="member-position">Construction Manager</p>
+              <p class="member-specialty">Home Additions & Basement Finishing</p>
               <div class="member-experience">
                 <i class="fas fa-calendar-alt"></i>
                 <span>10 years experience</span>
               </div>
               <div class="member-certifications">
-                <span class="cert-badge">HVAC Licensed</span>
-                <span class="cert-badge">EPA Certified</span>
-                <span class="cert-badge">Energy Star Partner</span>
+                <span class="cert-badge">Licensed Contractor</span>
+                <span class="cert-badge">Construction Management</span>
+                <span class="cert-badge">Safety Certified</span>
               </div>
               <div class="member-description">
-                <p>Expert in HVAC installation, repair, and energy-efficient system upgrades for optimal comfort.</p>
+                <p>Expert in managing complex construction projects including home additions and basement finishing.</p>
               </div>
             </div>
           </div>
@@ -862,7 +916,7 @@ document.addEventListener('DOMContentLoaded', function() {
       teamItems.forEach(item => {
         const itemCategory = item.getAttribute('data-category');
         
-        if (filterValue === 'all' || itemCategory === filterValue) {
+        if (filterValue === 'all' || itemCategory.includes(filterValue)) {
           item.style.display = 'block';
           item.classList.remove('hidden');
         } else {
