@@ -23,6 +23,9 @@
               </span>
             </div>
             
+            {{ if .Params.image }}
+            <img src="{{ .Params. image }}" alt="Header Image" class="img-fluid mb-4">
+            {{ end }}
             <h1 class="display-3 fw-bold mb-4">
               {{ .Params.hero_title | default (printf "%s's #1 Rated Home Services" .Title) }}
             </h1>

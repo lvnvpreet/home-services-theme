@@ -5,6 +5,9 @@
     <div class="container">
       <div class="row">
         <div class="col-12 text-center">
+          {{ if .Params.image }}
+          <img src="{{ .Params.image }}" alt="Header Image" class="img-fluid mb-4">
+          {{ end }}
           <h1 class="page-title">{{ .Title | default "Contact Us" }}</h1>
           <p class="page-subtitle">{{ .Params.hero_subtitle | default "Get in touch for all your needs" }}</p>
         </div>

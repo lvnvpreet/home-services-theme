@@ -15,6 +15,9 @@
               </ol>
             </nav>
             
+            {{ if .Params.image }}
+            <img src="{{ .Params.image }}" alt="Header Image" class="img-fluid mb-4">
+            {{ end }}
             <h1 class="service-title">{{ .Title }}</h1>
             <p class="service-subtitle">{{ .Description | default .Summary }}</p>
             

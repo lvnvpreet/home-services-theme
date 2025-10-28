@@ -343,6 +343,9 @@
               <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 mb-4">
                 <div class="team-card">
                   <div class="team-image">
+                    {{ if .image }}
+                    <img src="{{ .image | relURL }}" alt="{{ .name }}" class="img-fluid">
+                    {{ else }}
                     <div class="team-placeholder">
                       <i class="fas fa-user-tie"></i>
                     </div>
