@@ -21,7 +21,7 @@
 {{ end }}
 
 <!-- Contact Form Handling (Netlify or custom) -->
-{{ if eq .Section "contact" }}
+<!-- Temporarily removed conditional for debugging: {{ if eq .Section "contact" }} -->
 <script>
 // Enhanced form handling for contact pages
 document.addEventListener('DOMContentLoaded', function() {
@@ -49,29 +49,78 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function handleFormSubmission(form) {
-    // Custom form submission logic here
-    // You can integrate with your preferred form service
+    // Get API endpoint from site config or default to relative path
+    const apiEndpoint = '{{ .Site.Params.api.endpoint | default "/api/contact" }}';
     
-    setTimeout(() => {
+    // Collect form data
+    const formData = new FormData(form);
+    const data = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        serviceType: formData.get('serviceType'),
+        address: formData.get('address'),
+        message: formData.get('message'),
+        emergency: formData.get('emergency') === 'on',
+        ownerEmail: '{{ .Site.Params.email }}', // Site owner's email from config
+        projectId: '{{ .Site.Params.business_name | default "website" | urlize }}' // Project identifier
+    };
+
+    // Send to backend API
+    fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(result => {
         const submitBtn = form.querySelector('button[type="submit"]');
-        submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
-        submitBtn.classList.remove('btn-primary');
-        submitBtn.classList.add('btn-success');
         
-        // Show success message
-        showNotification('Thank you! We\'ll get back to you within 24 hours.', 'success');
-        
-        // Reset form
-        form.reset();
-        
-        // Reset button after delay
-        setTimeout(() => {
-            submitBtn.innerHTML = 'Send Message';
+        if (result.success) {
+            // Success
+            submitBtn.innerHTML = '<i class="fas fa-check me-2"></i>Message Sent!';
+            submitBtn.classList.remove('btn-primary');
+            submitBtn.classList.add('btn-success');
+            
+            // Show success message
+            showNotification(result.message || 'Thank you! We\'ll get back to you soon!', 'success');
+            
+            // Reset form
+            form.reset();
+            
+            // Reset button after delay
+            setTimeout(() => {
+                submitBtn.innerHTML = 'Send Message';
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('btn-success');
+                submitBtn.classList.add('btn-primary');
+            }, 5000);
+        } else {
+            // Error
+            submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Send Message';
             submitBtn.disabled = false;
-            submitBtn.classList.remove('btn-success');
-            submitBtn.classList.add('btn-primary');
-        }, 5000);
-    }, 2000);
+            
+            // Show error message
+            showNotification(result.message || 'Failed to send message. Please try again.', 'danger');
+        }
+    })
+    .catch(error => {
+        console.error('Form submission error:', error);
+        const submitBtn = form.querySelector('button[type="submit"]');
+        
+        submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Send Message';
+        submitBtn.disabled = false;
+        
+        // Show error message
+        showNotification('Network error. Please check your connection and try again.', 'danger');
+    });
 }
 
 function showNotification(message, type = 'info') {
@@ -85,7 +134,7 @@ function showNotification(message, type = 'info') {
         animation: slideInRight 0.3s ease;
     `;
     notification.innerHTML = `
-        <i class="fas fa-${type === 'success' ? 'check-circle' : 'info-circle'} me-2"></i>
+        <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'danger' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
         ${message}
         <button type="button" class="btn-close" onclick="this.parentElement.remove()"></button>
     `;
@@ -100,7 +149,7 @@ function showNotification(message, type = 'info') {
     }, 5000);
 }
 </script>
-{{ end }}
+<!-- Temporarily removed conditional for debugging: {{ end }} -->
 
 <!-- Gallery Page Scripts -->
 {{ if eq .Section "gallery" }}
