@@ -1,7 +1,14 @@
 {{ define "main" }}
 <div class="location-homepage">
   <!-- Location Hero Section -->
-  <section class="hero-section {{ if not (or .Params.header_image .Params.hero_image .Params.image) }}hero-section-gradient{{ end }}" {{ with or .Params.header_image .Params.hero_image .Params.image }}style="background-image: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%), url('{{ . | relURL }}'); background-size: cover; background-position: center;"{{ end }}>
+  <section class="hero-section {{ if not .Params.hero_image }}hero-section-gradient{{ end }}">
+    {{ if .Params.hero_image }}
+    <div class="hero-bg">
+      <img src="{{ .Params.hero_image | relURL }}" 
+           alt="{{ .Params.hero_title | default "Our Service Areas" }}" 
+           class="header-background-image">
+    </div>
+    {{ end }} 
     <div class="hero-overlay"></div>
 
     <div class="hero-content">
