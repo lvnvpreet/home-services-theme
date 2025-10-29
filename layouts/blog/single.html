@@ -1,7 +1,13 @@
 {{ define "main" }}
 <div class="blog-single">
   <!-- Blog Header -->
-  <section class="blog-header">
+  <section class="blog-header {{ if not .Params.image }}page-header-gradient{{ end }}">
+    {{ if .Params.image }}
+    <div class="blog-header-bg">
+      <img src="{{ .Params.image }}" alt="{{ .Title }}" class="header-background-image">
+      <div class="blog-header-overlay"></div>
+    </div>
+    {{ end }}
     <div class="container">
       <div class="row">
         <div class="col-lg-8 mx-auto">
@@ -49,26 +55,6 @@
       </div>
     </div>
   </section>
-  
-  <!-- Featured Image -->
-  {{ if .Params.image }}
-  <section class="featured-image-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-10 mx-auto">
-          <div class="featured-image">
-            <img src="{{ .Params.image | relURL }}" alt="{{ .Title }}" class="img-fluid">
-            {{ if .Params.image_caption }}
-            <div class="image-caption">
-              {{ .Params.image_caption }}
-            </div>
-            {{ end }}
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  {{ end }}
   
   <!-- Blog Content -->
   <section class="blog-content-section py-5">
@@ -359,8 +345,52 @@
 <style>
 /* Blog Single Page Styles */
 .blog-header {
-  background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+  position: relative;
   padding: 40px 0 20px;
+  min-height: 350px;
+  overflow: hidden;
+}
+
+.blog-header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.header-background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.blog-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.blog-header .container {
+  position: relative;
+  z-index: 3;
+}
+
+/* Gradient background when no image is present */
+.page-header-gradient {
+  background: linear-gradient(135deg, 
+    #ff6b6b 0%,     /* Coral/Red */
+    #ee5a6f 25%,    /* Pink-Red */
+    #a855f7 50%,    /* Purple */
+    #6366f1 75%,    /* Indigo */
+    #3b82f6 100%    /* Blue */
+  );
 }
 
 .blog-header .breadcrumb-item a {

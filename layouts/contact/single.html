@@ -1,15 +1,20 @@
 {{ define "main" }}
 <div class="contact-page">
   <!-- Page Header -->
-  <section class="page-header">
-    <div class="container">
-      <div class="row">
-        <div class="col-12 text-center">
-          {{ if .Params.image }}
-          <img src="{{ .Params.image }}" alt="Header Image" class="img-fluid mb-4">
-          {{ end }}
-          <h1 class="page-title">{{ .Title | default "Contact Us" }}</h1>
-          <p class="page-subtitle">{{ .Params.hero_subtitle | default "Get in touch for all your needs" }}</p>
+  <section class="page-header {{ if not .Params.image }}page-header-gradient{{ end }}">
+    {{ if .Params.image }}
+    <div class="page-header-bg">
+      <img src="{{ .Params.image }}" alt="{{ .Title }}" class="header-background-image">
+      <div class="page-header-overlay"></div>
+    </div>
+    {{ end }}
+    <div class="page-header-content">
+      <div class="container">
+        <div class="row">
+          <div class="col-12 text-center">
+            <h1 class="page-title">{{ .Title | default "Contact Us" }}</h1>
+            <p class="page-subtitle">{{ .Params.hero_subtitle | default "Get in touch for all your needs" }}</p>
+          </div>
         </div>
       </div>
     </div>
@@ -140,21 +145,67 @@
 <style>
 /* Contact Page Styles */
 .contact-page .page-header {
-  background: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%);
+  position: relative;
   color: white;
   padding: 80px 0;
+  min-height: 400px;
+  overflow: hidden;
+}
+
+.page-header-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+.header-background-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.page-header-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 2;
+}
+
+.page-header-content {
+  position: relative;
+  z-index: 3;
 }
 
 .page-title {
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1rem;
+  color: white;
 }
 
 .page-subtitle {
   font-size: 1.25rem;
   opacity: 0.9;
   margin: 0;
+  color: white;
+}
+
+/* Gradient background when no image is present */
+.page-header-gradient {
+  background: linear-gradient(135deg, 
+    #ff6b6b 0%,     /* Coral/Red */
+    #ee5a6f 25%,    /* Pink-Red */
+    #a855f7 50%,    /* Purple */
+    #6366f1 75%,    /* Indigo */
+    #3b82f6 100%    /* Blue */
+  );
 }
 
 .contact-content-section {
@@ -305,6 +356,7 @@
   
   .contact-page .page-header {
     padding: 60px 0;
+    min-height: 300px;
   }
   
   .contact-form-wrapper {
@@ -315,6 +367,10 @@
   .map-section {
     margin-top: 0;
     padding: 1.5rem;
+  }
+  
+  .map-container-large {
+    height: 300px;
   }
   
   .map-container-large {

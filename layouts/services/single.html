@@ -1,7 +1,7 @@
 {{ define "main" }}
 <div class="service-single">
   <!-- Service Hero -->
-  <section class="service-hero">
+  <section class="service-hero" {{ with or .Params.header_image .Params.image .Params.hero_image }}style="background-image: linear-gradient(135deg, var(--primary-color) 0%, #0056b3 100%), url('{{ . | relURL }}'); background-size: cover; background-position: center;"{{ end }}>
     <div class="container">
       <div class="row align-items-center">
         <div class="col-lg-8">
@@ -15,9 +15,6 @@
               </ol>
             </nav>
             
-            {{ if .Params.image }}
-            <img src="{{ .Params.image }}" alt="Header Image" class="img-fluid mb-4">
-            {{ end }}
             <h1 class="service-title">{{ .Title }}</h1>
             <p class="service-subtitle">{{ .Description | default .Summary }}</p>
             
