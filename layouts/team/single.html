@@ -63,7 +63,7 @@
             {{ if .Params.team_members }}
               {{ $specialties := slice }}
               {{ range .Params.team_members }}
-                {{ $memberSpecialties := split .specialties ", " }}
+                {{ $memberSpecialties := .specialties }}
                 {{ range $memberSpecialties }}
                   {{ $specialty := trim . " " }}
                   {{ if not (in $specialties $specialty) }}
@@ -201,7 +201,7 @@
         <!-- Team members from frontmatter -->
         {{ if .Params.team_members }}
         {{ range .Params.team_members }}
-        {{ $memberSpecialties := split .specialties ", " }}
+        {{ $memberSpecialties := .specialties }}
         {{ $categoryList := slice }}
         {{ range $memberSpecialties }}
           {{ $specialty := trim . " " }}
