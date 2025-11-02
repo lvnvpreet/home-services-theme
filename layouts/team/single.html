@@ -64,10 +64,19 @@
               {{ $specialties := slice }}
               {{ range .Params.team_members }}
                 {{ $memberSpecialties := .specialties }}
-                {{ range $memberSpecialties }}
-                  {{ $specialty := trim . " " }}
-                  {{ if not (in $specialties $specialty) }}
-                    {{ $specialties = $specialties | append $specialty }}
+                {{ if reflect.IsSlice $memberSpecialties }}
+                  {{ range $memberSpecialties }}
+                    {{ $specialty := trim . " " }}
+                    {{ if not (in $specialties $specialty) }}
+                      {{ $specialties = $specialties | append $specialty }}
+                    {{ end }}
+                  {{ end }}
+                {{ else }}
+                  {{ range split $memberSpecialties ", " }}
+                    {{ $specialty := trim . " " }}
+                    {{ if not (in $specialties $specialty) }}
+                      {{ $specialties = $specialties | append $specialty }}
+                    {{ end }}
                   {{ end }}
                 {{ end }}
               {{ end }}
@@ -203,10 +212,18 @@
         {{ range .Params.team_members }}
         {{ $memberSpecialties := .specialties }}
         {{ $categoryList := slice }}
-        {{ range $memberSpecialties }}
-          {{ $specialty := trim . " " }}
-          {{ $filterKey := $specialty | lower | replaceRE "[^a-z0-9]+" "-" }}
-          {{ $categoryList = $categoryList | append $filterKey }}
+        {{ if reflect.IsSlice $memberSpecialties }}
+          {{ range $memberSpecialties }}
+            {{ $specialty := trim . " " }}
+            {{ $filterKey := $specialty | lower | replaceRE "[^a-z0-9]+" "-" }}
+            {{ $categoryList = $categoryList | append $filterKey }}
+          {{ end }}
+        {{ else }}
+          {{ range split $memberSpecialties ", " }}
+            {{ $specialty := trim . " " }}
+            {{ $filterKey := $specialty | lower | replaceRE "[^a-z0-9]+" "-" }}
+            {{ $categoryList = $categoryList | append $filterKey }}
+          {{ end }}
         {{ end }}
         <div class="col-lg-4 col-md-6 mb-4 team-member-item" data-category="{{ delimit $categoryList " " }}">
           <div class="team-member-card h-100">
