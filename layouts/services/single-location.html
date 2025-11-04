@@ -9,7 +9,7 @@
           <nav aria-label="breadcrumb" class="location-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ "/" | relURL }}">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ "/services" | relURL }}">Services</a></li>
+              <li class="breadcrumb-item"><a href="{{ "services" | relURL }}">Services</a></li>
               <li class="breadcrumb-item"><a href="{{ .Parent.Permalink }}">{{ .Parent.Title }}</a></li>
               <li class="breadcrumb-item active">{{ .Params.location }}</li>
             </ol>
@@ -41,7 +41,7 @@
             
             <!-- Location CTA -->
             <div class="location-cta">
-              <a href="{{ "/contact" | relURL }}?service={{ .Parent.Title | urlize }}&location={{ .Params.location | urlize }}" class="btn btn-primary btn-lg me-3">
+              <a href="{{ "contact" | relURL }}?service={{ .Parent.Title | urlize }}&location={{ .Params.location | urlize }}" class="btn btn-primary btn-lg me-3">
                 <i class="fas fa-phone me-2"></i>
                 Get Quote in {{ .Params.location }}
               </a>
@@ -177,7 +177,7 @@
                 </a>
               </div>
               
-              <a href="{{ "/contact" | relURL }}?service={{ .Parent.Title | urlize }}&location={{ .Params.location | urlize }}" class="btn btn-primary w-100 mt-3">
+              <a href="{{ "contact" | relURL }}?service={{ .Parent.Title | urlize }}&location={{ .Params.location | urlize }}" class="btn btn-primary w-100 mt-3">
                 <i class="fas fa-calendar-check me-2"></i>
                 Schedule in {{ .Params.location }}
               </a>
@@ -231,7 +231,7 @@
             <h2>Ready for {{ .Parent.Title }} Service in {{ .Params.location }}?</h2>
             <p class="lead">Join hundreds of satisfied {{ .Params.location }} customers</p>
             <div class="cta-actions">
-              <a href="{{ "/contact" | relURL }}?service={{ .Parent.Title | urlize }}&location={{ .Params.location | urlize }}" class="btn btn-primary btn-lg me-3">
+              <a href="{{ "contact" | relURL }}?service={{ .Parent.Title | urlize }}&location={{ .Params.location | urlize }}" class="btn btn-primary btn-lg me-3">
                 <i class="fas fa-calendar-check me-2"></i>
                 Schedule Service
               </a>

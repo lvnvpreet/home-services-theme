@@ -15,7 +15,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="{{ "/" | relURL }}">Home</a></li>
-              <li class="breadcrumb-item"><a href="{{ "/blog" | relURL }}">Blog</a></li>
+              <li class="breadcrumb-item"><a href="{{ "blog" | relURL }}">Blog</a></li>
               {{ if .Params.category }}
               <li class="breadcrumb-item"><a href="{{ "/categories/" | relURL }}{{ .Params.category | urlize }}">{{ .Params.category }}</a></li>
               {{ end }}
@@ -238,7 +238,7 @@
               <h4>Need Professional Help?</h4>
               <p>Don't want to tackle this yourself? Our experts can handle it for you.</p>
               <div class="contact-options">
-                <a href="{{ "/contact" | relURL }}?service=general" class="btn btn-primary w-100 mb-2">
+                <a href="{{ "contact" | relURL }}?service=general" class="btn btn-primary w-100 mb-2">
                   <i class="fas fa-calendar-check me-2"></i>
                   Schedule Service
                 </a>

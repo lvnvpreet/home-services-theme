@@ -18,7 +18,7 @@
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="{{ "/" | relURL }}">Home</a></li>
-                <li class="breadcrumb-item"><a href="{{ "/services" | relURL }}">Services</a></li>
+                <li class="breadcrumb-item"><a href="{{ "services" | relURL }}">Services</a></li>
                 <li class="breadcrumb-item active">{{ .Title }}</li>
               </ol>
             </nav>
@@ -56,7 +56,7 @@
             
             <!-- CTA Buttons -->
             <div class="service-actions">
-              <a href="{{ "/contact" | relURL }}?service={{ .Title | urlize }}" class="btn btn-primary btn-lg me-3">
+              <a href="{{ "contact" | relURL }}?service={{ .Title | urlize }}" class="btn btn-primary btn-lg me-3">
                 <i class="fas fa-phone me-2"></i>
                 Get Free Quote
               </a>
@@ -422,7 +422,7 @@
             <h2>Ready to Get Started?</h2>
             <p class="lead">Contact us today for a free estimate on your {{ .Title | lower }} project</p>
             <div class="cta-actions">
-              <a href="{{ "/contact" | relURL }}?service={{ .Title | urlize }}" class="btn btn-primary btn-lg me-3">
+              <a href="{{ "contact" | relURL }}?service={{ .Title | urlize }}" class="btn btn-primary btn-lg me-3">
                 <i class="fas fa-calculator me-2"></i>
                 Get Free Estimate
               </a>
