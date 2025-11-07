@@ -25,25 +25,25 @@
         
         <!-- Home -->
         <li class="nav-item">
-          <a class="nav-link{{ if eq $currentPage.RelPermalink "/" }} active{{ end }}" href="{{ "/" | relURL }}">
+          <a class="nav-link{{ if eq $currentPage.RelPermalink "/" }} active{{ end }}" href="{{ "index.html" | relURL }}">
             Home
           </a>
         </li>
         
         <!-- About -->
         <li class="nav-item">
-          <a class="nav-link{{ if eq $currentPage.Section "about" }} active{{ end }}" href="{{ "about" | relURL }}">
+          <a class="nav-link{{ if eq $currentPage.Section "about" }} active{{ end }}" href="{{ "about.html" | relURL }}">
             About
           </a>
         </li>
         
         <!-- Services -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle{{ if eq $currentPage.Section "services" }} active{{ end }}" href="{{ "services" | relURL }}" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle{{ if eq $currentPage.Section "services" }} active{{ end }}" href="{{ "services.html" | relURL }}" id="servicesDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Services
           </a>
           <ul class="dropdown-menu" aria-labelledby="servicesDropdown">
-            <li><a class="dropdown-item" href="{{ "services" | relURL }}">All Services</a></li>
+            <li><a class="dropdown-item" href="{{ "services.html" | relURL }}">All Services</a></li>
             {{ with .Site.GetPage "/" }}
             {{ range .Params.featured_services }}
             <li>
@@ -54,30 +54,30 @@
             {{ end }}
             {{ end }}
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{{ "contact" | relURL }}">Emergency Service</a></li>
+            <li><a class="dropdown-item" href="{{ "contact.html" | relURL }}">Emergency Service</a></li>
           </ul>
         </li>
         
         <!-- Service Area -->
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle{{ if eq $currentPage.Section "service-area" }} active{{ end }}" href="{{ "service-area" | relURL }}" id="serviceAreaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link dropdown-toggle{{ if eq $currentPage.Section "service-area" }} active{{ end }}" href="{{ "service-area.html" | relURL }}" id="serviceAreaDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Service Area
           </a>
           <ul class="dropdown-menu" aria-labelledby="serviceAreaDropdown">
-            <li><a class="dropdown-item" href="{{ "service-area" | relURL }}">All Service Areas</a></li>
+            <li><a class="dropdown-item" href="{{ "service-area.html" | relURL }}">All Service Areas</a></li>
             {{ with .Site.GetPage "/" }}
             {{ range .Params.service_areas_highlight }}
               <li><a class="dropdown-item" href="{{ .link | relURL }}">{{ .name }}</a></li>
             {{ end }}
             {{ end }}
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="{{ "contact" | relURL }}">Request Service Quote</a></li>
+            <li><a class="dropdown-item" href="{{ "contact.html" | relURL }}">Request Service Quote</a></li>
           </ul>
         </li>
         
         <!-- Contact -->
         <li class="nav-item">
-          <a class="nav-link{{ if eq $currentPage.Section "contact" }} active{{ end }}" href="{{ "contact" | relURL }}">
+          <a class="nav-link{{ if eq $currentPage.Section "contact" }} active{{ end }}" href="{{ "contact.html" | relURL }}">
             Contact
           </a>
         </li>
@@ -88,7 +88,7 @@
         
         <!-- Contact Button (Replaces Free Quote) -->
         <div class="d-none d-lg-block">
-          <a href="{{ "contact" | relURL }}" class="btn btn-primary">
+          <a href="{{ "contact.html" | relURL }}" class="btn btn-primary">
             <i class="fas fa-calendar-check me-2"></i>
             Contact
           </a>
@@ -100,7 +100,7 @@
             <i class="fas fa-phone me-2"></i>
             Call Now
           </a>
-          <a href="{{ "contact" | relURL }}" class="btn btn-primary w-100">
+          <a href="{{ "contact.html" | relURL }}" class="btn btn-primary w-100">
             <i class="fas fa-calendar-check me-2"></i>
             Contact
           </a>
@@ -142,20 +142,20 @@
       
       <!-- Navigation Links -->
       <div class="mobile-nav-links">
-        <a href="{{ "/" | relURL }}" class="mobile-nav-link">Home</a>
-        <a href="{{ "about" | relURL }}" class="mobile-nav-link">About</a>
-        <a href="{{ "services" | relURL }}" class="mobile-nav-link">Services</a>
-        <a href="{{ "service-area" | relURL }}" class="mobile-nav-link">Service Area</a>
-        <a href="{{ "contact" | relURL }}" class="mobile-nav-link">Contact</a>
+        <a href="{{ "index.html" | relURL }}" class="mobile-nav-link">Home</a>
+        <a href="{{ "about.html" | relURL }}" class="mobile-nav-link">About</a>
+        <a href="{{ "services.html" | relURL }}" class="mobile-nav-link">Services</a>
+        <a href="{{ "service-area.html" | relURL }}" class="mobile-nav-link">Service Area</a>
+        <a href="{{ "contact.html" | relURL }}" class="mobile-nav-link">Contact</a>
       </div>
       
       <!-- Mobile CTA -->
       <div class="mobile-nav-cta">
-        <a href="{{ "contact" | relURL }}" class="btn btn-primary w-100 mb-2">
+        <a href="{{ "contact.html" | relURL }}" class="btn btn-primary w-100 mb-2">
           <i class="fas fa-calendar-check me-2"></i>
           Schedule Appointment
         </a>
-        <a href="{{ "services" | relURL }}" class="btn btn-outline-primary w-100">
+        <a href="{{ "services.html" | relURL }}" class="btn btn-outline-primary w-100">
           <i class="fas fa-tools me-2"></i>
           Our Services
         </a>
